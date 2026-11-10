@@ -4,7 +4,7 @@
 
 ## なぜこのスキルがあるか
 
-`vscode-docs`（`skills/plugins/others/skills/`）・`github-copilot-docs`・`vscode-copilot-docs`（`copilot-plugins/meta/`）など、WEBドキュメントを参照する複数のスキルで、以下のロジックがほぼ同じ形で個別に実装されていた。
+`vscode-docs`（`skills/plugins/others/skills/`）・`github-copilot-docs`・`vscode-copilot-docs`（`skills/plugins/ai-tools-knowledge/skills/`）など、WEBドキュメントを参照する複数のスキルで、以下のロジックがほぼ同じ形で個別に実装されていた。
 
 - ダウンロード結果への`fetched_at`記録とfreshnessチェック(既定24時間)
 - `llms.txt`/`llms-full.txt`候補パスの存在確認

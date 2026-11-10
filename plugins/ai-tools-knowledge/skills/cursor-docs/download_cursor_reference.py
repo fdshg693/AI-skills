@@ -8,7 +8,7 @@ fetched per-URL with WebFetch. Each indexed URL already ends in `.md`
 (e.g. https://cursor.com/docs/agent/overview.md), so WebFetch gets clean
 markdown directly without needing to strip HTML chrome.
 
-Standalone copy-and-adapt of ../../../claude-plugins/meta/skills/writing-skill-web/scripts/download_web_reference.py's
+Standalone copy-and-adapt of skills/plugins/cc-knowledge/skills/writing-skill-web/scripts/download_web_reference.py's
 freshness-check contract (source + fetched_at frontmatter, 24h default
 freshness window, --force to bypass).
 """

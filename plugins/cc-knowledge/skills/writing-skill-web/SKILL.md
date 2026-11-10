@@ -9,7 +9,7 @@ description: Use when creating or editing a skill that needs web content — eit
 #   - tav-cli・tav-litスキル(tools/_plugin/my-tools/skills配下)への依存: 動的検索/取得が必要な場合はまずこれらを使う想定。クライアントを重複実装しない
 #   - 実運用例(出自メモ。スキル作成に必要なテンプレートはすべてscripts/配下に同梱済みで、
 #     スキル外のフォルダを読みに行く必要はない):
-#     skills/plugins/others/skills/vscode-docs, copilot-plugins/meta/{github-copilot-docs,vscode-copilot-docs},
+#     skills/plugins/others/skills/vscode-docs, skills/plugins/ai-tools-knowledge/skills/{github-copilot-docs,vscode-copilot-docs},
 #     skills/plugins/topics/skills/codegraph-docs, skills/plugins/cicd/skills/pr-agent-docs(GitHub取得の実例)
 #
 # 由来・scripts/のコピー前提テンプレートという性質・命名変更の経緯は同階層のREADME.md参照（人間のメンテナ向け）
@@ -23,7 +23,7 @@ meta:
   requires_skills: writing-skill, tav-cli, tav-lit, aim-cli
   status: stable
   description: no description
-  version: 1.2.4
+  version: 1.2.5
 ---
 
 # WEB情報を扱うスキルの作り方

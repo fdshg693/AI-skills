@@ -16,7 +16,7 @@ PowerShell example:
     python .\claude-plugins\my-tools\skills\tav-lit\extract_page.py https://example.com/page
 
 bash example:
-    python ./claude-plugins/my-tools/skills/tav-lit/extract_page.py https://example.com/page --query "pricing"
+    python ./skills/plugins/web-lookup/skills/tav-lit/extract_page.py https://example.com/page --query "pricing"
 """
 
 from __future__ import annotations
