@@ -1,0 +1,8 @@
+{
+  "name": "ai-tools-knowledge",
+  "version": "0.1.0",
+  "description": "Knowledge skills about AI coding tools (Codex, GitHub Copilot, Cursor, Antigravity, Cline, Kilo Code).",
+  "author": {
+    "name": "Seiwan Maikuma"
+  }
+}

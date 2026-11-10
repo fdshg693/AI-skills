@@ -1,0 +1,17 @@
+{
+  "name": "ai-tools-knowledge",
+  "version": "0.1.0",
+  "description": "Knowledge skills about AI coding tools (Codex, GitHub Copilot, Cursor, Antigravity, Cline, Kilo Code).",
+  "author": {
+    "name": "Seiwan Maikuma"
+  },
+  "license": "MIT",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "AI Tools Knowledge",
+    "shortDescription": "Docs and authoring know-how for AI coding tools",
+    "longDescription": "Knowledge skills about Codex, GitHub Copilot, Cursor, Antigravity, Cline and Kilo Code: official docs lookup, CLIs, SDKs, memory files, skills and plugins.",
+    "developerName": "Seiwan Maikuma",
+    "category": "Productivity"
+  }
+}

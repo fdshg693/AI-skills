@@ -2,7 +2,7 @@
 
 `output/cli-excerpt.md` は、抽出元 llms.txt（Ona公式ドキュメントの索引。[ona-docs](../ona-docs/SKILL.md) スキルが24時間おきに再取得する `output/docs/llms.txt`）から、Ona公式CLI（`ona`コマンド）に関するエントリを人手で抜粋した固定ファイルです。抽出元の実際のパスはこのディレクトリの直下にある **[config.yml](config.yml)** の `source` キーで定義されており、コード内にハードコードされていません。
 
-このスキルは[vscode-copilot-docs](../../../../../copilot-plugins/meta/vscode-copilot-docs/README.md)（`vscode-docs`のllms.txtからCopilot関連だけを人手キュレーション＋ドリフト検知スクリプトで抜粋するパターン）を踏襲したものです。`ona-docs`が既に取得済みのllms.txtから抜粋するだけで、`ona --help`の実行結果を新規にキャプチャする方式（存在する場合）とは抽出方式が異なります。混同しないよう注意してください。
+このスキルは[vscode-copilot-docs](../../../ai-tools-knowledge/skills/vscode-copilot-docs/README.md)（`vscode-docs`のllms.txtからCopilot関連だけを人手キュレーション＋ドリフト検知スクリプトで抜粋するパターン）を踏襲したものです。`ona-docs`が既に取得済みのllms.txtから抜粋するだけで、`ona --help`の実行結果を新規にキャプチャする方式（存在する場合）とは抽出方式が異なります。混同しないよう注意してください。
 
 `check_cli_excerpt.py` / `generate_cli_excerpt.py` は PyYAML（`config.yml` の読み込み用）に依存します。素の `python` コマンドの環境には入っていないことがあるため、必ず **`uv run <スクリプト名>.py`** で実行してください（各ファイル先頭の PEP 723 インラインスクリプトメタデータで依存を宣言しているため、`uv run` 経由なら環境を問わず自動解決される）。`python <スクリプト名>.py` のように直接実行すると `ModuleNotFoundError: No module named 'yaml'` になり得る。
 

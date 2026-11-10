@@ -1,0 +1,10 @@
+# check_copilot_excerpt.py / generate_copilot_excerpt.py / extract_uncurated_entries.py
+# が抜粋元として参照する llms.txt の場所。リポジトリルートからの相対パスで書く
+# （このファイル自身や vscode-docs スキルの場所が変わってもこの1行だけ直せばよい
+# ようにするため。config.yml からの相対パスにすると、config.yml と抽出元のどちらが
+# 移動しても壊れる2重の脆さを持つ）。
+#
+# 実体は vscode-docs スキルが取得・保持しているファイル。vscode-docs 自体が
+# 再取得すればこのパスの中身は更新されるが、パス自体（どのスキルの output/llms.txt を
+# 見るか）が変わった場合はここを直す。
+source: skills/plugins/others/skills/vscode-docs/output/llms.txt

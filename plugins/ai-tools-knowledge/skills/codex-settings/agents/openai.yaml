@@ -1,0 +1,4 @@
+interface:
+  display_name: "Codex Settings"
+  short_description: "Edit Codex config.toml, hooks, rules, MCP servers."
+  default_prompt: "Use $codex-settings to edit Codex's configuration files (config.toml, hooks, rules, mcp_servers) safely."

@@ -1,0 +1,169 @@
+version: 1.1.4
+fetched_at: '2026-07-20T10:16:56.998755+00:00'
+command: agy
+usage: 'Usage of agy.exe:'
+options:
+- name: --add-dir
+  description: Add a directory to the workspace (repeatable)
+  default: '[]'
+- name: --agent
+  description: Agent for the current CLI session
+- name: -c
+  description: Short alias for --continue
+- name: --continue
+  description: Continue the most recent conversation
+- name: --conversation
+  description: Resume a previous conversation by ID
+- name: --dangerously-skip-permissions
+  description: Auto-approve all tool permission requests without prompting
+- name: -i
+  description: Short alias for --prompt-interactive
+- name: --log-file
+  description: Override CLI log file path
+- name: --mode
+  description: Set the agent execution mode for this session (accept-edits, plan)
+- name: --model
+  description: Model for the current CLI session
+- name: --new-project
+  description: Create a new project for this session
+- name: -p
+  description: Short alias for --print
+- name: --print
+  description: Run a single prompt non-interactively and print the response
+- name: --print-timeout
+  description: Timeout for print mode wait
+  default: 5m0s
+- name: --project
+  description: Project ID for the current CLI session
+- name: --prompt
+  description: Alias for --print
+- name: --prompt-interactive
+  description: Run an initial prompt interactively and continue the session
+- name: --sandbox
+  description: Run in a sandbox with terminal restrictions enabled
+subcommands:
+- name: agent
+  description: List available agents
+- name: agents
+  description: List available agents
+- name: changelog
+  description: Show changelog and release notes
+- name: help
+  description: Show help for subcommands
+- name: install
+  description: Configure environment paths and shell settings
+- name: models
+  description: List available models
+- name: plugin
+  description: Manage plugins (install, uninstall, list, enable, disable)
+- name: plugins
+  description: Alias for plugin
+- name: update
+  description: Update CLI
+subcommand_help:
+  agent:
+    usage: 'Usage: agy.exe agent [flags]'
+    description: List available agents
+    flags:
+    - name: -h
+      description: Show help
+    - name: --help
+      description: Show help
+    commands: []
+  changelog:
+    usage: 'Usage: agy.exe changelog [flags]'
+    description: Show changelog and release notes
+    flags:
+    - name: -h
+      description: Show help
+    - name: --help
+      description: Show help
+    commands: []
+  help:
+    note: '`agy help help` は未対応。トップレベル使い方を見るには `agy help`（引数なし）を実行すること。'
+  install:
+    usage: 'Usage: agy.exe install [flags]'
+    description: Configure environment paths and shell settings
+    flags:
+    - name: --dir
+      description: Custom directory target to configure PATH for
+    - name: -h
+      description: Show help
+    - name: --help
+      description: Show help
+    - name: --skip-aliases
+      description: Bypasses shell profile alias purging
+    - name: --skip-path
+      description: Bypasses shell profile PATH appending
+    commands: []
+  models:
+    usage: 'Usage: agy.exe models [flags]'
+    description: List available models
+    flags:
+    - name: -h
+      description: Show help
+    - name: --help
+      description: Show help
+    commands: []
+  plugin:
+    usage: 'Usage: agy.exe plugin <command> [arguments]'
+    description: ''
+    flags: []
+    commands:
+    - name: list
+      description: List imported plugins
+    - name: import [source]
+      description: Import plugins from gemini or claude
+    - name: install <target>
+      description: Install a plugin (supports plugin@marketplace)
+    - name: uninstall <name>
+      description: Uninstall a plugin
+    - name: enable <name>
+      description: Enable a plugin
+    - name: disable <name>
+      description: Disable a plugin
+    - name: validate [path]
+      description: Validate a plugin
+    - name: link <mp> <target>
+      description: Generate link to a marketplace
+    - name: help
+      description: Show this help
+  update:
+    usage: 'Usage of update:'
+    description: ''
+    flags: []
+    commands: []
+  plugins:
+    alias_for: plugin
+    usage: 'Usage: agy.exe plugin <command> [arguments]'
+    description: ''
+    flags: []
+    commands:
+    - name: list
+      description: List imported plugins
+    - name: import [source]
+      description: Import plugins from gemini or claude
+    - name: install <target>
+      description: Install a plugin (supports plugin@marketplace)
+    - name: uninstall <name>
+      description: Uninstall a plugin
+    - name: enable <name>
+      description: Enable a plugin
+    - name: disable <name>
+      description: Disable a plugin
+    - name: validate [path]
+      description: Validate a plugin
+    - name: link <mp> <target>
+      description: Generate link to a marketplace
+    - name: help
+      description: Show this help
+  agents:
+    alias_for: agent
+    usage: 'Usage: agy.exe agent [flags]'
+    description: List available agents
+    flags:
+    - name: -h
+      description: Show help
+    - name: --help
+      description: Show help
+    commands: []

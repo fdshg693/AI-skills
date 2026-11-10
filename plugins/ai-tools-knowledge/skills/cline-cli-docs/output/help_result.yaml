@@ -1,0 +1,89 @@
+version: 3.0.44
+fetched_at: '2026-07-18T19:14:29.708630+00:00'
+usage: cline [options] [command] [prompt]
+description: Cline CLI - AI coding assistant in your terminal
+arguments:
+- name: prompt
+  description: Your prompt. Default to start in act mode with auto-approve enabled.
+options:
+- name: -V, --version
+  description: Output the version number
+- name: -p, --plan
+  description: Run in plan mode
+- name: --json
+  description: Output messages as JSON instead of styled text
+- name: --auto-approve <boolean>
+  description: 'Set tool auto-approval for all tools (default: true)'
+- name: -c, --cwd <path>
+  description: Working directory
+- name: --thinking <level>
+  description: 'Set reasoning effort: none|low|medium|high|xhigh. Bare --thinking uses medium; omitted leaves provider default.'
+- name: --compaction <mode>
+  description: 'Context compaction mode: agentic|basic|off (default: basic)'
+- name: -i, --tui
+  description: Open the terminal user interface (TUI) for interactive sessions
+- name: --id <session-id>
+  description: Resume an existing session by ID
+- name: -P, --provider <id>
+  description: 'Provider id (default: cline)'
+- name: -k, --key <api-key>
+  description: API key override for this run
+- name: -m, --model <model-id>
+  description: Model to use for the session with the selected provider
+- name: -s, --system <system-prompt>
+  description: Override the default system prompt
+- name: -z, --zen
+  description: Start a session that runs in the background hub
+- name: --retries [value]
+  description: 'Number of maximum consecutive mistakes (retries) before exiting (default: 6)'
+- name: -t, --timeout <seconds>
+  description: 'Optional timeout in seconds (default: 0 for no timeout)'
+- name: --acp
+  description: Run in Agent Client Protocol (ACP) mode for editor integration
+- name: --config <path>
+  description: 'Configuration directory (default: ~/.cline/data/settings)'
+- name: --data-dir <path>
+  description: 'Use isolated local state at this directory path (default: ~/.cline)'
+- name: --hooks-dir <path>
+  description: 'Directory path to additional hooks for runtime hook injection (default: ~/.cline/hooks)'
+- name: --worktree
+  description: Auto-create a detached git worktree under ~/.cline/worktrees/ and run the task there
+- name: --update
+  description: Check for updates and install if available
+- name: --kanban
+  description: Run the kanban app
+- name: -v, --verbose
+  description: Show verbose output
+- name: -h, --help
+  description: display help for command
+commands:
+- name: auth [options] [provider]
+  description: Authenticate a provider and configure what model is used
+- name: config [options]
+  description: Show current configuration
+- name: plugin
+  description: Manage Cline Plugins
+- name: skill [args...]
+  description: Manage Cline Skills via the open skills CLI (npx skills)
+- name: connect [options] [channel]
+  description: Connect to an external channel
+- name: mcp
+  description: Manage MCP servers
+- name: doctor
+  description: Diagnose and fix configuration issues
+- name: history|h [options]
+  description: List session history or manage saved sessions
+- name: hook
+  description: Handle a hook payload from stdin
+- name: schedule
+  description: Manage scheduled tasks
+- name: hub
+  description: Manage the local hub daemon
+- name: dashboard [options]
+  description: Start the Cline Hub dashboard and open it in a browser
+- name: update [options]
+  description: Check for updates and install if available
+- name: version
+  description: Show Cline CLI version number
+- name: kanban
+  description: Run the kanban app

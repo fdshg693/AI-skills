@@ -1,0 +1,4 @@
+interface:
+  display_name: "Codex CLI Use"
+  short_description: "Delegate one-shot tasks to Codex CLI"
+  default_prompt: "Use $codex-cli-use to delegate this task to Codex CLI with a safe execution policy."

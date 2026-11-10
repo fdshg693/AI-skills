@@ -1,0 +1,87 @@
+version: 2026.07.08-0c04a8a
+fetched_at: '2026-07-08T19:05:12.784849+00:00'
+usage: agent [options] [command] [prompt...]
+description: Start the Cursor Agent
+arguments:
+- name: prompt
+  description: Initial prompt for the agent
+options:
+- name: -v, --version
+  description: Output the version number
+- name: --api-key <key>
+  description: API key for authentication (can also use CURSOR_API_KEY env var)
+- name: -H, --header <header>
+  description: 'Add custom header to agent requests (format: ''Name: Value'', can be used multiple times)'
+- name: -p, --print
+  description: 'Print responses to console (for scripts or non-interactive use). Has access to all tools, including write and shell. (default: false)'
+- name: --output-format <format>
+  description: 'Output format (only works with --print): text | json | stream-json (default: "text")'
+- name: --stream-partial-output
+  description: 'Stream partial output as individual text deltas (only works with --print and stream-json format) (default: false)'
+- name: --mode <mode>
+  description: 'Start in the given execution mode. plan: read-only/planning (analyze, propose plans, no edits). ask: Q&A style for explanations and questions (read-only). (choices: "plan", "ask")'
+- name: --plan
+  description: 'Start in plan mode (shorthand for --mode=plan). (default: false)'
+- name: --resume [chatId]
+  description: 'Select a session to resume (default: false)'
+- name: --continue
+  description: 'Continue previous session (default: false)'
+- name: --model <model>
+  description: Model to use (e.g., gpt-5, sonnet-4-thinking). Parameterized models accept quoted bracket overrides, e.g. 'claude-opus-4-8[context=1m,effort=high,fast=false]'
+- name: --list-models
+  description: 'List available models and exit (default: false)'
+- name: -f, --force
+  description: 'Force allow commands unless explicitly denied (default: false)'
+- name: --yolo
+  description: 'Alias for --force (Run Everything) (default: false)'
+- name: --auto-review
+  description: 'Use Auto-review (Smart Auto): a server classifier auto-runs safe tool calls and prompts for the rest (default: false)'
+- name: --sandbox <mode>
+  description: 'Explicitly enable or disable sandbox mode (overrides config) (choices: "enabled", "disabled")'
+- name: --approve-mcps
+  description: 'Automatically approve all MCP servers (default: false)'
+- name: --trust
+  description: 'Trust the current workspace without prompting (only works with --print/headless mode) (default: false)'
+- name: --workspace <path-or-name>
+  description: Workspace directory or saved workspace name to use (defaults to current working directory)
+- name: --add-dir <path>
+  description: Add an additional workspace root directory (can be specified multiple times)
+- name: --plugin-dir <path>
+  description: Load a local plugin directory (can be specified multiple times)
+- name: -w, --worktree [name]
+  description: Start in an isolated git worktree at ~/.cursor/worktrees/<reponame>/<name>. If omitted, a name is generated.
+- name: --worktree-base <branch>
+  description: 'Branch or ref to base the new worktree on (default: current HEAD)'
+- name: --skip-worktree-setup
+  description: 'Skip running worktree setup scripts from .cursor/worktrees.json (default: false)'
+- name: -h, --help
+  description: Display help for command
+commands:
+- name: login
+  description: Authenticate with Cursor. Set NO_OPEN_BROWSER to disable browser opening.
+- name: logout
+  description: Sign out and clear stored authentication
+- name: mcp
+  description: Manage MCP servers
+- name: worker [options]
+  description: Start a private cloud worker that connects to Cursor to run agents in your environment
+- name: status|whoami [options]
+  description: View authentication status
+- name: models
+  description: List available models for this account
+- name: about [options]
+  description: Display version, system, and account information
+- name: update
+  description: Update Cursor Agent to the latest version
+- name: create-chat
+  description: Create a new empty chat and return its ID
+- name: generate-rule|rule
+  description: Generate a new Cursor rule with interactive prompts
+- name: agent [prompt...]
+  description: Start the Cursor Agent
+- name: ls
+  description: Resume a chat session
+- name: resume
+  description: Resume the latest chat session
+- name: help [command]
+  description: Display help for command

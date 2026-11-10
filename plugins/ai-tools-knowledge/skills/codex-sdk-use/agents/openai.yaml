@@ -1,0 +1,4 @@
+interface:
+  display_name: "Codex SDK Use"
+  short_description: "Explain or implement Codex SDK usage"
+  default_prompt: "Use $codex-sdk-use to explain or implement programmatic Codex control with the official SDK."

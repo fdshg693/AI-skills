@@ -1,0 +1,5 @@
+{
+  "name": "ai-tools-knowledge",
+  "version": "0.1.0",
+  "description": "Knowledge skills about other AI coding tools (Codex, GitHub Copilot, Cursor, Antigravity, Cline, Kilo Code): docs, CLIs, SDKs, memory, skills and plugins"
+}
