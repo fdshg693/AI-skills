@@ -1,0 +1,26 @@
+# skill-group が探索するスキルグループの定義
+#
+# 各エントリは以下の3項目を持つフラットなリスト:
+#   - name: グループ名（list-skills.py list <group> で指定する識別子）
+#     description: グループの説明（グループ一覧表示では使わないが、人間が読む際の参考用）
+#     path: list-skills.py からの相対パス（このフォルダ配下を再帰探索して SKILL.md を集める）
+#
+# 同じ name のエントリを複数書くと、それらの path がまとめて1つのグループとして扱われる
+# （list-skills.py list <group> は該当する全 path を再帰探索した結果をまとめて返す）。
+#
+# 例（他フォルダのスキル群を追加する場合）:
+# - name: other-group
+#   description: 別のスキル群
+#   path: ../other-skills
+#
+# 例（同じグループ名に複数フォルダを束ねる場合）:
+# - name: other-group
+#   description: 別のスキル群（追加フォルダその1）
+#   path: ../other-skills-2
+# - name: other-group
+#   description: 別のスキル群（追加フォルダその2）
+#   path: ../other-skills-3
+
+- name: default
+  description: skill-group 標準のサブスキル群
+  path: ./sub_skills

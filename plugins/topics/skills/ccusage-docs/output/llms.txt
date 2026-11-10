@@ -1,0 +1,74 @@
+---
+source: https://ccusage.com/llms.txt
+fetched_at: 2026-09-07T16:55:30.280984+00:00
+---
+
+# ccusage
+
+> Coding (Agent) CLI Usage Analysis
+
+A fast local CLI for tracking tokens and estimated costs across Claude Code, Codex, OpenCode, Amp, Droid, Codebuff, Hermes Agent, pi-agent, Goose, OpenClaw, Kilo, Kimi, Qwen, GitHub Copilot CLI, Gemini CLI, Antigravity, Grok Build CLI, and ZCode
+
+## Table of Contents
+
+### Introduction
+
+- [Introduction](/guide.md)
+- [Getting Started](/guide/getting-started.md)
+- [Installation](/guide/installation.md)
+
+### Usage Views
+
+- [All Sources (Default)](/guide/all-reports.md)
+- [Daily Usage](/guide/daily-reports.md)
+- [Weekly Usage](/guide/weekly-reports.md)
+- [Monthly Usage](/guide/monthly-reports.md)
+- [Session Usage](/guide/session-reports.md)
+
+### Data Sources
+
+- [Claude Code Data Source](/guide/claude.md)
+- [Codex Data Source (Beta)](/guide/codex.md)
+- [OpenCode Data Source (Beta)](/guide/opencode.md)
+- [Amp Data Source (Beta)](/guide/amp.md)
+- [Droid Data Source (Experimental)](/guide/droid.md)
+- [Codebuff Data Source (Experimental)](/guide/codebuff.md)
+- [Hermes Agent Data Source (Experimental)](/guide/hermes.md)
+- [pi-agent Data Source (Beta)](/guide/pi.md)
+- [Goose Data Source (Experimental)](/guide/goose.md)
+- [Kilo Data Source (Beta)](/guide/kilo.md)
+- [Qwen Data Source (Experimental)](/guide/qwen.md)
+- [GitHub Copilot CLI Data Source (Beta)](/guide/copilot.md)
+- [Gemini CLI Data Source (Beta)](/guide/gemini.md)
+- [Antigravity Data Source](/guide/antigravity.md)
+- [Kimi Data Source (Experimental)](/guide/kimi.md)
+- [OpenClaw Data Source (Experimental)](/guide/openclaw.md)
+- [Grok Build CLI Data Source](/guide/grok.md)
+- [ZCode Data Source](/guide/zcode.md)
+- [Source Support Q\&A](/guide/source-support-qa.md)
+
+### Configuration
+
+- [Configuration Overview](/guide/configuration.md)
+- [Command-Line Options](/guide/cli-options.md)
+- [Environment Variables](/guide/environment-variables.md)
+- [Configuration Files](/guide/config-files.md)
+- [Cost Modes](/guide/cost-modes.md)
+
+### Integration
+
+- [JSON Output](/guide/json-output.md)
+
+### Community
+
+- [Community Projects](/guide/community-projects.md)
+- [Sponsors](/guide/sponsors.md)
+
+### Other
+
+- [AGENTS.md - Documentation](/AGENTS.md)
+- [Blocks](/guide/blocks-reports.md)
+- [Documentation Site](/README.md)
+- [Grok Env-Only Path Discovery Design](/superpowers/specs/2026-07-28-grok-env-only-path-design.md)
+- [Live Monitoring (Removed)](/guide/live-monitoring.md)
+- [Statusline Integration (Beta) 🚀](/guide/statusline.md)

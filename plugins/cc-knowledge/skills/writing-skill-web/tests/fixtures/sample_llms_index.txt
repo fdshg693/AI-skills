@@ -1,0 +1,10 @@
+---
+source: https://docs.example.com/llms.txt
+fetched_at: 2026-09-01T00:00:00+00:00
+---
+
+# Documentation
+- [Router](https://docs.example.com/docs/Router): Configure routing.
+- [Proxy](https://docs.example.com/docs/proxy)
+See https://docs.example.com/docs/observability for metrics.
+See https://docs.example.com/docs/Router#duplicate for a fragment duplicate.

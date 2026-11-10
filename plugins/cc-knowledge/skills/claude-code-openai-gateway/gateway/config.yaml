@@ -1,0 +1,22 @@
+# 公開する alias は、Claude Code に --model / ANTHROPIC_MODEL で渡す文字列と完全一致させる。
+# プロバイダ指定（openai/...）は litellm_params の内側に閉じ込め、クライアントには漏らさない。
+# 必要な alias だけを書く。意図しないモデルを公開しない。
+# drop_params は書かない（非対応パラメータが黙って捨てられ、切り分け不能になるため）。
+model_list:
+  - model_name: gpt-5-mini # ← Claude Code に渡す文字列
+    litellm_params:
+      model: openai/gpt-5-mini # ← 実体
+      api_key: os.environ/OPENAI_API_KEY
+
+  # 例: 大きめのモデルも使うなら、同じ形で追記する
+  # - model_name: gpt-4o
+  #   litellm_params:
+  #     model: openai/gpt-4o
+  #     api_key: os.environ/OPENAI_API_KEY
+
+general_settings:
+  master_key: os.environ/LITELLM_MASTER_KEY
+
+litellm_settings:
+  # 応答本文をログに出さない（APIキーやコード片が混ざるため）
+  turn_off_message_logging: true

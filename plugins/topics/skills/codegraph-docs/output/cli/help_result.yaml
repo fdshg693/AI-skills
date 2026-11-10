@@ -1,0 +1,453 @@
+version: 1.6.0
+fetched_at: '2026-09-13T05:51:22.857279+00:00'
+invocation: codegraph
+usage:
+- codegraph [options] [command]
+description: Code intelligence and knowledge graph for any codebase
+commands:
+- name: init [options] [path]
+  description: Initialize CodeGraph in a project directory and build the initial index
+- name: uninit [options] [path]
+  description: Remove CodeGraph from a project (deletes .codegraph/ directory)
+- name: index [options] [path]
+  description: Rebuild the full index from scratch (same result as a fresh init)
+- name: sync [options] [path]
+  description: Sync changes since last index
+- name: status [options] [path]
+  description: Show index status and statistics
+- name: query [options] <search>
+  description: Search for symbols in the codebase
+- name: explore [options] <query...>
+  description: 'Explore an area: relevant symbols'' source + call paths in one shot (same output as the codegraph_explore MCP tool)'
+- name: context [options] <task...>
+  description: 'Build context for a task: relevant symbols, relationships, and code blocks'
+- name: node [options] [name]
+  description: One symbol's source + caller/callee trail, or read a file with line numbers + dependents (same output as the codegraph_node MCP tool)
+- name: files [options]
+  description: Show project file structure from the index
+- name: daemon|daemons
+  description: Manage running CodeGraph background daemons — pick one and press enter to stop it
+- name: unlock [path]
+  description: Remove a stale lock file that is blocking indexing
+- name: callers [options] <symbol>
+  description: Find all functions/methods that call a specific symbol
+- name: callees [options] <symbol>
+  description: Find all functions/methods that a specific symbol calls
+- name: impact [options] <symbol>
+  description: Analyze what code is affected by changing a symbol
+- name: affected [options] [files...]
+  description: Find test files affected by changed source files
+- name: install [options]
+  description: Install codegraph MCP server into one or more agents (Claude Code, Cursor, Codex CLI, opencode, Hermes Agent, Gemini CLI, Antigravity IDE, Kiro, GitHub Copilot)
+- name: uninstall [options]
+  description: Remove codegraph from your agents (Claude Code, Cursor, Codex CLI, opencode, Hermes Agent, Gemini CLI, Antigravity IDE, Kiro, GitHub Copilot)
+- name: telemetry [action]
+  description: Show or change anonymous usage telemetry (status, on, off)
+- name: upgrade [options] [version]
+  description: Update CodeGraph to the latest release (or a specific version)
+- name: version
+  description: 'Print the installed CodeGraph version (also: -v, --version)'
+- name: help [command]
+  description: display help for command
+arguments: []
+options:
+- name: -V, --version
+  description: output the version number
+- name: --color
+  description: force ANSI colors even when stdout is not a TTY
+- name: --no-color
+  description: disable ANSI colors (NO_COLOR env is also honored)
+- name: -h, --help
+  description: display help for command
+subcommands:
+  init:
+    invocation: codegraph init
+    hidden: false
+    aliases: []
+    usage:
+    - codegraph init [options] [path]
+    description: Initialize CodeGraph in a project directory and build the initial index
+    commands: []
+    arguments: []
+    options:
+    - name: -i, --index
+      description: 'Deprecated: indexing now runs by default; flag accepted for backward compatibility'
+    - name: -f, --force
+      description: Initialize even if the path looks like your home directory or a filesystem root
+    - name: -v, --verbose
+      description: Show detailed worker lifecycle and memory info
+    - name: -y, --yes
+      description: 'Non-interactive: skip every prompt and take the defaults (for scripts / CI / container bootstraps)'
+    - name: -h, --help
+      description: display help for command
+  uninit:
+    invocation: codegraph uninit
+    hidden: false
+    aliases: []
+    usage:
+    - codegraph uninit [options] [path]
+    description: Remove CodeGraph from a project (deletes .codegraph/ directory)
+    commands: []
+    arguments: []
+    options:
+    - name: -f, --force
+      description: Skip confirmation prompt
+    - name: -h, --help
+      description: display help for command
+  index:
+    invocation: codegraph index
+    hidden: false
+    aliases: []
+    usage:
+    - codegraph index [options] [path]
+    description: Rebuild the full index from scratch (same result as a fresh init)
+    commands: []
+    arguments: []
+    options:
+    - name: -f, --force
+      description: Index even if the path looks like your home directory or a filesystem root
+    - name: -q, --quiet
+      description: Suppress progress output
+    - name: -v, --verbose
+      description: Show detailed worker lifecycle and memory info
+    - name: -h, --help
+      description: display help for command
+  sync:
+    invocation: codegraph sync
+    hidden: false
+    aliases: []
+    usage:
+    - codegraph sync [options] [path]
+    description: Sync changes since last index
+    commands: []
+    arguments: []
+    options:
+    - name: -q, --quiet
+      description: Suppress output (for git hooks)
+    - name: -h, --help
+      description: display help for command
+  status:
+    invocation: codegraph status
+    hidden: false
+    aliases: []
+    usage:
+    - codegraph status [options] [path]
+    description: Show index status and statistics
+    commands: []
+    arguments: []
+    options:
+    - name: -j, --json
+      description: Output as JSON
+    - name: -h, --help
+      description: display help for command
+  query:
+    invocation: codegraph query
+    hidden: false
+    aliases: []
+    usage:
+    - codegraph query [options] <search>
+    description: Search for symbols in the codebase
+    commands: []
+    arguments: []
+    options:
+    - name: -p, --path <path>
+      description: Project path
+    - name: -l, --limit <number>
+      description: 'Maximum results (default: "10")'
+    - name: -k, --kind <kind>
+      description: Filter by node kind (function, class, etc.)
+    - name: -j, --json
+      description: Output as JSON
+    - name: -h, --help
+      description: display help for command
+  explore:
+    invocation: codegraph explore
+    hidden: false
+    aliases: []
+    usage:
+    - codegraph explore [options] <query...>
+    description: 'Explore an area: relevant symbols'' source + call paths in one shot (same output as the codegraph_explore MCP tool)'
+    commands: []
+    arguments: []
+    options:
+    - name: -p, --path <path>
+      description: Project path
+    - name: --max-files <number>
+      description: Maximum number of files to include source from
+    - name: -h, --help
+      description: display help for command
+  context:
+    invocation: codegraph context
+    hidden: false
+    aliases: []
+    usage:
+    - codegraph context [options] <task...>
+    description: 'Build context for a task: relevant symbols, relationships, and code blocks'
+    commands: []
+    arguments: []
+    options:
+    - name: -p, --path <path>
+      description: Project path
+    - name: -f, --format <format>
+      description: 'Output format: markdown or json (default: "markdown")'
+    - name: -n, --max-nodes <number>
+      description: Maximum number of symbols to include
+    - name: --no-code
+      description: Omit code blocks (structure only)
+    - name: -h, --help
+      description: display help for command
+  node:
+    invocation: codegraph node
+    hidden: false
+    aliases: []
+    usage:
+    - codegraph node [options] [name]
+    description: One symbol's source + caller/callee trail, or read a file with line numbers + dependents (same output as the codegraph_node MCP tool)
+    commands: []
+    arguments: []
+    options:
+    - name: -p, --path <path>
+      description: Project path
+    - name: -f, --file <file>
+      description: Treat as file mode (or disambiguate a symbol to this file)
+    - name: --offset <number>
+      description: 'File mode: 1-based start line'
+    - name: --limit <number>
+      description: 'File mode: maximum lines'
+    - name: --symbols-only
+      description: 'File mode: just the symbol map + dependents'
+    - name: -h, --help
+      description: display help for command
+  files:
+    invocation: codegraph files
+    hidden: false
+    aliases: []
+    usage:
+    - codegraph files [options]
+    description: Show project file structure from the index
+    commands: []
+    arguments: []
+    options:
+    - name: -p, --path <path>
+      description: Project path
+    - name: --filter <dir>
+      description: Filter to files under this directory
+    - name: --pattern <glob>
+      description: Filter files matching this glob pattern
+    - name: --format <format>
+      description: 'Output format (tree, flat, grouped) (default: "tree")'
+    - name: --max-depth <number>
+      description: Maximum directory depth for tree format
+    - name: --no-metadata
+      description: Hide file metadata (language, symbol count)
+    - name: -j, --json
+      description: Output as JSON
+    - name: -h, --help
+      description: display help for command
+  daemon:
+    invocation: codegraph daemon
+    hidden: false
+    aliases:
+    - daemons
+    usage:
+    - codegraph daemon|daemons [options]
+    description: Manage running CodeGraph background daemons — pick one and press enter to stop it
+    commands: []
+    arguments: []
+    options:
+    - name: -h, --help
+      description: display help for command
+  unlock:
+    invocation: codegraph unlock
+    hidden: false
+    aliases: []
+    usage:
+    - codegraph unlock [options] [path]
+    description: Remove a stale lock file that is blocking indexing
+    commands: []
+    arguments: []
+    options:
+    - name: -h, --help
+      description: display help for command
+  callers:
+    invocation: codegraph callers
+    hidden: false
+    aliases: []
+    usage:
+    - codegraph callers [options] <symbol>
+    description: Find all functions/methods that call a specific symbol
+    commands: []
+    arguments: []
+    options:
+    - name: -p, --path <path>
+      description: Project path
+    - name: -l, --limit <number>
+      description: 'Maximum results (default: "20")'
+    - name: -j, --json
+      description: Output as JSON
+    - name: -h, --help
+      description: display help for command
+  callees:
+    invocation: codegraph callees
+    hidden: false
+    aliases: []
+    usage:
+    - codegraph callees [options] <symbol>
+    description: Find all functions/methods that a specific symbol calls
+    commands: []
+    arguments: []
+    options:
+    - name: -p, --path <path>
+      description: Project path
+    - name: -l, --limit <number>
+      description: 'Maximum results (default: "20")'
+    - name: -j, --json
+      description: Output as JSON
+    - name: -h, --help
+      description: display help for command
+  impact:
+    invocation: codegraph impact
+    hidden: false
+    aliases: []
+    usage:
+    - codegraph impact [options] <symbol>
+    description: Analyze what code is affected by changing a symbol
+    commands: []
+    arguments: []
+    options:
+    - name: -p, --path <path>
+      description: Project path
+    - name: -d, --depth <number>
+      description: 'Traversal depth (default: "2")'
+    - name: -j, --json
+      description: Output as JSON
+    - name: -h, --help
+      description: display help for command
+  affected:
+    invocation: codegraph affected
+    hidden: false
+    aliases: []
+    usage:
+    - codegraph affected [options] [files...]
+    description: Find test files affected by changed source files
+    commands: []
+    arguments: []
+    options:
+    - name: -p, --path <path>
+      description: Project path
+    - name: --stdin
+      description: Read file list from stdin (one per line)
+    - name: -d, --depth <number>
+      description: 'Max dependency traversal depth (default: "5")'
+    - name: -f, --filter <glob>
+      description: Custom glob filter for test files (e.g. "e2e/*.spec.ts")
+    - name: -j, --json
+      description: Output as JSON
+    - name: -q, --quiet
+      description: Only output file paths, no decoration
+    - name: -h, --help
+      description: display help for command
+  install:
+    invocation: codegraph install
+    hidden: false
+    aliases: []
+    usage:
+    - codegraph install [options]
+    description: Install codegraph MCP server into one or more agents (Claude Code, Cursor, Codex CLI, opencode, Hermes Agent, Gemini CLI, Antigravity IDE, Kiro, GitHub Copilot)
+    commands: []
+    arguments: []
+    options:
+    - name: -t, --target <ids>
+      description: 'Target agent(s): comma-separated ids, or "auto"|"all"|"none". Default: prompt'
+    - name: -l, --location <where>
+      description: 'Install location: "global" or "local". Default: prompt'
+    - name: -y, --yes
+      description: 'Non-interactive: defaults to --location=global --target=auto, auto-allow on'
+    - name: -i, --init
+      description: After wiring agents, also run `codegraph init` in the current directory — builds this project’s index, so install + index is one command (combine with --yes for an unattended bootstrap)
+    - name: --no-permissions
+      description: Skip writing the auto-allow permissions list (Claude Code only)
+    - name: --print-config <id>
+      description: Print MCP config snippet for the named agent and exit (no file writes)
+    - name: --refresh
+      description: Rewrite what previous installs configured, for already-configured agents only (never adds new ones). Run automatically by `codegraph upgrade`
+    - name: -h, --help
+      description: display help for command
+  uninstall:
+    invocation: codegraph uninstall
+    hidden: false
+    aliases: []
+    usage:
+    - codegraph uninstall [options]
+    description: Remove codegraph from your agents (Claude Code, Cursor, Codex CLI, opencode, Hermes Agent, Gemini CLI, Antigravity IDE, Kiro, GitHub Copilot)
+    commands: []
+    arguments: []
+    options:
+    - name: -t, --target <ids>
+      description: 'Target agent(s): comma-separated ids, or "all". Default: all'
+    - name: -l, --location <where>
+      description: 'Uninstall location: "global" or "local". Default: prompt'
+    - name: -y, --yes
+      description: 'Non-interactive: defaults to --location=global --target=all'
+    - name: --keep-cli
+      description: Remove agent configs only — leave the codegraph CLI installed
+    - name: -h, --help
+      description: display help for command
+  telemetry:
+    invocation: codegraph telemetry
+    hidden: false
+    aliases: []
+    usage:
+    - codegraph telemetry [options] [action]
+    description: Show or change anonymous usage telemetry (status, on, off)
+    commands: []
+    arguments: []
+    options:
+    - name: -h, --help
+      description: display help for command
+  upgrade:
+    invocation: codegraph upgrade
+    hidden: false
+    aliases: []
+    usage:
+    - codegraph upgrade [options] [version]
+    description: Update CodeGraph to the latest release (or a specific version)
+    commands: []
+    arguments: []
+    options:
+    - name: --check
+      description: Check whether an update is available without installing
+    - name: -f, --force
+      description: Reinstall even if already on the target version
+    - name: -h, --help
+      description: display help for command
+  version:
+    invocation: codegraph version
+    hidden: false
+    aliases: []
+    usage:
+    - codegraph version [options]
+    description: 'Print the installed CodeGraph version (also: -v, --version)'
+    commands: []
+    arguments: []
+    options:
+    - name: -h, --help
+      description: display help for command
+  serve:
+    invocation: codegraph serve
+    hidden: true
+    aliases: []
+    usage:
+    - codegraph serve [options]
+    description: Start CodeGraph as an MCP server for AI assistants
+    commands: []
+    arguments: []
+    options:
+    - name: -p, --path <path>
+      description: Project path (optional for MCP mode, uses rootUri from client)
+    - name: --mcp
+      description: Run as MCP server (stdio transport)
+    - name: --no-watch
+      description: Disable the file watcher (no auto-sync; useful on slow filesystems like WSL2 /mnt drives)
+    - name: -h, --help
+      description: display help for command

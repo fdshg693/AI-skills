@@ -1,0 +1,10 @@
+# check_cli_excerpt.py / generate_cli_excerpt.py が抜粋元として参照する
+# llms.txt の場所。リポジトリルートからの相対パスで書く（このファイル自身や
+# ona-docs スキルの場所が変わってもこの1行だけ直せばよいようにするため。
+# config.yml からの相対パスにすると、config.yml と抽出元のどちらが移動しても
+# 壊れる2重の脆さを持つ）。
+#
+# 実体は ona-docs スキルが取得・保持しているファイル。ona-docs 自体が再取得すれば
+# このパスの中身は更新されるが、パス自体（どのスキルの output/docs/llms.txt を
+# 見るか）が変わった場合はここを直す。
+source: skills/plugins/topics/skills/ona-docs/output/docs/llms.txt

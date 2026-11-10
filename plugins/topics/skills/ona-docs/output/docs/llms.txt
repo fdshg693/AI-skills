@@ -1,0 +1,514 @@
+---
+source: https://ona.com/docs/llms.txt
+fetched_at: 2026-08-11T14:27:39.037476+00:00
+---
+
+# Ona Documentation
+
+## Docs
+
+- [Overview](https://ona.com/docs/ona/getting-started.md): The platform for background agents.
+- [Quickstart](https://ona.com/docs/ona/quickstart.md): Get up and running with Ona in less than 5 minutes.
+- [Ona Changelog](https://ona.com/docs/changelog.md): Product updates and announcements
+- [Create your first project](https://ona.com/docs/ona/create-first-project.md): Connect a repository to Ona so you can launch environments, configure Dev Containers, and run Automations against it.
+- [Project configuration](https://ona.com/docs/ona/projects/overview.md)
+- [Project visibility](https://ona.com/docs/ona/projects/project-sharing.md)
+- [Prebuilds](https://ona.com/docs/ona/projects/prebuilds.md)
+- [Setup prebuilds](https://ona.com/docs/ona/projects/prebuilds-setup.md)
+- [Managing prebuilds](https://ona.com/docs/ona/projects/prebuilds-management.md)
+- [Warm Pools](https://ona.com/docs/ona/projects/warm-pools.md)
+- [Development environments](https://ona.com/docs/ona/environments/overview.md): Isolated development workspaces for humans and agents.
+- [Persistent storage](https://ona.com/docs/ona/environments/persistent-storage.md): What persists in Ona environments across stops, starts, and Dev Container rebuilds.
+- [Archive & auto-delete](https://ona.com/docs/ona/environments/archive-auto-delete.md): How Ona archives and deletes inactive environments.
+- [Browser extension](https://ona.com/docs/ona/integrations/browser-extension.md): One-click environment creation from GitHub, GitLab, Bitbucket, and Azure DevOps.
+- [Open from URL](https://ona.com/docs/ona/integrations/ona-url.md): Create environments directly from a repository URL.
+- [README button](https://ona.com/docs/ona/integrations/readme-button.md): Add a "Build with Ona" button to your repository README for one-click environment creation.
+- [Built-in web browser](https://ona.com/docs/ona/integrations/web-browser.md): Open the built-in browser in an environment, preview local apps, and share browser context with Ona.
+- [Port sharing](https://ona.com/docs/ona/integrations/ports.md): Expose ports from environments to share running services.
+- [Codex Agent](https://ona.com/docs/ona/agents/codex.md): Run the open-source Codex harness in Ona Cloud or on a supported customer-managed runner.
+- [Model access](https://ona.com/docs/ona/agents/llm-providers/overview.md): Understand default model access, Codex Agent ChatGPT plan support, and custom token providers.
+- [OpenAI direct API](https://ona.com/docs/ona/agents/llm-providers/openai.md): Set up a runner LLM integration that connects directly to the OpenAI API
+- [AWS Bedrock Mantle](https://ona.com/docs/ona/agents/llm-providers/bedrock-mantle.md): Set up AWS Bedrock Mantle for OpenAI model routing on an AWS EC2 runner
+- [Bash commands](https://ona.com/docs/ona/bash-commands.md): Run bash commands in sessions using the ! prefix
+- [GitHub, GitLab & Bitbucket tools](https://ona.com/docs/ona/agents/scm-tools.md): Built-in tools for managing pull requests, issues, and code reviews
+- [Image attachments](https://ona.com/docs/ona/agents/image-attachments.md): Attach screenshots and images to agent prompts for visual context.
+- [Mermaid diagrams](https://ona.com/docs/ona/agents/mermaid-diagrams.md): Visualize architecture, dependencies, and workflows with agent-generated diagrams
+- [Using environments from external agents](https://ona.com/docs/ona/environments/agent-environments.md): Manage Ona environments from external AI agents like Claude Code or Cursor using the Ona CLI.
+- [Ona Agent (deprecated)](https://ona.com/docs/ona/agents/overview.md): Reference documentation for Enterprise organizations that still use Ona Agent.
+- [Anthropic direct API (deprecated)](https://ona.com/docs/ona/agents/llm-providers/anthropic.md): Maintain an existing direct Anthropic API integration in Ona.
+- [AWS Bedrock Runtime (deprecated)](https://ona.com/docs/ona/agents/llm-providers/bedrock.md): Maintain an existing Anthropic Claude integration through AWS Bedrock Runtime.
+- [Google Vertex AI (deprecated)](https://ona.com/docs/ona/agents/llm-providers/google-vertex.md): Maintain an existing Google Vertex AI integration in Ona.
+- [Background automations](https://ona.com/docs/ona/automations/overview.md): Proactive background agents that combine AI prompts with deterministic commands in trigger-based, closed-loop workflows.
+- [Create your first Automation](https://ona.com/docs/ona/create-first-automation.md): Go from zero to a scheduled Automation: set up a project, make your repository AI-ready, and run your first closed-loop workflow.
+- [Configure Automations](https://ona.com/docs/ona/automations/configure-automations.md): Configure triggers, steps, guardrails, and workflows
+- [Running an Automation](https://ona.com/docs/ona/automations/running-automations.md): Execute and monitor Automations
+- [Sharing Automations](https://ona.com/docs/ona/automations/sharing-automations.md): Share Automations with individual users, groups, or your entire organization
+- [Automations in practice](https://ona.com/docs/ona/automations/automations-in-practice.md): Set up five real-world Automations: Sentry triage, autonomous backlog picker, Knip cleanup, CVE remediation, and migrations at scale.
+- [Automations as Code](https://ona.com/docs/ona/automations/automations-as-code.md): Define, version, and share Automations using YAML files and the Ona CLI.
+- [Manual triggers](https://ona.com/docs/ona/automations/triggers/manual.md): Run Automations on demand
+- [Time-based triggers](https://ona.com/docs/ona/automations/triggers/timebased.md): Schedule Automations on a recurring basis
+- [Webhooks](https://ona.com/docs/ona/automations/webhooks.md): Receive SCM events to trigger Automations
+- [Pull request triggers](https://ona.com/docs/ona/automations/triggers/pullrequest.md): Trigger Automations from pull request events
+- [Report step](https://ona.com/docs/ona/automations/report-step.md): Extract structured data from Automation executions
+- [Automation guardrails](https://ona.com/docs/ona/automations/guardrails.md): Safety controls and policies for Automations
+- [Plans and limits](https://ona.com/docs/ona/automations/plans-and-limits.md): Automation limits by organization plan
+- [Troubleshooting automations](https://ona.com/docs/ona/automations/troubleshooting.md): Common Automation issues and solutions
+- [Supported editors](https://ona.com/docs/ona/editors/overview.md): IDEs & Editors supported by Ona
+- [Visual Studio Code](https://ona.com/docs/ona/editors/vscode.md): Connect to Ona environments using Visual Studio Code with the Ona extension.
+- [VS Code browser](https://ona.com/docs/ona/editors/vscode-browser.md): Connect to Ona environments using VS Code in the browser with zero installation.
+- [Cursor](https://ona.com/docs/ona/editors/cursor.md): Connect to Ona environments using Cursor editor.
+- [Windsurf](https://ona.com/docs/ona/editors/windsurf.md): Connect to Ona environments using Windsurf editor.
+- [JetBrains](https://ona.com/docs/ona/editors/jetbrains.md): Integrate JetBrains IDEs with Ona
+- [Zed](https://ona.com/docs/ona/editors/zed.md): Connect to Ona environments using Zed editor via SSH.
+- [Set up your first environment](https://ona.com/docs/ona/configuration/devcontainer/getting-started.md): Create a Dev Container so your environments and agents have everything they need.
+- [Container configuration](https://ona.com/docs/ona/configuration/devcontainer/overview.md): Standardize development environments across your team with Dev Container configuration.
+- [Optimize startup times](https://ona.com/docs/ona/configuration/devcontainer/optimizing-startup-times.md): Fast startup times enable humans and agents to work effectively and autonomously across multiple tasks in parallel.
+- [Startup tasks & services](https://ona.com/docs/ona/configuration/tasks-and-services/overview.md): Automate environment setup and define repeatable actions for humans and agents.
+- [Dynamic configuration](https://ona.com/docs/ona/configuration/tasks-and-services/generating-tasks-and-services.md): Generate tasks and services programmatically based on what agents discover in your codebase.
+- [Task & service examples](https://ona.com/docs/ona/configuration/tasks-and-services/examples.md): Common patterns for database setup, preview servers, cloud auth, and more.
+- [Dotfiles](https://ona.com/docs/ona/configuration/dotfiles/overview.md): Apply your shell, editor, and tool configurations to every Ona environment automatically.
+- [Multi-repository environments](https://ona.com/docs/ona/configuration/multi-repository.md): Work with multiple repositories in a single environment for microservices and monorepo workflows.
+- [Teach agents your codebase](https://ona.com/docs/ona/agents-md.md): Help agents understand your project conventions, commands, and architecture with AGENTS.md.
+- [Skills](https://ona.com/docs/ona/agents/skills.md): Teach agents to follow your workflows automatically.
+- [Organization-level skills](https://ona.com/docs/ona/skills.md): Codify your organization's best practices into reusable skills that agents can discover and anyone can run.
+- [Git providers](https://ona.com/docs/ona/source-control/overview.md): Source control integrations in Ona
+- [GitHub](https://ona.com/docs/ona/source-control/github.md): Configure GitHub as a source control provider for your Ona environments.
+- [GitLab](https://ona.com/docs/ona/source-control/gitlab.md): Configure GitLab as a source control provider for your Ona environments.
+- [Bitbucket Cloud](https://ona.com/docs/ona/source-control/bitbucket.md): Configure Bitbucket Cloud as a source control provider for your Ona environments.
+- [Azure DevOps](https://ona.com/docs/ona/source-control/azuredevops.md): Configure Azure DevOps as a source control provider for your Ona environments.
+- [How secrets work](https://ona.com/docs/ona/configuration/secrets/overview.md): Securely store API keys, tokens, and credentials for your environments and agents.
+- [Add your first secret](https://ona.com/docs/ona/add-first-secret.md): Store API keys and credentials so agents can connect to external services.
+- [User secrets](https://ona.com/docs/ona/configuration/secrets/user-secrets.md): Personal secrets available across all your projects and environments.
+- [Project secrets](https://ona.com/docs/ona/projects/project-secrets.md)
+- [Organization secrets](https://ona.com/docs/ona/organizations/organization-secrets.md)
+- [Environment variables](https://ona.com/docs/ona/configuration/secrets/environment-variables.md)
+- [File secrets](https://ona.com/docs/ona/configuration/secrets/files.md)
+- [Container registry](https://ona.com/docs/ona/configuration/secrets/container-registry-secret.md): Authenticate with private container registries for Dev Container images.
+- [Integrations](https://ona.com/docs/ona/integrations/overview.md): Connect Ona to source control, work trackers, docs, incident tools, and cloud providers.
+- [MCP servers](https://ona.com/docs/ona/mcp.md): Extend agents with external tools using the Model Context Protocol
+- [Linear](https://ona.com/docs/ona/integrations/configure-linear.md): Connect agents to your project management so they can create issues, update status, and stay in sync with your workflow.
+- [Slack](https://ona.com/docs/ona/integrations/configure-slack.md): Mention Ona in Slack to start and follow agent sessions from a channel or direct message.
+- [Atlassian](https://ona.com/docs/ona/integrations/configure-atlassian.md): Connect agents to Jira and Confluence so they can manage issues, search documentation, and stay in sync with your workflow.
+- [Notion](https://ona.com/docs/ona/integrations/configure-notion.md): Connect agents to your Notion workspace so they can search pages, read documentation, and access project context.
+- [Sentry](https://ona.com/docs/ona/integrations/configure-sentry.md): Connect agents to Sentry so they can view errors, analyze stack traces, and access monitoring context.
+- [Granola](https://ona.com/docs/ona/integrations/configure-granola.md): Connect agents to your Granola meeting notes so they can search transcripts, extract action items, and access meeting context.
+- [Codex](https://ona.com/docs/ona/integrations/configure-codex.md): Connect your ChatGPT account so Codex sessions in Ona can use your ChatGPT plan.
+- [GitHub](https://ona.com/docs/ona/integrations/configure-github.md): Enable the GitHub integration for one or more GitHub organizations.
+- [Mention Ona on a pull request](https://ona.com/docs/ona/integrations/github-pr-mentions.md): Mention @ona-agent in a GitHub pull request comment to start an agent on the PR.
+- [CLI](https://ona.com/docs/ona/integrations/cli.md): Manage environments, SSH access, and automations from your terminal.
+- [Ona SDK](https://ona.com/docs/ona/integrations/sdk.md): Create environments, run commands, and start Codex agents from Python, TypeScript, or Go.
+- [Create or join an organization](https://ona.com/docs/ona/organizations/create-organization.md)
+- [Manage organization](https://ona.com/docs/ona/organizations/manage-organization.md)
+- [Team management](https://ona.com/docs/ona/organizations/overview.md): Organizations let teams share runners, projects, and secrets with role-based access control.
+- [Sharing resources](https://ona.com/docs/ona/organizations/sharing-resources.md)
+- [Insights](https://ona.com/docs/ona/organizations/insights.md)
+- [Insights API](https://ona.com/docs/ona/organizations/insights-api.md)
+- [Home notice](https://ona.com/docs/ona/organizations/announcement-banner.md)
+- [Terms of Service](https://ona.com/docs/ona/organizations/terms-of-service.md)
+- [Manage members](https://ona.com/docs/ona/organizations/manage-members.md)
+- [Manage groups](https://ona.com/docs/ona/organizations/groups.md)
+- [Manage teams](https://ona.com/docs/ona/organizations/teams.md)
+- [Organization roles](https://ona.com/docs/ona/organizations/organization-roles.md)
+- [Organization policies](https://ona.com/docs/ona/organizations/policies/overview.md): Control resource usage, enforce consistency, and implement security restrictions across your organization.
+- [Environment creation](https://ona.com/docs/ona/organizations/policies/environment-creation.md): Restrict blank environment creation for members while still allowing projects and Git URLs.
+- [Auto-stop timeout](https://ona.com/docs/ona/organizations/policies/environment-timeout.md): Limit auto-stop timeout options to control resource usage and costs.
+- [Maximum environment lifetime](https://ona.com/docs/ona/organizations/policies/environment-lifetime.md): Set a maximum age for environments and optionally block restarting expired ones.
+- [Archive timing](https://ona.com/docs/ona/organizations/policies/archive-timing.md): Configure when stopped Enterprise environments move to Archived.
+- [Web browser policy](https://ona.com/docs/ona/organizations/policies/web-browser.md): Control whether members can open the built-in web browser from environment pages.
+- [Security agents](https://ona.com/docs/ona/organizations/policies/security-agents.md): Deploy security agents like CrowdStrike Falcon to all organization environments.
+- [Restrict account creation to SCIM](https://ona.com/docs/ona/organizations/policies/scim-account-restriction.md): Restrict organization access to users provisioned via SCIM.
+- [Guardrails](https://ona.com/docs/ona/guardrails/overview.md): Understand the identity, policy, enforcement, and audit controls that govern Ona environments and agents.
+- [Veto](https://ona.com/docs/ona/guardrails/veto.md): Kernel-level enforcement engine that protects AI agent environments from unauthorized execution and data exfiltration.
+- [Veto Exec executable policy](https://ona.com/docs/ona/organizations/policies/executable-deny-list.md): Audit or block specific executables in organization environments with kernel-level enforcement.
+- [Veto - Datawall](https://ona.com/docs/ona/guardrails/datawall.md): Detect confidential data leaving Ona environments over the network using kernel-level fingerprinting.
+- [Audit logs](https://ona.com/docs/ona/audit-logs/overview.md)
+- [Command deny list](https://ona.com/docs/ona/command-deny-list.md): Block specific commands from being executed by agents.
+- [Single sign-on (SSO)](https://ona.com/docs/ona/sso/overview.md): Overview of SSO options for Ona
+- [Okta](https://ona.com/docs/ona/sso/okta.md)
+- [Microsoft Entra ID](https://ona.com/docs/ona/sso/entra.md)
+- [Google](https://ona.com/docs/ona/sso/google.md)
+- [GitLab SSO](https://ona.com/docs/ona/sso/gitlab.md)
+- [Amazon Cognito](https://ona.com/docs/ona/sso/cognito.md)
+- [PingFederate](https://ona.com/docs/ona/sso/pingfederate.md)
+- [SCIM Provisioning](https://ona.com/docs/ona/scim/overview.md)
+- [OpenID Connect (OIDC)](https://ona.com/docs/ona/configuration/oidc.md): Access cloud providers and third-party services from Ona environments using OIDC tokens, without static credentials.
+- [AWS (V2)](https://ona.com/docs/ona/integrations/aws.md): Access AWS resources from environments using OIDC V2 tokens.
+- [Service accounts](https://ona.com/docs/ona/organizations/service-accounts.md)
+- [Personal access tokens](https://ona.com/docs/ona/integrations/personal-access-token.md): Authenticate CLI and SDK access for automation and CI/CD.
+- [Runner infrastructure](https://ona.com/docs/ona/runners/overview.md): Runners provision and manage your environments and agents. Deploy on Ona Cloud or in your own AWS or GCP account.
+- [Ona Cloud](https://ona.com/docs/ona/runners/ona-cloud.md)
+- [AWS runners](https://ona.com/docs/ona/runners/aws/overview.md)
+- [Setup AWS runner](https://ona.com/docs/ona/runners/aws/setup.md)
+- [Networking](https://ona.com/docs/ona/runners/aws/networking.md)
+- [Capacity planning](https://ona.com/docs/ona/runners/aws/capacity-planning.md)
+- [Costs & budgeting](https://ona.com/docs/ona/runners/aws/aws-runner-costs.md)
+- [Base snapshots for AWS runners](https://ona.com/docs/ona/runners/aws/base-snapshots.md): Understand how Ona uses automatic base snapshots to reduce startup time on Enterprise AWS runners.
+- [AWS access requirements](https://ona.com/docs/ona/runners/aws/detailed-access-requirements.md)
+- [Environment classes](https://ona.com/docs/ona/runners/aws/environment-classes.md)
+- [Regions and latency](https://ona.com/docs/ona/runners/aws/aws-regions.md)
+- [Upgrade runner](https://ona.com/docs/ona/runners/aws/update-runner.md): CloudFormation infrastructure upgrades for AWS runners.
+- [Troubleshooting AWS runners](https://ona.com/docs/ona/runners/aws/troubleshooting-runners.md): Troubleshoot AWS runner issues.
+- [Zscaler troubleshooting](https://ona.com/docs/ona/runners/aws/troubleshooting-zscaler.md): Troubleshoot Zscaler compatibility issues with Ona
+- [GCP runners](https://ona.com/docs/ona/runners/gcp/overview.md)
+- [Setup GCP runner](https://ona.com/docs/ona/runners/gcp/setup.md)
+- [Reference Architectures](https://ona.com/docs/ona/runners/gcp/reference-architectures.md)
+- [GCP access requirements](https://ona.com/docs/ona/runners/gcp/detailed-access-requirements.md)
+- [Using private Google Artifact Registry images](https://ona.com/docs/ona/runners/gcp/private-gar-images.md)
+- [Costs & Budgeting for GCP Runner](https://ona.com/docs/ona/runners/gcp/gcp-runner-costs.md)
+- [Upgrade and delete runner](https://ona.com/docs/ona/runners/gcp/update-runner.md): Terraform infrastructure upgrades, release notifications, and deletion for GCP runners.
+- [Alerts and Dashboards](https://ona.com/docs/ona/runners/gcp/alerts-and-dashboards.md)
+- [Troubleshooting GCP runners](https://ona.com/docs/ona/runners/gcp/troubleshooting-runners.md): Learn how to troubleshoot GCP runners.
+- [Custom domain](https://ona.com/docs/ona/custom-domain.md): Set up a custom domain for your Ona management plane with TLS termination
+- [Automated updates](https://ona.com/docs/ona/runners/runner-updates.md): How runners are updated automatically and how to configure update windows.
+- [Configuring repository access](https://ona.com/docs/ona/runners/configuring-repository-access.md)
+- [Dual disk environments](https://ona.com/docs/ona/runners/dual-disk.md): Use separate system and data disks for Enterprise environments on supported runners.
+- [Dev container image cache](https://ona.com/docs/ona/runners/devcontainer-image-cache.md): Cache built Dev Container images to reduce environment startup times.
+- [Ona managed metrics](https://ona.com/docs/ona/runners/managed-metrics.md): Let Ona monitor your runner health with curated operational metrics
+- [Custom metrics pipeline](https://ona.com/docs/ona/runners/monitoring-and-metrics.md)
+- [Billing](https://ona.com/docs/ona/billing/overview.md): Manage billing for Core Ona Cloud organizations.
+- [Cost & Budgets](https://ona.com/docs/ona/billing/usage.md): Understand usage and OCU billing for Core Ona Cloud organizations.
+- [User budgets](https://ona.com/docs/ona/billing/user-budgets.md): Set monthly usage budgets for individual users in Enterprise organizations.
+- [AI cost usage API](https://ona.com/docs/ona/billing/cost-usage-api.md)
+- [Ona Intelligence usage API](https://ona.com/docs/ona/billing/ona-intelligence-usage-api.md)
+- [How Ona Works](https://ona.com/docs/ona/understanding/how-ona-works.md): Understand how Ona combines environments, agents, and runners to deliver a complete development platform.
+- [Core Components](https://ona.com/docs/ona/understanding/core-components.md): The five building blocks of Ona and how they work together.
+- [Architecture Overview](https://ona.com/docs/ona/understanding/architecture.md): How the management plane and runners work together to keep your code secure while providing a consistent development experience.
+- [Best practices](https://ona.com/docs/ona/best-practices.md): Best practices for using Ona environments, agents, and guardrails effectively in your development workflow.
+- [Workflows](https://ona.com/docs/ona/workflows.md): End-to-end recipes for common tasks with agents in Ona.
+- [API Reference](https://ona.com/docs/api-reference.md): Call the public Ona Connect API from scripts, services, and generated clients.
+- [Migrate from SDK versions 0.x](https://ona.com/docs/api-reference/sdk-migration.md): Migrate Python, TypeScript, and Go code from Ona SDK versions 0.x to versions 1.x.
+- [Accounts](https://ona.com/docs/api-reference/generated/account/overview.md): Reference for the Accounts API methods.
+- [Block Account](https://ona.com/docs/api-reference/generated/account/block-account.md): Blocks an account, preventing all API access.
+- [Delete Account](https://ona.com/docs/api-reference/generated/account/delete-account.md): Deletes an account permanently.
+- [Get Account](https://ona.com/docs/api-reference/generated/account/get-account.md): Gets information about the currently authenticated account.
+- [Get SSO Login URL](https://ona.com/docs/api-reference/generated/account/get-sso-login-url.md): Gets the SSO login URL for a specific email domain.
+- [List Joinable Organizations](https://ona.com/docs/api-reference/generated/account/list-joinable-organizations.md): Lists organizations that the currently authenticated account can join.
+- [List Login Providers](https://ona.com/docs/api-reference/generated/account/list-login-providers.md): Lists available login providers with optional filtering.
+- [List SSO Logins](https://ona.com/docs/api-reference/generated/account/list-sso-logins.md): Call gitpod.v1.AccountService.ListSSOLogins.
+- [Unblock Account](https://ona.com/docs/api-reference/generated/account/unblock-account.md): Unblocks a previously blocked account, restoring API access.
+- [Agents](https://ona.com/docs/api-reference/generated/agent/overview.md): Reference for the Agents API methods.
+- [Create Agent Execution Conversation Token](https://ona.com/docs/api-reference/generated/agent/create-agent-execution-conversation-token.md): Creates a token for conversation access with a specific agent run.
+- [Create Prompt](https://ona.com/docs/api-reference/generated/agent/create-prompt.md): Creates a new prompt.
+- [Delete Agent Execution](https://ona.com/docs/api-reference/generated/agent/delete-agent-execution.md): Deletes an agent run.
+- [Delete Prompt](https://ona.com/docs/api-reference/generated/agent/delete-prompt.md): Deletes a prompt.
+- [Get Agent Execution](https://ona.com/docs/api-reference/generated/agent/get-agent-execution.md): Gets details about a specific agent run, including its metadata, specification,
+- [Get Prompt](https://ona.com/docs/api-reference/generated/agent/get-prompt.md): Gets details about a specific prompt including name, description,
+- [List Agent Executions](https://ona.com/docs/api-reference/generated/agent/list-agent-executions.md): Lists all agent runs matching the specified filter.
+- [List Prompts](https://ona.com/docs/api-reference/generated/agent/list-prompts.md): Lists all prompts matching the specified criteria.
+- [Send To Agent Execution](https://ona.com/docs/api-reference/generated/agent/send-to-agent-execution.md): Sends user input to an active agent run.
+- [Start Agent](https://ona.com/docs/api-reference/generated/agent/start-agent.md): Starts (or triggers) an agent run using a provided agent.
+- [Stop Agent Execution](https://ona.com/docs/api-reference/generated/agent/stop-agent-execution.md): Stops an active agent execution.
+- [Update Prompt](https://ona.com/docs/api-reference/generated/agent/update-prompt.md): Updates an existing prompt.
+- [Billing](https://ona.com/docs/api-reference/generated/billing/overview.md): BillingService provides billing and subscription management functionality.
+- [Create Team Credit Allocation](https://ona.com/docs/api-reference/generated/billing/create-team-credit-allocation.md): Creates a credit allocation (budget) for a team.
+- [Delete Enterprise AI User Budget Policy](https://ona.com/docs/api-reference/generated/billing/delete-enterprise-ai-user-budget-policy.md): Deletes the organization default or a per-user monthly budget policy.
+- [Delete Team Credit Allocation](https://ona.com/docs/api-reference/generated/billing/delete-team-credit-allocation.md): Deletes the credit allocation for a team.
+- [Get Credit Usage Export](https://ona.com/docs/api-reference/generated/billing/get-credit-usage-export.md): Returns a signed download URL for a CSV export of credit usage.
+- [Get Credit Usage Report](https://ona.com/docs/api-reference/generated/billing/get-credit-usage-report.md): Returns a daily credit usage report for an enterprise organization.
+- [Get Cumulative Credit Usage](https://ona.com/docs/api-reference/generated/billing/get-cumulative-credit-usage.md): Returns cumulative credit usage for an organization and its teams.
+- [Get Enterprise AI Usage Summary](https://ona.com/docs/api-reference/generated/billing/get-enterprise-ai-usage-summary.md): Returns organization-level enterprise AI usage totals for reporting.
+- [Get Enterprise AI Usage Time Series](https://ona.com/docs/api-reference/generated/billing/get-enterprise-ai-usage-time-series.md): Returns daily enterprise AI usage totals for the organization.
+- [Get Enterprise AI User Budget Policy](https://ona.com/docs/api-reference/generated/billing/get-enterprise-ai-user-budget-policy.md): Gets the configured and effective monthly budget policy for a user or org.
+- [Get Team Credit Allocation](https://ona.com/docs/api-reference/generated/billing/get-team-credit-allocation.md): Gets the credit allocation for a team.
+- [List Enterprise AI Team Usage](https://ona.com/docs/api-reference/generated/billing/list-enterprise-ai-team-usage.md): Lists enterprise AI usage grouped by team.
+- [List Enterprise AI User Usage](https://ona.com/docs/api-reference/generated/billing/list-enterprise-ai-user-usage.md): Lists enterprise AI usage grouped by user with effective monthly budget data.
+- [List Enterprise User Credit Usage](https://ona.com/docs/api-reference/generated/billing/list-enterprise-user-credit-usage.md): Lists per-user month-to-date credit usage with effective monthly budgets.
+- [Set Enterprise AI User Budget Policy](https://ona.com/docs/api-reference/generated/billing/set-enterprise-ai-user-budget-policy.md): Sets the organization default or a per-user monthly budget policy.
+- [Update Team Credit Allocation](https://ona.com/docs/api-reference/generated/billing/update-team-credit-allocation.md): Updates the credit allocation for a team.
+- [Editors](https://ona.com/docs/api-reference/generated/editor/overview.md): Reference for the Editors API methods.
+- [Get Editor](https://ona.com/docs/api-reference/generated/editor/get-editor.md): Gets details about a specific editor.
+- [List Editors](https://ona.com/docs/api-reference/generated/editor/list-editors.md): Lists all available code editors, optionally filtered to those allowed in an organization.
+- [Resolve Editor URL](https://ona.com/docs/api-reference/generated/editor/resolve-editor-url.md): Resolves the URL for accessing an editor in a specific environment.
+- [Environment Automations](https://ona.com/docs/api-reference/generated/environment-automation/overview.md): Reference for the Environment Automations API methods.
+- [Create Service](https://ona.com/docs/api-reference/generated/environment-automation/create-service.md): Creates a new automation service for an environment.
+- [Create Task](https://ona.com/docs/api-reference/generated/environment-automation/create-task.md): Creates a new automation task.
+- [Delete Service](https://ona.com/docs/api-reference/generated/environment-automation/delete-service.md): Deletes an automation service.
+- [Delete Task](https://ona.com/docs/api-reference/generated/environment-automation/delete-task.md): Deletes an automation task.
+- [Get Service](https://ona.com/docs/api-reference/generated/environment-automation/get-service.md): Gets details about a specific automation service.
+- [Get Task](https://ona.com/docs/api-reference/generated/environment-automation/get-task.md): Gets details about a specific automation task.
+- [Get Task Execution](https://ona.com/docs/api-reference/generated/environment-automation/get-task-execution.md): Gets details about a specific task execution.
+- [List Services](https://ona.com/docs/api-reference/generated/environment-automation/list-services.md): Lists automation services with optional filtering.
+- [List Task Executions](https://ona.com/docs/api-reference/generated/environment-automation/list-task-executions.md): Lists executions of automation tasks.
+- [List Tasks](https://ona.com/docs/api-reference/generated/environment-automation/list-tasks.md): Lists automation tasks with optional filtering.
+- [Start Service](https://ona.com/docs/api-reference/generated/environment-automation/start-service.md): Starts an automation service.
+- [Start Task](https://ona.com/docs/api-reference/generated/environment-automation/start-task.md): Starts a task by creating a new task execution.
+- [Stop Service](https://ona.com/docs/api-reference/generated/environment-automation/stop-service.md): Stops an automation service.
+- [Stop Task Execution](https://ona.com/docs/api-reference/generated/environment-automation/stop-task-execution.md): Stops a running task execution.
+- [Update Service](https://ona.com/docs/api-reference/generated/environment-automation/update-service.md): Updates an automation service configuration.
+- [Update Task](https://ona.com/docs/api-reference/generated/environment-automation/update-task.md): Updates an automation task configuration.
+- [Upsert Automations File](https://ona.com/docs/api-reference/generated/environment-automation/upsert-automations-file.md): Upserts the automations file for the given environment.
+- [Environments](https://ona.com/docs/api-reference/generated/environment/overview.md): Reference for the Environments API methods.
+- [Allow Port Access](https://ona.com/docs/api-reference/generated/environment/allow-port-access.md): Deprecated: Use local validation with the environment state cache instead.
+- [Archive Environment](https://ona.com/docs/api-reference/generated/environment/archive-environment.md): Archives an environment immediately.
+- [Create Environment](https://ona.com/docs/api-reference/generated/environment/create-environment.md): Creates a development environment from a context URL (e.g.
+- [Create Environment Access Token](https://ona.com/docs/api-reference/generated/environment/create-environment-access-token.md): Creates an access token for the environment.
+- [Create Environment From Project](https://ona.com/docs/api-reference/generated/environment/create-environment-from-project.md): Creates an environment from an existing project configuration and starts it.
+- [Create Environment Logs Token](https://ona.com/docs/api-reference/generated/environment/create-environment-logs-token.md): Creates an access token for retrieving environment logs.
+- [Create Port Access Token](https://ona.com/docs/api-reference/generated/environment/create-port-access-token.md): Creates an access token for a specific port on an environment.
+- [Delete Environment](https://ona.com/docs/api-reference/generated/environment/delete-environment.md): Permanently deletes an environment.
+- [Get Environment](https://ona.com/docs/api-reference/generated/environment/get-environment.md): Gets details about a specific environment including its status, configuration, and context URL.
+- [List Environment Classes](https://ona.com/docs/api-reference/generated/environment/list-environment-classes.md): Lists available environment classes with their specifications and resource limits.
+- [List Environments](https://ona.com/docs/api-reference/generated/environment/list-environments.md): Lists all environments matching the specified criteria.
+- [Mark Environment Active](https://ona.com/docs/api-reference/generated/environment/mark-environment-active.md): Records environment activity to prevent automatic shutdown.
+- [Start Environment](https://ona.com/docs/api-reference/generated/environment/start-environment.md): Starts a stopped environment.
+- [Stop Environment](https://ona.com/docs/api-reference/generated/environment/stop-environment.md): Stops a running environment.
+- [Unarchive Environment](https://ona.com/docs/api-reference/generated/environment/unarchive-environment.md): Unarchives an environment.
+- [Update Environment](https://ona.com/docs/api-reference/generated/environment/update-environment.md): Updates an environment's configuration while it is running.
+- [Events](https://ona.com/docs/api-reference/generated/event/overview.md): Reference for the Events API methods.
+- [Get Audit Log](https://ona.com/docs/api-reference/generated/event/get-audit-log.md): Gets one audit-log entry, including any typed details stored for it.
+- [List Audit Logs](https://ona.com/docs/api-reference/generated/event/list-audit-logs.md): Lists audit logs with filtering and pagination options.
+- [Watch Events](https://ona.com/docs/api-reference/generated/event/watch-events.md): Streams events for all projects, runners, environments, tasks, and services based on the
+- [Gateways](https://ona.com/docs/api-reference/generated/gateway/overview.md): Reference for the Gateways API methods.
+- [List Gateways](https://ona.com/docs/api-reference/generated/gateway/list-gateways.md): Call gitpod.v1.GatewayService.ListGateways.
+- [Groups](https://ona.com/docs/api-reference/generated/group/overview.md): Reference for the Groups API methods.
+- [Create Group](https://ona.com/docs/api-reference/generated/group/create-group.md): Creates a new group within an organization.
+- [Create Membership](https://ona.com/docs/api-reference/generated/group/create-membership.md): Creates a membership for a user in a group.
+- [Create Role Assignment](https://ona.com/docs/api-reference/generated/group/create-role-assignment.md): Creates a role assignment for a group on a resource.
+- [Delete Group](https://ona.com/docs/api-reference/generated/group/delete-group.md): Deletes a group and removes all its resource assignments.
+- [Delete Membership](https://ona.com/docs/api-reference/generated/group/delete-membership.md): Deletes a membership for a user in a group.
+- [Delete Role Assignment](https://ona.com/docs/api-reference/generated/group/delete-role-assignment.md): Deletes a role assignment.
+- [Get Group](https://ona.com/docs/api-reference/generated/group/get-group.md): Gets information about a specific group by ID or name.
+- [Get Membership](https://ona.com/docs/api-reference/generated/group/get-membership.md): Gets a specific membership by group ID and subject.
+- [List Groups](https://ona.com/docs/api-reference/generated/group/list-groups.md): Lists groups with optional pagination.
+- [List Memberships](https://ona.com/docs/api-reference/generated/group/list-memberships.md): Lists all memberships of a group.
+- [List Role Assignments](https://ona.com/docs/api-reference/generated/group/list-role-assignments.md): Lists role assignments for a group or resource.
+- [Share Resource With Principal](https://ona.com/docs/api-reference/generated/group/share-resource-with-principal.md): Shares a resource directly with a principal (user or service account).
+- [Unshare Resource With Principal](https://ona.com/docs/api-reference/generated/group/unshare-resource-with-principal.md): Removes direct access for a principal (user or service account) from a resource.
+- [Update Group](https://ona.com/docs/api-reference/generated/group/update-group.md): Updates group information.
+- [Identity](https://ona.com/docs/api-reference/generated/identity/overview.md): Reference for the Identity API methods.
+- [Exchange Token](https://ona.com/docs/api-reference/generated/identity/exchange-token.md): Exchanges an exchange token for a new access token.
+- [Get Authenticated Identity](https://ona.com/docs/api-reference/generated/identity/get-authenticated-identity.md): Retrieves information about the currently authenticated identity.
+- [Get ID Token](https://ona.com/docs/api-reference/generated/identity/get-id-token.md): Gets an ID token for authenticating with other services.
+- [Insights](https://ona.com/docs/api-reference/generated/insights/overview.md): InsightsService provides AI code attribution analytics for projects.
+- [Disable Project Insights](https://ona.com/docs/api-reference/generated/insights/disable-project-insights.md): Disables co-author insights for a project.
+- [Enable Project Insights](https://ona.com/docs/api-reference/generated/insights/enable-project-insights.md): Enables co-author insights for a project.
+- [Get Insights Summary](https://ona.com/docs/api-reference/generated/insights/get-insights-summary.md): Returns how many projects have insights enabled vs total projects in the org.
+- [Get Project Insights Status](https://ona.com/docs/api-reference/generated/insights/get-project-insights-status.md): Returns whether co-author insights is enabled for a project.
+- [Integrations](https://ona.com/docs/api-reference/generated/integration/overview.md): Reference for the Integrations API methods.
+- [Create Integration](https://ona.com/docs/api-reference/generated/integration/create-integration.md): Creates a new integration instance within an organization.
+- [Delete Integration](https://ona.com/docs/api-reference/generated/integration/delete-integration.md): Deletes an integration instance.
+- [Get Integration](https://ona.com/docs/api-reference/generated/integration/get-integration.md): Gets details about a specific integration instance.
+- [Get Integration Definition](https://ona.com/docs/api-reference/generated/integration/get-integration-definition.md): Gets details about a specific integration definition.
+- [List Integration Definitions](https://ona.com/docs/api-reference/generated/integration/list-integration-definitions.md): Lists available integration definitions.
+- [List Integrations](https://ona.com/docs/api-reference/generated/integration/list-integrations.md): Lists integration instances for the organization.
+- [Update Integration](https://ona.com/docs/api-reference/generated/integration/update-integration.md): Updates an existing integration instance.
+- [Validate Integration](https://ona.com/docs/api-reference/generated/integration/validate-integration.md): Validates an integration's configuration and connectivity.
+- [Notifications](https://ona.com/docs/api-reference/generated/notification/overview.md): NotificationService manages in-app notifications for users.
+- [Delete Notifications](https://ona.com/docs/api-reference/generated/notification/delete-notifications.md): Deletes notifications.
+- [Get Notification](https://ona.com/docs/api-reference/generated/notification/get-notification.md): Returns a single notification by ID.
+- [List Notifications](https://ona.com/docs/api-reference/generated/notification/list-notifications.md): Lists notifications for the authenticated user.
+- [Mark Notifications Read](https://ona.com/docs/api-reference/generated/notification/mark-notifications-read.md): Marks notifications as read.
+- [Mark Notifications Unread](https://ona.com/docs/api-reference/generated/notification/mark-notifications-unread.md): Marks notifications as unread.
+- [Organizations](https://ona.com/docs/api-reference/generated/organization/overview.md): Reference for the Organizations API methods.
+- [Accept Terms Of Service](https://ona.com/docs/api-reference/generated/organization/accept-terms-of-service.md): Records acceptance of a Terms of Service version for the caller.
+- [Create Custom Domain](https://ona.com/docs/api-reference/generated/organization/create-custom-domain.md): Creates a custom domain configuration for an organization.
+- [Create Domain Verification](https://ona.com/docs/api-reference/generated/organization/create-domain-verification.md): Initiates domain verification process to enable organization features.
+- [Create Organization](https://ona.com/docs/api-reference/generated/organization/create-organization.md): Creates a new organization with the specified name and settings.
+- [Create Organization Invite](https://ona.com/docs/api-reference/generated/organization/create-organization-invite.md): Creates an invite link for joining an organization.
+- [Create SCIM Configuration](https://ona.com/docs/api-reference/generated/organization/create-scim-configuration.md): Creates a new SCIM configuration for automated user provisioning.
+- [Create SSO Configuration](https://ona.com/docs/api-reference/generated/organization/create-sso-configuration.md): Creates or updates SSO configuration for organizational authentication.
+- [Delete Custom Domain](https://ona.com/docs/api-reference/generated/organization/delete-custom-domain.md): Removes a custom domain configuration from an organization.
+- [Delete Domain Verification](https://ona.com/docs/api-reference/generated/organization/delete-domain-verification.md): Removes a domain verification request.
+- [Delete Organization](https://ona.com/docs/api-reference/generated/organization/delete-organization.md): Permanently deletes an organization.
+- [Delete SCIM Configuration](https://ona.com/docs/api-reference/generated/organization/delete-scim-configuration.md): Removes a SCIM configuration from an organization.
+- [Delete SSO Configuration](https://ona.com/docs/api-reference/generated/organization/delete-sso-configuration.md): Removes an SSO configuration from an organization.
+- [Get Announcement Banner](https://ona.com/docs/api-reference/generated/organization/get-announcement-banner.md): Retrieves the announcement banner configuration for an organization.
+- [Get Custom Domain](https://ona.com/docs/api-reference/generated/organization/get-custom-domain.md): Retrieves a specific custom domain configuration.
+- [Get Domain Verification](https://ona.com/docs/api-reference/generated/organization/get-domain-verification.md): Retrieves the status of a domain verification request.
+- [Get OIDC Config](https://ona.com/docs/api-reference/generated/organization/get-oidc-config.md): Retrieves the OIDC token configuration for an organization.
+- [Get Organization](https://ona.com/docs/api-reference/generated/organization/get-organization.md): Gets details about a specific organization.
+- [Get Organization Invite](https://ona.com/docs/api-reference/generated/organization/get-organization-invite.md): Call gitpod.v1.OrganizationService.GetOrganizationInvite.
+- [Get Organization Invite Summary](https://ona.com/docs/api-reference/generated/organization/get-organization-invite-summary.md): Retrieves organization details and membership info based on an invite link.
+- [Get Organization Policies](https://ona.com/docs/api-reference/generated/organization/get-organization-policies.md): Gets organization policy settings by organization ID.
+- [Get SCIM Configuration](https://ona.com/docs/api-reference/generated/organization/get-scim-configuration.md): Retrieves a specific SCIM configuration.
+- [Get SSO Configuration](https://ona.com/docs/api-reference/generated/organization/get-sso-configuration.md): Retrieves a specific SSO configuration.
+- [Get Terms Of Service](https://ona.com/docs/api-reference/generated/organization/get-terms-of-service.md): Gets the Terms of Service for an organization.
+- [Get Terms Of Service Acceptances Export](https://ona.com/docs/api-reference/generated/organization/get-terms-of-service-acceptances-export.md): Returns a signed download URL for a CSV export of per-member acceptance of a Terms of Service version.
+- [Join Organization](https://ona.com/docs/api-reference/generated/organization/join-organization.md): Allows users to join an organization through direct ID, invite link, or domain-based auto-join.
+- [Leave Organization](https://ona.com/docs/api-reference/generated/organization/leave-organization.md): Removes a user from an organization while preserving organization data.
+- [List Domain Verifications](https://ona.com/docs/api-reference/generated/organization/list-domain-verifications.md): Lists and monitors domain verification status across an organization.
+- [List Members](https://ona.com/docs/api-reference/generated/organization/list-members.md): Lists and filters organization members with optional pagination.
+- [List SCIM Configurations](https://ona.com/docs/api-reference/generated/organization/list-scim-configurations.md): Lists SCIM configurations for an organization.
+- [List SSO Configurations](https://ona.com/docs/api-reference/generated/organization/list-sso-configurations.md): Lists and filters SSO configurations for an organization.
+- [List Terms Of Service Acceptances](https://ona.com/docs/api-reference/generated/organization/list-terms-of-service-acceptances.md): Lists per-member acceptance of a Terms of Service version.
+- [List Terms Of Service Versions](https://ona.com/docs/api-reference/generated/organization/list-terms-of-service-versions.md): Lists Terms of Service versions for an organization.
+- [Regenerate SCIM Token](https://ona.com/docs/api-reference/generated/organization/regenerate-scim-token.md): Regenerates the bearer token for a SCIM configuration.
+- [Set Role](https://ona.com/docs/api-reference/generated/organization/set-role.md): Manages organization membership and roles by setting a user's role within the organization.
+- [Set Stripe Customer ID](https://ona.com/docs/api-reference/generated/organization/set-stripe-customer-id.md): Sets the Stripe customer ID for an organization's billing configuration.
+- [Update Announcement Banner](https://ona.com/docs/api-reference/generated/organization/update-announcement-banner.md): Updates the announcement banner configuration for an organization.
+- [Update Custom Domain](https://ona.com/docs/api-reference/generated/organization/update-custom-domain.md): Updates custom domain configuration settings.
+- [Update OIDC Config](https://ona.com/docs/api-reference/generated/organization/update-oidc-config.md): Updates the OIDC token configuration for an organization.
+- [Update Organization](https://ona.com/docs/api-reference/generated/organization/update-organization.md): Updates an organization's settings including name, invite domains, and member policies.
+- [Update Organization Policies](https://ona.com/docs/api-reference/generated/organization/update-organization-policies.md): Updates organization policy settings.
+- [Update SCIM Configuration](https://ona.com/docs/api-reference/generated/organization/update-scim-configuration.md): Updates a SCIM configuration.
+- [Update SSO Configuration](https://ona.com/docs/api-reference/generated/organization/update-sso-configuration.md): Updates SSO provider settings and authentication rules.
+- [Update Terms Of Service](https://ona.com/docs/api-reference/generated/organization/update-terms-of-service.md): Updates the Terms of Service for an organization.
+- [Verify Domain](https://ona.com/docs/api-reference/generated/organization/verify-domain.md): Verifies domain ownership for an organization.
+- [Prebuilds](https://ona.com/docs/api-reference/generated/prebuild/overview.md): PrebuildService manages prebuilds for projects to enable faster environment startup times.
+- [Cancel Prebuild](https://ona.com/docs/api-reference/generated/prebuild/cancel-prebuild.md): Cancels a running prebuild.
+- [Create Prebuild](https://ona.com/docs/api-reference/generated/prebuild/create-prebuild.md): Creates a prebuild for a project.
+- [Create Prebuild Logs Token](https://ona.com/docs/api-reference/generated/prebuild/create-prebuild-logs-token.md): Creates a logs access token for a prebuild.
+- [Create Warm Pool](https://ona.com/docs/api-reference/generated/prebuild/create-warm-pool.md): Creates a warm pool for a project and environment class.
+- [Delete Prebuild](https://ona.com/docs/api-reference/generated/prebuild/delete-prebuild.md): Deletes a prebuild.
+- [Delete Warm Pool](https://ona.com/docs/api-reference/generated/prebuild/delete-warm-pool.md): Deletes a warm pool.
+- [Get Prebuild](https://ona.com/docs/api-reference/generated/prebuild/get-prebuild.md): Gets details about a specific prebuild.
+- [Get Warm Pool](https://ona.com/docs/api-reference/generated/prebuild/get-warm-pool.md): Gets details about a specific warm pool.
+- [List Prebuilds](https://ona.com/docs/api-reference/generated/prebuild/list-prebuilds.md): Call gitpod.v1.PrebuildService.ListPrebuilds.
+- [List Warm Pools](https://ona.com/docs/api-reference/generated/prebuild/list-warm-pools.md): Lists warm pools with optional filtering.
+- [Update Warm Pool](https://ona.com/docs/api-reference/generated/prebuild/update-warm-pool.md): Updates a warm pool's configuration.
+- [Projects](https://ona.com/docs/api-reference/generated/project/overview.md): Reference for the Projects API methods.
+- [Create Project](https://ona.com/docs/api-reference/generated/project/create-project.md): Creates a new project with specified configuration.
+- [Create Project From Environment](https://ona.com/docs/api-reference/generated/project/create-project-from-environment.md): Creates a new project using an existing environment as a template.
+- [Create Project Policy](https://ona.com/docs/api-reference/generated/project/create-project-policy.md): Creates a new policy for a project.
+- [Create Projects](https://ona.com/docs/api-reference/generated/project/create-projects.md): Creates multiple projects in a single request.
+- [Delete Project](https://ona.com/docs/api-reference/generated/project/delete-project.md): Deletes a project permanently.
+- [Delete Project Policy](https://ona.com/docs/api-reference/generated/project/delete-project-policy.md): Deletes a project policy.
+- [Delete Projects](https://ona.com/docs/api-reference/generated/project/delete-projects.md): Deletes multiple projects in a single request.
+- [Get Project](https://ona.com/docs/api-reference/generated/project/get-project.md): Gets details about a specific project.
+- [List Project Environment Classes](https://ona.com/docs/api-reference/generated/project/list-project-environment-classes.md): Lists environment classes of a project.
+- [List Project Policies](https://ona.com/docs/api-reference/generated/project/list-project-policies.md): Lists policies for a project.
+- [List Projects](https://ona.com/docs/api-reference/generated/project/list-projects.md): Lists projects with optional filtering.
+- [Update Project](https://ona.com/docs/api-reference/generated/project/update-project.md): Updates a project's configuration.
+- [Update Project Environment Classes](https://ona.com/docs/api-reference/generated/project/update-project-environment-classes.md): Updates all environment classes of a project.
+- [Update Project Policy](https://ona.com/docs/api-reference/generated/project/update-project-policy.md): Updates an existing project policy.
+- [Update Projects](https://ona.com/docs/api-reference/generated/project/update-projects.md): Updates multiple projects in a single request.
+- [Runner Configurations](https://ona.com/docs/api-reference/generated/runner-configuration/overview.md): Reference for the Runner Configurations API methods.
+- [Create Environment Class](https://ona.com/docs/api-reference/generated/runner-configuration/create-environment-class.md): Creates a new environment class for a runner.
+- [Create Host Authentication Token](https://ona.com/docs/api-reference/generated/runner-configuration/create-host-authentication-token.md): Creates a new authentication token for accessing remote hosts.
+- [Create LLM Integration](https://ona.com/docs/api-reference/generated/runner-configuration/create-llm-integration.md): Creates a new LLM integration for a runner.
+- [Create SCM Integration](https://ona.com/docs/api-reference/generated/runner-configuration/create-scm-integration.md): Creates a new SCM integration for a runner.
+- [Delete Host Authentication Token](https://ona.com/docs/api-reference/generated/runner-configuration/delete-host-authentication-token.md): Deletes a host authentication token.
+- [Delete LLM Integration](https://ona.com/docs/api-reference/generated/runner-configuration/delete-llm-integration.md): Deletes an LLM integration.
+- [Delete SCM Integration](https://ona.com/docs/api-reference/generated/runner-configuration/delete-scm-integration.md): Deletes an SCM integration.
+- [Get Environment Class](https://ona.com/docs/api-reference/generated/runner-configuration/get-environment-class.md): Gets details about a specific environment class.
+- [Get Host Authentication Token](https://ona.com/docs/api-reference/generated/runner-configuration/get-host-authentication-token.md): Gets details about a specific host authentication token.
+- [Get LLM Integration](https://ona.com/docs/api-reference/generated/runner-configuration/get-llm-integration.md): Gets details about a specific LLM integration.
+- [Get Runner Configuration Schema](https://ona.com/docs/api-reference/generated/runner-configuration/get-runner-configuration-schema.md): Gets the latest runner configuration schema.
+- [Get SCM Integration](https://ona.com/docs/api-reference/generated/runner-configuration/get-scm-integration.md): Gets details about a specific SCM integration.
+- [List Environment Classes](https://ona.com/docs/api-reference/generated/runner-configuration/list-environment-classes.md): Lists environment classes with optional filtering.
+- [List Host Authentication Tokens](https://ona.com/docs/api-reference/generated/runner-configuration/list-host-authentication-tokens.md): Lists host authentication tokens with optional filtering.
+- [List LLM Integrations](https://ona.com/docs/api-reference/generated/runner-configuration/list-llm-integrations.md): Lists LLM integrations for a runner.
+- [List SCM Integrations](https://ona.com/docs/api-reference/generated/runner-configuration/list-scm-integrations.md): Lists SCM integrations for a runner.
+- [Update Environment Class](https://ona.com/docs/api-reference/generated/runner-configuration/update-environment-class.md): Updates an environment class.
+- [Update Host Authentication Token](https://ona.com/docs/api-reference/generated/runner-configuration/update-host-authentication-token.md): Updates an existing host authentication token.
+- [Update LLM Integration](https://ona.com/docs/api-reference/generated/runner-configuration/update-llm-integration.md): Updates an existing LLM integration.
+- [Update SCM Integration](https://ona.com/docs/api-reference/generated/runner-configuration/update-scm-integration.md): Updates an existing SCM integration.
+- [Validate Runner Configuration](https://ona.com/docs/api-reference/generated/runner-configuration/validate-runner-configuration.md): Validates a runner configuration.
+- [Runners](https://ona.com/docs/api-reference/generated/runner/overview.md): Reference for the Runners API methods.
+- [Check Authentication For Host](https://ona.com/docs/api-reference/generated/runner/check-authentication-for-host.md): Checks if a user is authenticated for a specific host.
+- [Check Repository Access](https://ona.com/docs/api-reference/generated/runner/check-repository-access.md): Checks if a principal has read access to a repository.
+- [Create Runner](https://ona.com/docs/api-reference/generated/runner/create-runner.md): Creates a new runner registration with the server.
+- [Create Runner Logs Token](https://ona.com/docs/api-reference/generated/runner/create-runner-logs-token.md): Creates an access token for runner logs and debug information.
+- [Create Runner Policy](https://ona.com/docs/api-reference/generated/runner/create-runner-policy.md): Creates a new policy for a runner.
+- [Create Runner Token](https://ona.com/docs/api-reference/generated/runner/create-runner-token.md): Creates a new authentication token for a runner.
+- [Delete Runner](https://ona.com/docs/api-reference/generated/runner/delete-runner.md): Deletes a runner permanently.
+- [Delete Runner Policy](https://ona.com/docs/api-reference/generated/runner/delete-runner-policy.md): Deletes a runner policy.
+- [Get Runner](https://ona.com/docs/api-reference/generated/runner/get-runner.md): Gets details about a specific runner.
+- [List Runner Policies](https://ona.com/docs/api-reference/generated/runner/list-runner-policies.md): Lists policies for a runner.
+- [List Runners](https://ona.com/docs/api-reference/generated/runner/list-runners.md): Lists all registered runners with optional filtering.
+- [List SCM Organizations](https://ona.com/docs/api-reference/generated/runner/list-scm-organizations.md): Lists SCM organizations the user belongs to.
+- [Parse Context URL](https://ona.com/docs/api-reference/generated/runner/parse-context-url.md): Parses a context URL and returns the parsed result.
+- [Search Repositories](https://ona.com/docs/api-reference/generated/runner/search-repositories.md): Searches for repositories across all authenticated SCM hosts.
+- [Update Runner](https://ona.com/docs/api-reference/generated/runner/update-runner.md): Updates a runner's configuration.
+- [Update Runner Policy](https://ona.com/docs/api-reference/generated/runner/update-runner-policy.md): Updates an existing runner policy.
+- [Secrets](https://ona.com/docs/api-reference/generated/secret/overview.md): Reference for the Secrets API methods.
+- [Create Secret](https://ona.com/docs/api-reference/generated/secret/create-secret.md): Creates a new secret for a project.
+- [Delete Secret](https://ona.com/docs/api-reference/generated/secret/delete-secret.md): Deletes a secret permanently.
+- [Get Secret Value](https://ona.com/docs/api-reference/generated/secret/get-secret-value.md): Gets the value of a secret.
+- [List Secrets](https://ona.com/docs/api-reference/generated/secret/list-secrets.md): Lists secrets
+- [Update Secret Value](https://ona.com/docs/api-reference/generated/secret/update-secret-value.md): Updates the value of an existing secret.
+- [Security](https://ona.com/docs/api-reference/generated/security/overview.md): Reference for the Security API methods.
+- [Create Security Policy](https://ona.com/docs/api-reference/generated/security/create-security-policy.md): Creates a new security policy.
+- [Delete Security Policy](https://ona.com/docs/api-reference/generated/security/delete-security-policy.md): Deletes a security policy.
+- [Get Security Policy](https://ona.com/docs/api-reference/generated/security/get-security-policy.md): Gets details about a specific security policy.
+- [List Security Policies](https://ona.com/docs/api-reference/generated/security/list-security-policies.md): Lists security policies.
+- [Update Security Policy](https://ona.com/docs/api-reference/generated/security/update-security-policy.md): Updates a security policy.
+- [Service Accounts](https://ona.com/docs/api-reference/generated/service-account/overview.md): Reference for the Service Accounts API methods.
+- [Create Service Account](https://ona.com/docs/api-reference/generated/service-account/create-service-account.md): Creates a new service account in an organization.
+- [Create Service Account Access Token](https://ona.com/docs/api-reference/generated/service-account/create-service-account-access-token.md): Creates a short-lived access token for configuring a service account.
+- [Create Service Account Token](https://ona.com/docs/api-reference/generated/service-account/create-service-account-token.md): Creates a long-lived token for a service account.
+- [Delete Service Account](https://ona.com/docs/api-reference/generated/service-account/delete-service-account.md): Deletes a service account.
+- [Delete Service Account Token](https://ona.com/docs/api-reference/generated/service-account/delete-service-account-token.md): Deletes a service account token.
+- [Get Service Account](https://ona.com/docs/api-reference/generated/service-account/get-service-account.md): Gets details about a specific service account.
+- [Get Service Account Token](https://ona.com/docs/api-reference/generated/service-account/get-service-account-token.md): Gets details about a specific service account token.
+- [List Service Account Tokens](https://ona.com/docs/api-reference/generated/service-account/list-service-account-tokens.md): Lists tokens for a service account.
+- [List Service Accounts](https://ona.com/docs/api-reference/generated/service-account/list-service-accounts.md): Lists service accounts in an organization.
+- [Update Service Account](https://ona.com/docs/api-reference/generated/service-account/update-service-account.md): Updates a service account.
+- [Teams](https://ona.com/docs/api-reference/generated/team/overview.md): TeamService manages teams and team memberships within an organization.
+- [Add Team Member](https://ona.com/docs/api-reference/generated/team/add-team-member.md): Adds a user to a team.
+- [Create Team](https://ona.com/docs/api-reference/generated/team/create-team.md): Creates a new team within an organization.
+- [Delete Team](https://ona.com/docs/api-reference/generated/team/delete-team.md): Deletes a team and all its memberships.
+- [Get Team](https://ona.com/docs/api-reference/generated/team/get-team.md): Gets information about a specific team.
+- [List Team Members](https://ona.com/docs/api-reference/generated/team/list-team-members.md): Lists members of a team with optional pagination.
+- [List Teams](https://ona.com/docs/api-reference/generated/team/list-teams.md): Lists teams with optional pagination and filtering.
+- [Remove Team Member](https://ona.com/docs/api-reference/generated/team/remove-team-member.md): Removes a user from a team.
+- [Update Team](https://ona.com/docs/api-reference/generated/team/update-team.md): Updates a team's properties.
+- [Usage](https://ona.com/docs/api-reference/generated/usage/overview.md): UsageService provides usage information about environments, users, and projects.
+- [Get Active Environments Count](https://ona.com/docs/api-reference/generated/usage/get-active-environments-count.md): Gets the count of active environments in the specified date range.
+- [Get Active Environments Time Series](https://ona.com/docs/api-reference/generated/usage/get-active-environments-time-series.md): Gets the active environments time series in the specified date range, aggregated by the specified resolution.
+- [Get Active Users Count](https://ona.com/docs/api-reference/generated/usage/get-active-users-count.md): Gets the count of active users.
+- [Get Active Users Time Series](https://ona.com/docs/api-reference/generated/usage/get-active-users-time-series.md): Gets active users time series in the specified date range, aggregated by the specified resolution.
+- [Get Adoption Usage Summary](https://ona.com/docs/api-reference/generated/usage/get-adoption-usage-summary.md): Gets a summary of adoption and usage metrics.
+- [Get Agent Trace Summary](https://ona.com/docs/api-reference/generated/usage/get-agent-trace-summary.md): Gets aggregated agent trace summary for the organization or a specific project.
+- [Get Agent Trace Time Series](https://ona.com/docs/api-reference/generated/usage/get-agent-trace-time-series.md): Gets agent trace data as a time series.
+- [Get Co Author Summary](https://ona.com/docs/api-reference/generated/usage/get-co-author-summary.md): Gets aggregated co-author summary for the organization or a specific project.
+- [Get Co Author Time Series](https://ona.com/docs/api-reference/generated/usage/get-co-author-time-series.md): Gets co-author contribution data as a time series.
+- [Get Environment Runtime](https://ona.com/docs/api-reference/generated/usage/get-environment-runtime.md): Gets the total runtime of all environments in the specified date range.
+- [Get Environment Runtime Time Series](https://ona.com/docs/api-reference/generated/usage/get-environment-runtime-time-series.md): Gets the total runtime time series in the specified date range, aggregated by the specified resolution.
+- [Get Environment Sessions Time Series](https://ona.com/docs/api-reference/generated/usage/get-environment-sessions-time-series.md): Gets the environment sessions time series in the specified date range, aggregated by the specified resolution.
+- [Get Pr Summary](https://ona.com/docs/api-reference/generated/usage/get-pr-summary.md): Gets aggregated PR speed summary for the organization or a specific project.
+- [Get Pr Time Series](https://ona.com/docs/api-reference/generated/usage/get-pr-time-series.md): Gets PR speed metrics as a time series.
+- [Get Top Active Users](https://ona.com/docs/api-reference/generated/usage/get-top-active-users.md): Gets the top active users based on total runtime.
+- [Get Top Environment Classes](https://ona.com/docs/api-reference/generated/usage/get-top-environment-classes.md): Gets the top environment classes by total runtime in the specified date range.
+- [Get Top Projects](https://ona.com/docs/api-reference/generated/usage/get-top-projects.md): Gets the top projects by total environment runtime in the specified date range.
+- [List Environment Usage Records](https://ona.com/docs/api-reference/generated/usage/list-environment-usage-records.md): Lists completed environment runtime records within a specified date range.
+- [Users](https://ona.com/docs/api-reference/generated/user/overview.md): Reference for the Users API methods.
+- [Create Personal Access Token](https://ona.com/docs/api-reference/generated/user/create-personal-access-token.md): Creates a new personal access token for API authentication.
+- [Delete Personal Access Token](https://ona.com/docs/api-reference/generated/user/delete-personal-access-token.md): Deletes a personal access token.
+- [Delete Preference](https://ona.com/docs/api-reference/generated/user/delete-preference.md): Deletes a user preference.
+- [Delete User](https://ona.com/docs/api-reference/generated/user/delete-user.md): Deletes a user.
+- [Get Authenticated User](https://ona.com/docs/api-reference/generated/user/get-authenticated-user.md): Gets information about the currently authenticated user.
+- [Get Dotfiles Configuration](https://ona.com/docs/api-reference/generated/user/get-dotfiles-configuration.md): Gets the dotfiles for a user.
+- [Get Personal Access Token](https://ona.com/docs/api-reference/generated/user/get-personal-access-token.md): Gets details about a specific personal access token.
+- [Get Preference](https://ona.com/docs/api-reference/generated/user/get-preference.md): Gets a specific user preference value.
+- [Get User](https://ona.com/docs/api-reference/generated/user/get-user.md): Gets basic information about a specific user by their ID.
+- [List Personal Access Tokens](https://ona.com/docs/api-reference/generated/user/list-personal-access-tokens.md): Lists personal access tokens with optional filtering.
+- [List Preferences](https://ona.com/docs/api-reference/generated/user/list-preferences.md): Lists all user preferences.
+- [Set Dotfiles Configuration](https://ona.com/docs/api-reference/generated/user/set-dotfiles-configuration.md): Sets the dotfiles configuration for a user.
+- [Set Preference](https://ona.com/docs/api-reference/generated/user/set-preference.md): Sets a user preference value.
+- [Set Suspended](https://ona.com/docs/api-reference/generated/user/set-suspended.md): Sets whether a user account is suspended.
+- [Webhooks](https://ona.com/docs/api-reference/generated/webhook/overview.md): Reference for the Webhooks API methods.
+- [Create Webhook](https://ona.com/docs/api-reference/generated/webhook/create-webhook.md): Creates a new webhook for receiving SCM events.
+- [Delete Webhook](https://ona.com/docs/api-reference/generated/webhook/delete-webhook.md): Deletes a webhook permanently.
+- [Get Webhook](https://ona.com/docs/api-reference/generated/webhook/get-webhook.md): Gets details about a specific webhook.
+- [Get Webhook Secret](https://ona.com/docs/api-reference/generated/webhook/get-webhook-secret.md): Gets the webhook secret for signature validation.
+- [List Webhook Workflows](https://ona.com/docs/api-reference/generated/webhook/list-webhook-workflows.md): Lists workflows bound to a webhook.
+- [List Webhooks](https://ona.com/docs/api-reference/generated/webhook/list-webhooks.md): Lists webhooks with optional filtering.
+- [Rotate Webhook Secret](https://ona.com/docs/api-reference/generated/webhook/rotate-webhook-secret.md): Rotates the webhook secret.
+- [Update Webhook](https://ona.com/docs/api-reference/generated/webhook/update-webhook.md): Updates a webhook's configuration.
+- [Workflows](https://ona.com/docs/api-reference/generated/workflow/overview.md): Reference for the Workflows API methods.
+- [Cancel Workflow Execution](https://ona.com/docs/api-reference/generated/workflow/cancel-workflow-execution.md): Cancels a running workflow execution.
+- [Cancel Workflow Execution Action](https://ona.com/docs/api-reference/generated/workflow/cancel-workflow-execution-action.md): Cancels a running workflow execution action.
+- [Create Workflow](https://ona.com/docs/api-reference/generated/workflow/create-workflow.md): Creates a new workflow with specified configuration.
+- [Delete Workflow](https://ona.com/docs/api-reference/generated/workflow/delete-workflow.md): Deletes a workflow permanently.
+- [Get Workflow](https://ona.com/docs/api-reference/generated/workflow/get-workflow.md): Gets details about a specific workflow.
+- [Get Workflow Execution](https://ona.com/docs/api-reference/generated/workflow/get-workflow-execution.md): Gets details about a specific workflow execution.
+- [Get Workflow Execution Action](https://ona.com/docs/api-reference/generated/workflow/get-workflow-execution-action.md): Gets details about a specific workflow execution action.
+- [Get Workflow Execution Summary](https://ona.com/docs/api-reference/generated/workflow/get-workflow-execution-summary.md): Returns aggregate counts of workflow executions within a time range.
+- [Get Workflow Webhook Secret](https://ona.com/docs/api-reference/generated/workflow/get-workflow-webhook-secret.md): Gets the webhook secret for a workflow.
+- [List Workflow Execution Actions](https://ona.com/docs/api-reference/generated/workflow/list-workflow-execution-actions.md): Lists workflow execution actions with optional filtering.
+- [List Workflow Execution Outputs](https://ona.com/docs/api-reference/generated/workflow/list-workflow-execution-outputs.md): Lists outputs produced by workflow execution actions.
+- [List Workflow Executions](https://ona.com/docs/api-reference/generated/workflow/list-workflow-executions.md): Lists workflow executions with optional filtering.
+- [List Workflows](https://ona.com/docs/api-reference/generated/workflow/list-workflows.md): Call gitpod.v1.WorkflowService.ListWorkflows.
+- [Rotate Workflow Webhook Secret](https://ona.com/docs/api-reference/generated/workflow/rotate-workflow-webhook-secret.md): Rotates the webhook secret for a workflow.
+- [Start Workflow](https://ona.com/docs/api-reference/generated/workflow/start-workflow.md): Starts a workflow execution.
+- [Update Workflow](https://ona.com/docs/api-reference/generated/workflow/update-workflow.md): Updates a workflow's configuration using full replacement semantics.
+- [CLI command reference](https://ona.com/docs/ona/reference/cli.md): Common Ona CLI commands for environments, automations, and configuration.
+- [.ona/config.yaml schema](https://ona.com/docs/ona/reference/ona-config-schema.md): Field reference for tasks and services in .ona/config.yaml.
+- [Troubleshooting guide](https://ona.com/docs/ona/troubleshooting.md): Diagnose issues with environments, runners, and IDEs using support bundles and logs.
+- [AWS Runner Releases](https://ona.com/docs/release-notes/aws-runner.md): Version releases and infrastructure updates for the AWS EC2 runner
+- [GCP Runner Releases](https://ona.com/docs/release-notes/gcp-runner.md): Version releases and infrastructure updates for the GCP runner
+
+## OpenAPI Specs
+
+- [openapi](https://ona.com/docs/api-reference/openapi.json)

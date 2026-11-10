@@ -1,0 +1,37 @@
+version: ccusage 20.0.20
+fetched_at: '2026-09-07T17:21:13.005971+00:00'
+invocation: ccusage statusline
+usage:
+- ccusage statusline <OPTIONS>
+description: Display compact status line for Claude Code hooks with hybrid time+file caching (Beta)
+commands: []
+arguments: []
+options:
+- name: -O, --offline
+  description: 'Use cached pricing data for Claude models instead of fetching from API (default: true)'
+- name: --no-offline
+  description: Negatable of -O, --offline
+- name: -B, --visual-burn-rate [visual-burn-rate]
+  description: 'Controls the visualization of the burn rate status (default: off, choices: off | emoji | text | emoji-text)'
+- name: --cost-source [cost-source]
+  description: 'Session cost source (default: auto, choices: auto | ccusage | cc | both)'
+- name: --cache
+  description: 'Enable cache for status line output (default: true)'
+- name: --no-cache
+  description: Negatable of --cache
+- name: --refresh-interval [refresh-interval]
+  description: 'Refresh interval in seconds for cache expiry (default: 1)'
+- name: --context-low-threshold [context-low-threshold]
+  description: 'Context usage percentage below which status is shown in green (0-100) (default: 50)'
+- name: '--context-medium-threshold [context-medium-threshold] Context usage percentage below which status is shown in yellow (0-100) (default: 80)'
+  description: ''
+- name: -z, --timezone <timezone>
+  description: Timezone for date grouping (IANA)
+- name: --config <config>
+  description: 'Path to configuration file (default: auto-discovery)'
+- name: -d, --debug
+  description: 'Show pricing mismatch information for debugging (default: false)'
+- name: -h, --help
+  description: Display this help message
+- name: -v, --version
+  description: Display this version

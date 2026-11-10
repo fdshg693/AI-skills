@@ -1,0 +1,5 @@
+{
+  "name": "cc-knowledge",
+  "version": "0.2.0",
+  "description": "Skills about Claude Code itself: docs, settings, and how to write skills, hooks, plugins and subagents"
+}

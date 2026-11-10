@@ -1,0 +1,302 @@
+---
+source: https://openrouter.ai/docs/llms.txt
+fetched_at: 2026-07-09T12:22:48.354506+00:00
+---
+
+# OpenRouter | Documentation
+
+## Docs
+
+- [Migrating to @openrouter/agent](https://openrouter.ai/docs/agent-sdk/agent-migration.md): Move agent toolkit imports from @openrouter/sdk to the standalone @openrouter/agent package
+- [API Reference](https://openrouter.ai/docs/agent-sdk/call-model/api-reference.md): Complete reference for the callModel API, ModelResult class, tool types, and helper functions.
+- [Dynamic Parameters](https://openrouter.ai/docs/agent-sdk/call-model/dynamic-parameters.md): Use async functions for adaptive model behavior across turns
+- [Skills Loader](https://openrouter.ai/docs/agent-sdk/call-model/examples/skills-loader.md): A complete implementation of a skills system similar to Claude Code, demonstrating the power of `nextTurnParams` for context injection.
+- [Weather Tool](https://openrouter.ai/docs/agent-sdk/call-model/examples/weather-tool.md): A complete weather tool demonstrating external API integration, proper validation, and error handling.
+- [Working with Items](https://openrouter.ai/docs/agent-sdk/call-model/items.md): Understanding the items-based streaming paradigm for callModel
+- [Message Formats](https://openrouter.ai/docs/agent-sdk/call-model/message-formats.md): The OpenRouter SDK provides helper functions to convert between popular message formats. This makes it easy to migrate existing code or integrate with different APIs.
+- [Next Turn Params](https://openrouter.ai/docs/agent-sdk/call-model/next-turn-params.md): Build encapsulated, context-aware tools with `nextTurnParams`. Create skills systems, plugins, and adaptive multi-turn agents.
+- [Call Model (Typescript)](https://openrouter.ai/docs/agent-sdk/call-model/overview.md): A unified API for calling any LLM with automatic tool execution and multiple consumption patterns
+- [Stop Conditions](https://openrouter.ai/docs/agent-sdk/call-model/stop-conditions.md): Control multi-turn execution with `stopWhen`. Use built-in helpers or custom conditions to stop by step count, tool calls, cost, or tokens.
+- [Streaming](https://openrouter.ai/docs/agent-sdk/call-model/streaming.md): Stream responses in real-time with multiple consumption patterns. All streams are built on a reusable stream architecture that supports concurrent consumers.
+- [Text Generation](https://openrouter.ai/docs/agent-sdk/call-model/text-generation.md): Generate text with callModel using various input formats and model configurations. Supports multiple consumption patterns including text, streaming, and structured output.
+- [Tool Approval & State Persistence](https://openrouter.ai/docs/agent-sdk/call-model/tool-approval-state.md): Add human-in-the-loop approval gates for sensitive tools and persist conversation state across callModel invocations.
+- [Tools](https://openrouter.ai/docs/agent-sdk/call-model/tools.md): Create type-safe tools with Zod schemas and automatic execution. Supports regular tools, generator tools with progress, manual tools, human-in-the-loop tools, and automatic multi-turn execution.
+- [DevTools](https://openrouter.ai/docs/agent-sdk/dev-tools/devtools.md): SDK Development Tools for telemetry capture and visualization
+- [Agent SDK](https://openrouter.ai/docs/agent-sdk/overview.md): Build AI agents with multi-turn loops, tools, and conversation state
+- [Analytics - TypeScript SDK](https://openrouter.ai/docs/agent-sdk/typescript/api-reference/analytics.md): Analytics method reference
+- [APIKeys - TypeScript SDK](https://openrouter.ai/docs/agent-sdk/typescript/api-reference/apikeys.md): APIKeys method reference
+- [Chat - TypeScript SDK](https://openrouter.ai/docs/agent-sdk/typescript/api-reference/chat.md): Chat method reference
+- [Credits - TypeScript SDK](https://openrouter.ai/docs/agent-sdk/typescript/api-reference/credits.md): Credits method reference
+- [Embeddings - TypeScript SDK](https://openrouter.ai/docs/agent-sdk/typescript/api-reference/embeddings.md): Embeddings method reference
+- [Endpoints - TypeScript SDK](https://openrouter.ai/docs/agent-sdk/typescript/api-reference/endpoints.md): Endpoints method reference
+- [Generations - TypeScript SDK](https://openrouter.ai/docs/agent-sdk/typescript/api-reference/generations.md): Generations method reference
+- [Guardrails - TypeScript SDK](https://openrouter.ai/docs/agent-sdk/typescript/api-reference/guardrails.md): Guardrails method reference
+- [Models - TypeScript SDK](https://openrouter.ai/docs/agent-sdk/typescript/api-reference/models.md): Models method reference
+- [OAuth - TypeScript SDK](https://openrouter.ai/docs/agent-sdk/typescript/api-reference/oauth.md): OAuth method reference
+- [Organization - TypeScript SDK](https://openrouter.ai/docs/agent-sdk/typescript/api-reference/organization.md): Organization method reference
+- [Providers - TypeScript SDK](https://openrouter.ai/docs/agent-sdk/typescript/api-reference/providers.md): Providers method reference
+- [Rerank - TypeScript SDK](https://openrouter.ai/docs/agent-sdk/typescript/api-reference/rerank.md): Rerank method reference
+- [Beta.Responses - TypeScript SDK](https://openrouter.ai/docs/agent-sdk/typescript/api-reference/responses.md): Beta.Responses method reference
+- [Speech - TypeScript SDK](https://openrouter.ai/docs/agent-sdk/typescript/api-reference/tts.md): Speech method reference
+- [VideoGeneration - TypeScript SDK](https://openrouter.ai/docs/agent-sdk/typescript/api-reference/videogeneration.md): VideoGeneration method reference
+- [Workspaces - TypeScript SDK](https://openrouter.ai/docs/agent-sdk/typescript/api-reference/workspaces.md): Workspaces method reference
+- [TypeScript SDK](https://openrouter.ai/docs/agent-sdk/typescript/overview.md): Official OpenRouter TypeScript SDK documentation
+- [Usage for Agents](https://openrouter.ai/docs/agent-sdk/usage-for-agents.md): Add OpenRouter Agent SDK skills to your AI coding assistant
+- [Authentication](https://openrouter.ai/docs/api/reference/authentication.md): API Authentication
+- [Embeddings](https://openrouter.ai/docs/api/reference/embeddings.md): Generate vector embeddings from text and images
+- [Errors and Debugging](https://openrouter.ai/docs/api/reference/errors-and-debugging.md): API Errors and Debugging
+- [Limits](https://openrouter.ai/docs/api/reference/limits.md): Rate Limits
+- [API Reference](https://openrouter.ai/docs/api/reference/overview.md): An overview of OpenRouter's API
+- [Parameters](https://openrouter.ai/docs/api/reference/parameters.md)
+- [Basic Usage](https://openrouter.ai/docs/api/reference/responses/basic-usage.md): Getting started with the Responses API Beta
+- [Error Handling](https://openrouter.ai/docs/api/reference/responses/error-handling.md): Understanding and handling errors in the Responses API Beta
+- [Responses API Beta](https://openrouter.ai/docs/api/reference/responses/overview.md): OpenAI-compatible Responses API (Beta)
+- [Reasoning](https://openrouter.ai/docs/api/reference/responses/reasoning.md): Advanced reasoning capabilities with the Responses API Beta
+- [Tool Calling](https://openrouter.ai/docs/api/reference/responses/tool-calling.md): Function calling and tool integration with the Responses API Beta
+- [Web Search](https://openrouter.ai/docs/api/reference/responses/web-search.md): Real-time web search integration with the Responses API Beta
+- [Streaming](https://openrouter.ai/docs/api/reference/streaming.md)
+- [App Attribution](https://openrouter.ai/docs/app-attribution.md): Get your app featured in OpenRouter rankings and analytics
+- [Migrating to @openrouter/agent](https://openrouter.ai/docs/client-sdks/agent-migration.md): Move agent toolkit imports from @openrouter/sdk to the standalone @openrouter/agent package
+- [DevTools](https://openrouter.ai/docs/client-sdks/dev-tools/devtools.md): SDK Development Tools for telemetry capture and visualization
+- [OpenRouter Go SDK](https://openrouter.ai/docs/client-sdks/go/overview.md): Go SDK for building AI features against 400+ models through OpenRouter.
+- [Analytics](https://openrouter.ai/docs/client-sdks/go/sdks/analytics/README.md): Analytics and usage endpoints
+- [APIKeys](https://openrouter.ai/docs/client-sdks/go/sdks/apikeys/README.md): API key management endpoints
+- [Benchmarks](https://openrouter.ai/docs/client-sdks/go/sdks/benchmarks/README.md): Benchmarks endpoints
+- [Beta.Analytics](https://openrouter.ai/docs/client-sdks/go/sdks/betaanalytics/README.md): beta.Analytics endpoints
+- [Byok](https://openrouter.ai/docs/client-sdks/go/sdks/byok/README.md): BYOK endpoints
+- [Chat](https://openrouter.ai/docs/client-sdks/go/sdks/chat/README.md)
+- [Classifications](https://openrouter.ai/docs/client-sdks/go/sdks/classifications/README.md): Task classification market-share endpoints
+- [Credits](https://openrouter.ai/docs/client-sdks/go/sdks/credits/README.md): Credit management endpoints
+- [Datasets](https://openrouter.ai/docs/client-sdks/go/sdks/datasets/README.md): Datasets endpoints
+- [Embeddings](https://openrouter.ai/docs/client-sdks/go/sdks/embeddings/README.md): Text embedding endpoints
+- [Endpoints](https://openrouter.ai/docs/client-sdks/go/sdks/endpoints/README.md): Endpoint information
+- [Files](https://openrouter.ai/docs/client-sdks/go/sdks/files/README.md): Files endpoints
+- [Generations](https://openrouter.ai/docs/client-sdks/go/sdks/generations/README.md): Generation history endpoints
+- [Guardrails](https://openrouter.ai/docs/client-sdks/go/sdks/guardrails/README.md): Guardrails endpoints
+- [Images](https://openrouter.ai/docs/client-sdks/go/sdks/images/README.md): Images endpoints
+- [Models](https://openrouter.ai/docs/client-sdks/go/sdks/models/README.md): Model information endpoints
+- [OAuth](https://openrouter.ai/docs/client-sdks/go/sdks/oauth/README.md): OAuth authentication endpoints
+- [Observability](https://openrouter.ai/docs/client-sdks/go/sdks/observability/README.md): Observability endpoints
+- [Organization](https://openrouter.ai/docs/client-sdks/go/sdks/organization/README.md): Organization endpoints
+- [Presets](https://openrouter.ai/docs/client-sdks/go/sdks/presets/README.md): Presets endpoints
+- [Providers](https://openrouter.ai/docs/client-sdks/go/sdks/providers/README.md): Provider information endpoints
+- [Rerank](https://openrouter.ai/docs/client-sdks/go/sdks/rerank/README.md): Rerank endpoints
+- [Beta.Responses](https://openrouter.ai/docs/client-sdks/go/sdks/responses/README.md): beta.responses endpoints
+- [Stt](https://openrouter.ai/docs/client-sdks/go/sdks/stt/README.md): Speech-to-text endpoints
+- [Tts](https://openrouter.ai/docs/client-sdks/go/sdks/tts/README.md): Text-to-speech endpoints
+- [VideoGeneration](https://openrouter.ai/docs/client-sdks/go/sdks/videogeneration/README.md): Video Generation endpoints
+- [Workspaces](https://openrouter.ai/docs/client-sdks/go/sdks/workspaces/README.md): Workspaces endpoints
+- [Client SDKs](https://openrouter.ai/docs/client-sdks/overview.md): Lightweight, type-safe clients for the OpenRouter API
+- [OpenRouter Python SDK](https://openrouter.ai/docs/client-sdks/python/overview.md): Python SDK for building AI features against 400+ models through OpenRouter.
+- [Analytics](https://openrouter.ai/docs/client-sdks/python/sdks/analytics/README.md): Analytics and usage endpoints
+- [APIKeys](https://openrouter.ai/docs/client-sdks/python/sdks/apikeys/README.md): API key management endpoints
+- [Benchmarks](https://openrouter.ai/docs/client-sdks/python/sdks/benchmarks/README.md): Benchmarks endpoints
+- [Beta.Analytics](https://openrouter.ai/docs/client-sdks/python/sdks/betaanalytics/README.md): beta.Analytics endpoints
+- [Byok](https://openrouter.ai/docs/client-sdks/python/sdks/byok/README.md): BYOK endpoints
+- [Chat](https://openrouter.ai/docs/client-sdks/python/sdks/chat/README.md)
+- [Classifications](https://openrouter.ai/docs/client-sdks/python/sdks/classifications/README.md): Task classification market-share endpoints
+- [Credits](https://openrouter.ai/docs/client-sdks/python/sdks/credits/README.md): Credit management endpoints
+- [Datasets](https://openrouter.ai/docs/client-sdks/python/sdks/datasets/README.md): Datasets endpoints
+- [Embeddings](https://openrouter.ai/docs/client-sdks/python/sdks/embeddings/README.md): Text embedding endpoints
+- [Endpoints](https://openrouter.ai/docs/client-sdks/python/sdks/endpoints/README.md): Endpoint information
+- [Files](https://openrouter.ai/docs/client-sdks/python/sdks/files/README.md): Files endpoints
+- [Generations](https://openrouter.ai/docs/client-sdks/python/sdks/generations/README.md): Generation history endpoints
+- [Guardrails](https://openrouter.ai/docs/client-sdks/python/sdks/guardrails/README.md): Guardrails endpoints
+- [Images](https://openrouter.ai/docs/client-sdks/python/sdks/images/README.md): Images endpoints
+- [Models](https://openrouter.ai/docs/client-sdks/python/sdks/models/README.md): Model information endpoints
+- [OAuth](https://openrouter.ai/docs/client-sdks/python/sdks/oauth/README.md): OAuth authentication endpoints
+- [Observability](https://openrouter.ai/docs/client-sdks/python/sdks/observability/README.md): Observability endpoints
+- [Organization](https://openrouter.ai/docs/client-sdks/python/sdks/organization/README.md): Organization endpoints
+- [Presets](https://openrouter.ai/docs/client-sdks/python/sdks/presets/README.md): Presets endpoints
+- [Providers](https://openrouter.ai/docs/client-sdks/python/sdks/providers/README.md): Provider information endpoints
+- [Rerank](https://openrouter.ai/docs/client-sdks/python/sdks/rerank/README.md): Rerank endpoints
+- [Beta.Responses](https://openrouter.ai/docs/client-sdks/python/sdks/responses/README.md): beta.responses endpoints
+- [Stt](https://openrouter.ai/docs/client-sdks/python/sdks/stt/README.md): Speech-to-text endpoints
+- [Tts](https://openrouter.ai/docs/client-sdks/python/sdks/tts/README.md): Text-to-speech endpoints
+- [VideoGeneration](https://openrouter.ai/docs/client-sdks/python/sdks/videogeneration/README.md): Video Generation endpoints
+- [Workspaces](https://openrouter.ai/docs/client-sdks/python/sdks/workspaces/README.md): Workspaces endpoints
+- [OpenRouter TypeScript SDK](https://openrouter.ai/docs/client-sdks/typescript/overview.md): Type-safe TypeScript toolkit for building AI features against 400+ models through OpenRouter.
+- [Analytics](https://openrouter.ai/docs/client-sdks/typescript/sdks/analytics/README.md): Analytics and usage endpoints
+- [APIKeys](https://openrouter.ai/docs/client-sdks/typescript/sdks/apikeys/README.md): API key management endpoints
+- [Benchmarks](https://openrouter.ai/docs/client-sdks/typescript/sdks/benchmarks/README.md): Benchmarks endpoints
+- [Beta.Analytics](https://openrouter.ai/docs/client-sdks/typescript/sdks/betaanalytics/README.md): beta.Analytics endpoints
+- [Byok](https://openrouter.ai/docs/client-sdks/typescript/sdks/byok/README.md): BYOK endpoints
+- [Chat](https://openrouter.ai/docs/client-sdks/typescript/sdks/chat/README.md)
+- [Classifications](https://openrouter.ai/docs/client-sdks/typescript/sdks/classifications/README.md): Task classification market-share endpoints
+- [Credits](https://openrouter.ai/docs/client-sdks/typescript/sdks/credits/README.md): Credit management endpoints
+- [Datasets](https://openrouter.ai/docs/client-sdks/typescript/sdks/datasets/README.md): Datasets endpoints
+- [Embeddings](https://openrouter.ai/docs/client-sdks/typescript/sdks/embeddings/README.md): Text embedding endpoints
+- [Endpoints](https://openrouter.ai/docs/client-sdks/typescript/sdks/endpoints/README.md): Endpoint information
+- [Files](https://openrouter.ai/docs/client-sdks/typescript/sdks/files/README.md): Files endpoints
+- [Generations](https://openrouter.ai/docs/client-sdks/typescript/sdks/generations/README.md): Generation history endpoints
+- [Guardrails](https://openrouter.ai/docs/client-sdks/typescript/sdks/guardrails/README.md): Guardrails endpoints
+- [Images](https://openrouter.ai/docs/client-sdks/typescript/sdks/images/README.md): Images endpoints
+- [Models](https://openrouter.ai/docs/client-sdks/typescript/sdks/models/README.md): Model information endpoints
+- [OAuth](https://openrouter.ai/docs/client-sdks/typescript/sdks/oauth/README.md): OAuth authentication endpoints
+- [Observability](https://openrouter.ai/docs/client-sdks/typescript/sdks/observability/README.md): Observability endpoints
+- [Organization](https://openrouter.ai/docs/client-sdks/typescript/sdks/organization/README.md): Organization endpoints
+- [Presets](https://openrouter.ai/docs/client-sdks/typescript/sdks/presets/README.md): Presets endpoints
+- [Providers](https://openrouter.ai/docs/client-sdks/typescript/sdks/providers/README.md): Provider information endpoints
+- [Rerank](https://openrouter.ai/docs/client-sdks/typescript/sdks/rerank/README.md): Rerank endpoints
+- [Beta.Responses](https://openrouter.ai/docs/client-sdks/typescript/sdks/responses/README.md): beta.responses endpoints
+- [Stt](https://openrouter.ai/docs/client-sdks/typescript/sdks/stt/README.md): Speech-to-text endpoints
+- [Tts](https://openrouter.ai/docs/client-sdks/typescript/sdks/tts/README.md): Text-to-speech endpoints
+- [VideoGeneration](https://openrouter.ai/docs/client-sdks/typescript/sdks/videogeneration/README.md): Video Generation endpoints
+- [Workspaces](https://openrouter.ai/docs/client-sdks/typescript/sdks/workspaces/README.md): Workspaces endpoints
+- [Usage for Agents](https://openrouter.ai/docs/client-sdks/usage-for-agents.md): Add OpenRouter Client SDKs skills to your AI coding assistant
+- [Activity Export](https://openrouter.ai/docs/cookbook/administration/activity-export.md)
+- [Control Costs with the Analytics API](https://openrouter.ai/docs/cookbook/administration/analytics-cost-control.md): Hand your coding agent a management key and the analytics skill, then ask it where your money is going
+- [API Key Rotation](https://openrouter.ai/docs/cookbook/administration/api-key-rotation.md): Securely rotate your OpenRouter API keys
+- [Crypto API](https://openrouter.ai/docs/cookbook/administration/crypto-api.md): Coinbase Commerce API deprecation
+- [Organization Management](https://openrouter.ai/docs/cookbook/administration/organization-management.md): Manage teams and shared resources with OpenRouter organizations
+- [Adding a Tax ID to Your Invoices](https://openrouter.ai/docs/cookbook/administration/tax-id.md): How to add your VAT, GST, or other tax ID so it appears on OpenRouter invoices
+- [Usage Accounting](https://openrouter.ai/docs/cookbook/administration/usage-accounting.md)
+- [User Tracking](https://openrouter.ai/docs/cookbook/administration/user-tracking.md)
+- [Build a Token-Efficient Review Agent](https://openrouter.ai/docs/cookbook/building-agents/advisor-server-tool.md): Use a cheap executor model for routine work and call Advisor only for compact uncertainty checks
+- [Build Your Own Agent TUI](https://openrouter.ai/docs/cookbook/building-agents/create-agent-harness-tui.md): Scaffold a custom AI agent with a fully customizable terminal interface using an AI coding agent
+- [Build Your Own Headless Agent](https://openrouter.ai/docs/cookbook/building-agents/create-headless-agent.md): Scaffold a headless AI agent for CLI tools, API servers, and automation pipelines
+- [Add Human-in-the-Loop Controls to an Agent SDK Agent](https://openrouter.ai/docs/cookbook/building-agents/hitl-tools.md): Add HITL to an existing Agent SDK agent so it can pause high-stakes tool calls for human input
+- [Build a Long-Horizon Agent](https://openrouter.ai/docs/cookbook/building-agents/long-horizon-agents.md): Run multi-hour agent loops with cost ceilings, resumable state, and voice input
+- [Delegate Routine Work to Cheaper Models](https://openrouter.ai/docs/cookbook/building-agents/subagent-server-tool.md): Use an orchestrator for planning and a cheap subagent worker for each subtask
+- [Automatic Code Review](https://openrouter.ai/docs/cookbook/coding-agents/automatic-code-review.md): Automatic code review for Claude Code using hooks and OpenRouter — async, non-blocking reviews from a second model while you keep working
+- [Claude Code](https://openrouter.ai/docs/cookbook/coding-agents/claude-code-integration.md): Use Claude Code with OpenRouter
+- [Claude Desktop](https://openrouter.ai/docs/cookbook/coding-agents/claude-desktop-integration.md): Use Claude Desktop with OpenRouter
+- [Codex CLI](https://openrouter.ai/docs/cookbook/coding-agents/codex-cli.md): Use Codex CLI with OpenRouter
+- [Cursor](https://openrouter.ai/docs/cookbook/coding-agents/cursor-integration.md): Use Cursor with OpenRouter
+- [Hermes Agent](https://openrouter.ai/docs/cookbook/coding-agents/hermes-integration.md): Use Hermes Agent by Nous Research with OpenRouter
+- [Junie CLI](https://openrouter.ai/docs/cookbook/coding-agents/junie.md): Using OpenRouter with JetBrains Junie CLI
+- [Using MCP Servers with OpenRouter](https://openrouter.ai/docs/cookbook/coding-agents/mcp-servers.md): Use MCP Servers with OpenRouter
+- [OpenClaw 🦞](https://openrouter.ai/docs/cookbook/coding-agents/openclaw-integration.md): Use OpenClaw (formerly Moltbot, formerly Clawdbot) with OpenRouter
+- [OpenCode](https://openrouter.ai/docs/cookbook/coding-agents/opencode-integration.md): Use OpenCode with OpenRouter
+- [Distillation](https://openrouter.ai/docs/cookbook/evaluate-and-optimize/distillation.md): Ensure compliance with provider and model creator policies for distillation
+- [Claude 4.6 Migration Guide](https://openrouter.ai/docs/cookbook/evaluate-and-optimize/model-migrations/claude-4-6.md): Migrate to Claude 4.6 with adaptive thinking and max effort level
+- [Claude 4.7 Migration Guide](https://openrouter.ai/docs/cookbook/evaluate-and-optimize/model-migrations/claude-4-7.md): Migrate to Claude 4.7 Opus — sampling parameters removed, adaptive-only thinking, and new xhigh effort level
+- [GPT-5.4 Migration Guide](https://openrouter.ai/docs/cookbook/evaluate-and-optimize/model-migrations/gpt-5-4.md): Support the phase field for GPT-5.3 Codex, GPT-5.4, GPT-5.4 Pro, GPT-5.5, and GPT-5.5 Pro
+- [Claude 5 Sonnet Migration Guide](https://openrouter.ai/docs/cookbook/evaluate-and-optimize/model-migrations/sonnet-5.md): Migrate to Claude 5 Sonnet — sampling parameters removed, adaptive-only thinking, and the new xhigh effort level
+- [RAG with Embeddings & Rerank](https://openrouter.ai/docs/cookbook/evaluate-and-optimize/rag.md): Build retrieval-augmented generation pipelines using OpenRouter's embeddings and rerank APIs
+- [Red Teaming](https://openrouter.ai/docs/cookbook/evaluate-and-optimize/red-teaming.md): Policy for red teaming and adversarial testing on OpenRouter
+- [Enterprise Quickstart](https://openrouter.ai/docs/cookbook/get-started/enterprise-quickstart.md): Get your organization up and running with OpenRouter
+- [Free Models Router](https://openrouter.ai/docs/cookbook/get-started/free-models-router-playground.md): Get started with free AI inference using the OpenRouter Chat Playground
+- [Migrate to OpenRouter in One Prompt](https://openrouter.ai/docs/cookbook/get-started/migrate-to-openrouter.md): Move an existing app's LLM calls to OpenRouter with a single coding-agent prompt
+- [Quickstart: Build a Chat App](https://openrouter.ai/docs/cookbook/get-started/quickstart.md): Send your first message and stream a response with the OpenRouter SDK
+- [Enhance Image Generation with Presets](https://openrouter.ai/docs/cookbook/image-generation/preset-enhanced-images.md): Pair a text model with the image generation server tool so every request gets a refined prompt automatically
+- [Choose a Video Generation Model](https://openrouter.ai/docs/cookbook/video-generation/choose-video-model.md): Select an OpenRouter video model by matching clip requirements and scoring priorities
+- [Turn an Image into a Video](https://openrouter.ai/docs/cookbook/video-generation/image-to-video.md): Use frame images to control the first or last frame of an OpenRouter video
+- [Use Provider-Specific Video Options](https://openrouter.ai/docs/cookbook/video-generation/provider-specific-video-options.md): Inspect allowed passthrough parameters and send provider-specific video controls safely
+- [Guide a Video with Reference Images](https://openrouter.ai/docs/cookbook/video-generation/reference-to-video.md): Use reference images to influence video subject, style, or identity without exact frame control
+- [Generate and Download a Video from Text](https://openrouter.ai/docs/cookbook/video-generation/text-to-video.md): Submit a text-to-video job, poll for completion, and save the generated MP4
+- [Get Video Results with Webhooks](https://openrouter.ai/docs/cookbook/video-generation/video-generation-webhooks.md): Submit a video job with a callback URL and verify OpenRouter webhook signatures
+- [Frequently Asked Questions](https://openrouter.ai/docs/faq.md): Common questions about OpenRouter
+- [Latency and Performance](https://openrouter.ai/docs/guides/best-practices/latency-and-performance.md): Understanding OpenRouter's performance characteristics
+- [Prompt Caching](https://openrouter.ai/docs/guides/best-practices/prompt-caching.md): Cache prompt messages
+- [Reasoning Tokens](https://openrouter.ai/docs/guides/best-practices/reasoning-tokens.md)
+- [Uptime Optimization](https://openrouter.ai/docs/guides/best-practices/uptime-optimization.md): OpenRouter tracks provider availability
+- [Anthropic Agent SDK](https://openrouter.ai/docs/guides/community/anthropic-agent-sdk.md): Using OpenRouter with the Anthropic Agent SDK
+- [Arize AX](https://openrouter.ai/docs/guides/community/arize.md): Using OpenRouter with Arize AX
+- [Awesome OpenRouter](https://openrouter.ai/docs/guides/community/awesome-openrouter.md): Community-curated list of projects built with OpenRouter
+- [Effect AI SDK](https://openrouter.ai/docs/guides/community/effect-ai-sdk.md): Integrate OpenRouter using the Effect AI SDK
+- [Provider Integration](https://openrouter.ai/docs/guides/community/for-providers.md)
+- [Frameworks and Integrations Overview](https://openrouter.ai/docs/guides/community/frameworks-and-integrations-overview.md): Using OpenRouter with Popular Frameworks and Integrations
+- [Infisical](https://openrouter.ai/docs/guides/community/infisical.md): Automatic API Key Rotation with Infisical
+- [LangChain](https://openrouter.ai/docs/guides/community/langchain.md): Using OpenRouter with LangChain
+- [Langfuse](https://openrouter.ai/docs/guides/community/langfuse.md): Using OpenRouter with Langfuse
+- [LiveKit](https://openrouter.ai/docs/guides/community/livekit.md): Using OpenRouter with LiveKit Agents
+- [Mastra](https://openrouter.ai/docs/guides/community/mastra.md): Using OpenRouter with Mastra
+- [OpenAI SDK](https://openrouter.ai/docs/guides/community/openai-sdk.md): Using OpenRouter with OpenAI SDK
+- [PydanticAI](https://openrouter.ai/docs/guides/community/pydantic-ai.md): Using OpenRouter with PydanticAI
+- [Replit](https://openrouter.ai/docs/guides/community/replit.md): Using OpenRouter with Replit Agent and Replit Apps
+- [TanStack AI](https://openrouter.ai/docs/guides/community/tanstack-ai.md): Using OpenRouter with TanStack AI
+- [Vercel AI SDK](https://openrouter.ai/docs/guides/community/vercel-ai-sdk.md): Using OpenRouter with Vercel AI SDK
+- [Xcode](https://openrouter.ai/docs/guides/community/xcode.md): Using OpenRouter with Apple Intelligence in Xcode
+- [Zapier](https://openrouter.ai/docs/guides/community/zapier.md): Build AI automations with OpenRouter & Zapier
+- [Broadcast](https://openrouter.ai/docs/guides/features/broadcast.md): Send traces to external observability platforms
+- [Arize AX](https://openrouter.ai/docs/guides/features/broadcast/arize.md): Send traces to Arize AX
+- [Braintrust](https://openrouter.ai/docs/guides/features/broadcast/braintrust.md): Send traces to Braintrust
+- [ClickHouse](https://openrouter.ai/docs/guides/features/broadcast/clickhouse.md): Send traces to ClickHouse
+- [Datadog](https://openrouter.ai/docs/guides/features/broadcast/datadog.md): Send traces to Datadog
+- [Grafana Cloud](https://openrouter.ai/docs/guides/features/broadcast/grafana.md): Send traces to Grafana Cloud
+- [Langfuse](https://openrouter.ai/docs/guides/features/broadcast/langfuse.md): Send traces to Langfuse
+- [LangSmith](https://openrouter.ai/docs/guides/features/broadcast/langsmith.md): Send traces to LangSmith
+- [New Relic](https://openrouter.ai/docs/guides/features/broadcast/newrelic.md): Send traces to New Relic
+- [Comet Opik](https://openrouter.ai/docs/guides/features/broadcast/opik.md): Send traces to Comet Opik
+- [OpenTelemetry Collector](https://openrouter.ai/docs/guides/features/broadcast/otel-collector.md): Send traces to any OpenTelemetry-compatible backend
+- [PostHog](https://openrouter.ai/docs/guides/features/broadcast/posthog.md): Send traces to PostHog
+- [Raindrop](https://openrouter.ai/docs/guides/features/broadcast/raindrop.md): Send traces to Raindrop
+- [Ramp](https://openrouter.ai/docs/guides/features/broadcast/ramp.md): Send traces to Ramp
+- [S3 / S3-Compatible](https://openrouter.ai/docs/guides/features/broadcast/s3.md): Send traces to Amazon S3 or S3-compatible storage
+- [Sentry](https://openrouter.ai/docs/guides/features/broadcast/sentry.md): Send traces to Sentry
+- [Snowflake](https://openrouter.ai/docs/guides/features/broadcast/snowflake.md): Send traces to Snowflake
+- [W&B Weave](https://openrouter.ai/docs/guides/features/broadcast/weave.md): Send traces to W&B Weave
+- [Webhook](https://openrouter.ai/docs/guides/features/broadcast/webhook.md): Send traces to any HTTP endpoint
+- [Custom Classifiers](https://openrouter.ai/docs/guides/features/classifiers.md): Automatically categorize every LLM generation in your workspace
+- [Guardrails](https://openrouter.ai/docs/guides/features/guardrails.md): Control spending and model access for your organization
+- [Prompt Injection Detection](https://openrouter.ai/docs/guides/features/guardrails/prompt-injection.md): Regex-based prompt injection guardrail patterns
+- [Allowlist](https://openrouter.ai/docs/guides/features/guardrails/prompt-injection/allowlist.md): Exclude known-safe phrases from prompt injection detection
+- [Sensitive Info Guardrail](https://openrouter.ai/docs/guides/features/guardrails/sensitive-info.md): Automatically detect and handle sensitive information in API requests
+- [Input & Output Logging](https://openrouter.ai/docs/guides/features/input-output-logging.md): Privately store and review your prompts and completions
+- [Message Transforms](https://openrouter.ai/docs/guides/features/message-transforms.md): Transform prompt messages
+- [Plugins](https://openrouter.ai/docs/guides/features/plugins.md): Extend model capabilities with OpenRouter plugins
+- [Fusion](https://openrouter.ai/docs/guides/features/plugins/fusion.md): Multi-model analysis with a judge model
+- [Response Healing](https://openrouter.ai/docs/guides/features/plugins/response-healing.md): Automatically fix malformed JSON responses
+- [Web Search](https://openrouter.ai/docs/guides/features/plugins/web-search.md): Model-agnostic grounding
+- [Presets](https://openrouter.ai/docs/guides/features/presets.md): Manage your LLM configurations
+- [Response Caching](https://openrouter.ai/docs/guides/features/response-caching.md): Cache responses for identical API requests to save time and money
+- [Router Metadata](https://openrouter.ai/docs/guides/features/router-metadata.md): Surface routing decisions on every response with a single opt-in header
+- [Server Tools](https://openrouter.ai/docs/guides/features/server-tools.md): Tools operated by OpenRouter that models can call during request
+- [Advisor](https://openrouter.ai/docs/guides/features/server-tools/advisor.md): Consult a stronger model mid-generation as a server tool
+- [Apply Patch](https://openrouter.ai/docs/guides/features/server-tools/apply-patch.md): Let models propose file changes via V4A diffs
+- [Bash](https://openrouter.ai/docs/guides/features/server-tools/bash.md): Give any model a sandboxed shell to run commands server-side
+- [Datetime](https://openrouter.ai/docs/guides/features/server-tools/datetime.md): Give any model access to the current date and time
+- [Fusion](https://openrouter.ai/docs/guides/features/server-tools/fusion.md): Multi-model deliberation as a server tool
+- [Image Generation](https://openrouter.ai/docs/guides/features/server-tools/image-generation.md): Generate images from text prompts with any model
+- [Subagent](https://openrouter.ai/docs/guides/features/server-tools/subagent.md): Delegate tasks to a smaller, faster model as a server tool
+- [Web Fetch](https://openrouter.ai/docs/guides/features/server-tools/web-fetch.md): Give any model the ability to fetch content from URLs
+- [Web Search](https://openrouter.ai/docs/guides/features/server-tools/web-search.md): Give any model access to real-time web information
+- [Service Tiers](https://openrouter.ai/docs/guides/features/service-tiers.md): Control cost and latency tradeoffs with service tier selection
+- [Sovereign AI](https://openrouter.ai/docs/guides/features/sovereign-ai.md): Keep AI workloads within national and regional boundaries
+- [Structured Outputs](https://openrouter.ai/docs/guides/features/structured-outputs.md): Return structured data from your models
+- [Tool & Function Calling](https://openrouter.ai/docs/guides/features/tool-calling.md): Use tools in your prompts
+- [Workspaces](https://openrouter.ai/docs/guides/features/workspaces.md): Organize your projects, teams, and agents into separate environments
+- [Workspace Budgets](https://openrouter.ai/docs/guides/features/workspaces/workspace-budgets.md): Set spending limits per workspace with automatic enforcement
+- [Zero Data Retention](https://openrouter.ai/docs/guides/features/zdr.md): How OpenRouter gives you control over your data
+- [Zero Completion Insurance](https://openrouter.ai/docs/guides/features/zero-completion-insurance.md): OpenRouter will not charge you for zero token responses
+- [BYOK](https://openrouter.ai/docs/guides/overview/auth/byok.md): Bring your own provider API keys
+- [Management API Keys](https://openrouter.ai/docs/guides/overview/auth/management-api-keys.md): Manage API keys programmatically
+- [OAuth PKCE](https://openrouter.ai/docs/guides/overview/auth/oauth.md): Connect your users to OpenRouter
+- [MCP](https://openrouter.ai/docs/guides/overview/mcp-server.md): Connect your AI coding tools to OpenRouter over MCP
+- [Models](https://openrouter.ai/docs/guides/overview/models.md): One API for hundreds of models
+- [Audio](https://openrouter.ai/docs/guides/overview/multimodal/audio.md): How to send and receive audio with OpenRouter models
+- [Image Generation](https://openrouter.ai/docs/guides/overview/multimodal/image-generation.md): How to generate images with OpenRouter's dedicated Image API
+- [Image Inputs](https://openrouter.ai/docs/guides/overview/multimodal/image-understanding.md): How to send images to OpenRouter models
+- [Multimodal Capabilities](https://openrouter.ai/docs/guides/overview/multimodal/overview.md): Send images, PDFs, audio, and video to OpenRouter models, generate speech from text, or transcribe audio to text
+- [PDF Inputs](https://openrouter.ai/docs/guides/overview/multimodal/pdfs.md): How to send PDFs to OpenRouter models
+- [Speech-to-Text](https://openrouter.ai/docs/guides/overview/multimodal/stt.md): How to transcribe audio into text with OpenRouter models
+- [Text-to-Speech](https://openrouter.ai/docs/guides/overview/multimodal/tts.md): How to generate speech audio from text with OpenRouter models
+- [Video Generation](https://openrouter.ai/docs/guides/overview/multimodal/video-generation.md): How to generate videos with OpenRouter models
+- [Video Inputs](https://openrouter.ai/docs/guides/overview/multimodal/videos.md): How to send video files to OpenRouter models
+- [Principles](https://openrouter.ai/docs/guides/overview/principles.md): Core principles and values of OpenRouter
+- [Report Feedback](https://openrouter.ai/docs/guides/overview/report-feedback.md)
+- [Stripe Projects](https://openrouter.ai/docs/guides/overview/stripe-projects.md): Add OpenRouter to your app with the Stripe Projects CLI
+- [Data Collection](https://openrouter.ai/docs/guides/privacy/data-collection.md): What data OpenRouter collects
+- [Provider Logging](https://openrouter.ai/docs/guides/privacy/provider-logging.md): Provider logging and data retention policies
+- [Auto Exacto](https://openrouter.ai/docs/guides/routing/auto-exacto.md): Automatic tool-calling provider optimization
+- [Model Fallbacks](https://openrouter.ai/docs/guides/routing/model-fallbacks.md): Automatic failover between models
+- [Exacto Variant](https://openrouter.ai/docs/guides/routing/model-variants/exacto.md): Route requests with quality-first provider sorting
+- [Extended Variant](https://openrouter.ai/docs/guides/routing/model-variants/extended.md): Extended context windows with :extended
+- [Free Variant](https://openrouter.ai/docs/guides/routing/model-variants/free.md): Access free models with the :free variant
+- [Nitro Variant](https://openrouter.ai/docs/guides/routing/model-variants/nitro.md): High-speed model inference with :nitro
+- [Online Variant](https://openrouter.ai/docs/guides/routing/model-variants/online.md): Real-time web search with :online
+- [Thinking Variant](https://openrouter.ai/docs/guides/routing/model-variants/thinking.md): Enable extended reasoning with :thinking
+- [Private Models](https://openrouter.ai/docs/guides/routing/private-models.md): Bring your own model to OpenRouter, scoped to approved users and organizations
+- [Provider Routing](https://openrouter.ai/docs/guides/routing/provider-selection.md): Route requests to the best provider
+- [Auto Router](https://openrouter.ai/docs/guides/routing/routers/auto-router.md): Automatically select the best model for your prompt
+- [Body Builder](https://openrouter.ai/docs/guides/routing/routers/body-builder.md): Generate multiple parallel API requests from natural language
+- [Free Models Router](https://openrouter.ai/docs/guides/routing/routers/free-router.md): Get free AI inference by routing to available free models
+- [Fusion Router](https://openrouter.ai/docs/guides/routing/routers/fusion-router.md): Multi-model deliberation as a model slug
+- [Latest Model Resolution](https://openrouter.ai/docs/guides/routing/routers/latest-resolution.md): Always target the newest version of a model family with a single slug
+- [Pareto Router](https://openrouter.ai/docs/guides/routing/routers/pareto-router.md): Pick a coding model by minimum coding score without choosing a specific model
+- [Quickstart](https://openrouter.ai/docs/quickstart.md): Get started with OpenRouter
+
+## OpenAPI Specs
+
+- [openapi](https://openrouter.ai/docs/openapi/openapi.yaml)

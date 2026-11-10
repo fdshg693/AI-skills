@@ -1,0 +1,53 @@
+version: ccusage 20.0.20
+fetched_at: '2026-09-07T17:21:13.005971+00:00'
+invocation: ccusage blocks
+usage:
+- ccusage blocks <OPTIONS>
+description: Show usage report grouped by session billing blocks
+commands: []
+arguments: []
+options:
+- name: -s, --since <since>
+  description: Filter from date (YYYYMMDD format)
+- name: -u, --until <until>
+  description: Filter until date (YYYYMMDD format)
+- name: -j, --json
+  description: 'Output in JSON format (default: false)'
+- name: -m, --mode [mode]
+  description: 'Cost calculation mode (default: auto, choices: auto | calculate | display)'
+- name: -d, --debug
+  description: 'Show pricing mismatch information for debugging (default: false)'
+- name: --debug-samples [debug-samples]
+  description: 'Number of sample discrepancies to show in debug output (default: 5)'
+- name: -o, --order [order]
+  description: 'Sort order (default: asc, choices: desc | asc)'
+- name: -b, --breakdown
+  description: 'Show per-model cost breakdown (default: false)'
+- name: -O, --offline
+  description: 'Use cached pricing data for Claude models instead of fetching from API (default: false)'
+- name: --no-offline
+  description: Negatable of -O, --offline
+- name: --single-thread
+  description: 'Disable parallel JSONL file loading (default: false)'
+- name: --color
+  description: 'Enable colored output. FORCE_COLOR=1 has the same effect. (default: auto)'
+- name: --no-color
+  description: 'Disable colored output. NO_COLOR=1 has the same effect. (default: auto)'
+- name: -z, --timezone <timezone>
+  description: 'Timezone for date grouping (e.g., UTC, America/New_York, Asia/Tokyo) (default: system timezone)'
+- name: --config <config>
+  description: 'Path to configuration file (default: auto-discovery)'
+- name: --compact
+  description: 'Force compact mode for narrow displays (better for screenshots) (default: false)'
+- name: -h, --help
+  description: Display this help message
+- name: -v, --version
+  description: Display this version
+- name: -a, --active
+  description: 'Show only active block with projections (default: false)'
+- name: -r, --recent
+  description: 'Show blocks from last 3 days (including active) (default: false)'
+- name: -t, --token-limit <token-limit>
+  description: Token limit for quota warnings (e.g., 500000 or "max")
+- name: '-n, --session-length [session-length] Session block duration in hours (default: 5)'
+  description: ''

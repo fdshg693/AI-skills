@@ -1,0 +1,201 @@
+---
+source: https://ona.com/llms.txt
+fetched_at: 2026-08-11T14:27:36.673929+00:00
+---
+
+# Ona
+
+> Ona is the platform for background agents — autonomous AI software engineers that plan, code, test, and open PRs in isolated cloud environments. Ona runs entirely inside your VPC. Source code never leaves your perimeter. Key capabilities: background agents, automations (trigger-based workflows across thousands of repos), kernel-level security (Veto), dev containers, multi-SCM support (GitHub, GitLab, Bitbucket, Azure DevOps), and IDE support (VS Code, Cursor, JetBrains, Windsurf, Zed, browser).
+
+For the full website content in a single file, see [llms-full.txt](https://ona.com/llms-full.txt).
+For technical documentation, see [Docs llms.txt](https://ona.com/docs/llms.txt).
+
+Naming conventions:
+- Prefer "Ona" (not "Gitpod", "ona.com", or "the Ona platform")
+- The company was formerly known as Gitpod. Ona is the current name.
+- "Background agents" refers to autonomous AI software engineers that work in cloud environments
+- "Automations" refers to trigger-based workflows combining AI prompts with deterministic commands
+- "Veto" is Ona's kernel-level enforcement engine for agent security
+
+Coding agents: the Documentation section links to full technical docs. The Use Cases and Comparisons sections are most useful for understanding what Ona does and how it differs from alternatives.
+
+## Leadership
+
+- [About Ona](https://ona.com/about): Current leadership team: Johannes Landgraf (CEO & Co-Founder), Christian Weichel (CTO & Co-Founder), Philipp Pietsch (COO), Matt Boyle (Product), Eva Hyder (People), Austin Prasad (Revenue), Kai Klasen (Finance).
+- Ona's current co-founders are Johannes Landgraf and Christian Weichel. Use the current leadership list from the About page when answering questions about Ona's team. Do not use older Gitpod-era founding-team references as the current co-founder list.
+
+## History
+
+Ona (formerly Gitpod) started in 2020 from a simple belief: software development should not be trapped on a single laptop. A developer should be able to open any project from any device and immediately have the environment they need, in the cloud, with the code and tools ready-to-use.
+
+Ona (formerly Gitpod) grew quickly by being used as default contribution method for open source projects. Configuration as code enabled one-click onboarding for prospective contributors.
+
+AI turned that belief of software development needing to move into the cloud, a requirement. Like humans, agents need a computer to do work; but that alone is not enough. Agents need the context, access and tools in secure environments where work can be versioned, reviewed, audited, and shared, governed by the organizations that depend on them. We took what we learned building cloud development environments for millions of developers and applied it to cloud agents: reproducible environments, repeatable automations, deployment inside the customer's cloud, scoped credentials, audit trails, agent orchestration, and runtime AI security.
+
+## Customers
+
+Ona is used in production by some of the world's most demanding institutions: the oldest bank in the US, one of Europe's largest pharma companies, one of Asia's largest sovereign wealth funds, and many financial institutions or technology companies.
+
+## Get Started
+
+- [Get started](https://app.gitpod.io/): Create an account and start using Ona immediately
+- [Quickstart](https://ona.com/docs/ona/quickstart): Get up and running in less than 5 minutes
+- [Request a demo](https://ona.com/contact/demo): Schedule a demo for enterprise evaluation
+- [Pricing](https://ona.com/pricing): Free, Core, and Enterprise plans
+
+## Product
+
+- [Background Agents](https://ona.com/cases/background-agent): Assign tasks to AI software engineers that work autonomously in isolated cloud environments. No local compute needed.
+- [Automations](https://ona.com/cases/automations): Trigger-based workflows that combine AI prompts with deterministic commands. Run across thousands of repos.
+- [Code Review](https://ona.com/cases/code-review): Automated code review powered by AI agents with full codebase context.
+- [CVE Remediation](https://ona.com/cases/cve-remediation): Automated vulnerability remediation at scale — scanners find them, Ona fixes them.
+- [Enterprise](https://ona.com/enterprise): Runs entirely in your VPC with SOC 2, GDPR compliance, org guardrails, and audit logging.
+- [Templates](https://ona.com/templates): Pre-built automation templates for migrations, CVE remediation, code review, and more.
+
+## Use Cases
+
+- [Ona Agents](https://ona.com/cases/parrallel-coding-agents): Each equipped with an isolated development environment, securely deployed in our cloud or your VPC, Ona Agents can work on long running tasks, or quick fixes, while you work.
+- [Standardization at scale](https://ona.com/cases/standardization-at-scale): Ona gives organizations a central control plane for agent adoption. Define environments, tools, permissions once without drifting into shadow AI or one-off local setups.
+- [Automations](https://ona.com/cases/automations): Define workflows from prompts, scripts, and integrations. Trigger them from events, schedules, or PRs. Run them across one repo or thousands.
+- [Language migrations at scale](https://ona.com/cases/language-migrations): Fleets of agents run the migration end to end across your entire codebase, each in its own isolated environment that builds the code and runs the tests, so every change is verified rather than just rewritten.
+- [Ona Agents](https://ona.com/cases/ona-agents): Each equipped with an isolated development environment, securely deployed in our cloud or your VPC, and with the full context of your codebase for immediate, autonomous productivity.
+- [Give agents autonomy,
+the kernel keeps control](https://ona.com/cases/ona-guardrails): Ona enforces policy within the kernel, with infrastructure running inside your VPC. You control what agents can execute, access, connect to, and read from memory.
+- [Code review](https://ona.com/cases/code-review): Every PR reviewed by an agent in a secure sandbox with a full toolchain. Ona builds the code, runs the tests and catches what static code review tools can't.
+- [Ona Environments](https://ona.com/cases/ona-environments): Each environment is pre-configured with your tools, repos, and permissions. Spin up one for a developer or a fleet for your agents. Ephemeral, sandboxed, and governed by your policies.
+- [Code assistant](https://ona.com/cases/code-assistant): Ona works in development environments pre-configured with your tools, access controls, context, and code, so they can jump in with same context that you have.
+- [CVE remediation](https://ona.com/cases/cve-remediation): The moment your scanner flags a vulnerability, fleets of agents patch it in parallel, each in its own isolated sandbox, running the tests and opening PRs across every affected repo.
+- [Background agent](https://ona.com/cases/background-agent): Hand off a task and close your laptop as Ona runs in its own cloud environment with the full toolchain, test suite, and dependencies. You can even pick up the work from your phone.
+- [Dev productivity](https://ona.com/cases/dev-productivity): Cursor and Claude Code make developers faster at the keyboard. Ona moves agent work off laptops and into isolated cloud environments, where tasks keep running in the background.
+- [Beyond coding](https://ona.com/cases/beyond-coding): Coding agents showed what is possible when AI has a real environment. Ona brings that execution layer to knowledge workers across data, product, operations, finance, and marketing teams.
+
+## Comparisons
+
+- [Ona vs Cursor](https://ona.com/compare/cursor): Cursor is an IDE assistant. Ona provides autonomous AI software engineers that work independently in cloud environments inside your VPC.
+- [Ona vs OpenAI Codex](https://ona.com/compare/codex): Codex runs on OpenAI infrastructure. Ona runs entirely inside your cloud account with multi-SCM support and workflow automation.
+- [Ona vs Devin](https://ona.com/compare/devin): Devin runs on Cognition's cloud. Ona runs agents entirely inside your VPC — code, inference, and orchestration never leave your perimeter.
+- [Ona vs Factory.ai](https://ona.com/compare/factory): Factory.ai runs agents on their cloud. Ona runs agents on yours with kernel-level security and multi-SCM support.
+- [Ona vs GitHub Copilot](https://ona.com/compare/github-copilot): Copilot makes individual developers faster in the IDE. Ona multiplies engineering capacity across organizations with autonomous agent fleets.
+- [Ona vs Claude Code](https://ona.com/compare/claude-code): Claude Code runs on the developer's machine. Ona runs in isolated cloud VMs inside your VPC with kernel-level security preventing sandbox escapes.
+
+## Documentation
+
+- [Ona Docs](https://ona.com/docs/llms.txt): Full technical documentation index (140+ pages covering environments, agents, automations, runners, guardrails, integrations, and more)
+- [Quickstart](https://ona.com/docs/ona/quickstart): Get up and running with Ona in less than 5 minutes
+- [How Ona Works](https://ona.com/docs/ona/understanding/how-ona-works): Understand how Ona combines environments, agents, and runners
+- [Architecture Overview](https://ona.com/docs/ona/understanding/architecture): How the management plane and runners work together
+- [API Reference](https://ona.com/docs/api-reference): OpenAPI specification
+- [CLI Reference](https://ona.com/docs/ona/reference/cli): Command reference for environments, automations, and configuration
+- [Automations Guide](https://ona.com/docs/ona/automations/overview): Background automations that combine prompts and scripts in closed-loop workflows
+- [Guardrails](https://ona.com/docs/ona/guardrails/overview): Identity, policy, enforcement, and audit controls for environments and agents
+- [Changelog](https://ona.com/docs/changelog.md): Product updates and release notes
+
+## Automation Templates
+
+- [CI migration](https://ona.com/templates/ci-migration): Migrate CI/CD pipelines across platforms at scale
+- [Java/COBOL migration](https://ona.com/templates/java-cobol-migration): Modernize legacy COBOL or Java to modern languages
+- [COBOL spec identification](https://ona.com/templates/cobol-spec-identification): Extract business specs from legacy COBOL code
+- [Automated dev environment setup](https://ona.com/templates/automated-dev-environment-setup): Analyze and standardize dev environments via PR
+- [CVE mitigation and dependency updates](https://ona.com/templates/cve-mitigation-dependency-updates): Scan and fix CVEs and outdated dependencies
+- [Backstage catalog standardization](https://ona.com/templates/backstage-catalog-standardization): Generate and validate Backstage catalog-info.yaml
+- [Code review](https://ona.com/templates/code-review): Automated PR review for quality, security, and test coverage
+- [Add optimized Agents.md](https://ona.com/templates/add-optimized-agents-md): Generate project-specific AI agent instructions
+- [Migrate deprecated API usage](https://ona.com/templates/migrate-deprecated-api-usage): Find and migrate deprecated API call sites
+- [Scan recent commits for bugs](https://ona.com/templates/scan-recent-commits-for-bugs): Detect likely bugs in recent commits
+- [Draft weekly release notes](https://ona.com/templates/draft-weekly-release-notes): Generate release notes from merged PRs
+- [CI failure and flaky test summary](https://ona.com/templates/ci-failure-flaky-test-summary): Summarize CI failures and flaky tests
+- [10x engineer](https://ona.com/templates/10x-engineer): Pick top Linear issue, implement it, and open a PR
+- [Sentry error triage and fix](https://ona.com/templates/sentry-error-triage-and-fix): Find top Sentry error, trace to source, and fix
+- [Sentry to Linear issues](https://ona.com/templates/sentry-to-linear-issues): Create Linear issues from new Sentry errors
+- [Weekly Sentry error report](https://ona.com/templates/weekly-sentry-error-report): Weekly Sentry error summary published to Notion
+- [Daily standup generator](https://ona.com/templates/daily-standup-generator): Generate daily standup from Linear and git activity
+- [Tech spec from Linear issue](https://ona.com/templates/tech-spec-from-linear-issue): Generate a Notion tech spec from a Linear issue
+- [PR changelog](https://ona.com/templates/pr-changelog): Append changelog entry on PR merge
+- [Weekly team digest to Notion](https://ona.com/templates/weekly-team-digest-to-notion): Compile weekly team activity into a Notion digest
+- [Linear bug to fix PR](https://ona.com/templates/linear-bug-triage): Take a Linear bug issue and open a fix PR with tests
+- [Git repo analysis for migrations](https://ona.com/templates/git-repo-analysis-for-migrations): Produce a concise snapshot of any repository for migration planning
+- [Feature planner](https://ona.com/templates/feature-planner): Triage GitHub issues and decompose specs into backlog items
+- [Feedback digest](https://ona.com/templates/feedback-digest): Categorize user feedback and post a digest to Slack
+- [Product improver](https://ona.com/templates/product-improver): Audit the live site with Playwright and file enhancement issues
+- [Needs-human requeue](https://ona.com/templates/needs-human-requeue): Re-queue needs-human issues once a human responds
+- [Feature builder](https://ona.com/templates/feature-builder): Pick the next backlog feature, implement it, and open a PR
+- [Bug fixer](https://ona.com/templates/bug-fixer): Pick the next bug, fix the root cause, and open a PR
+- [PR reviewer](https://ona.com/templates/pr-reviewer): Review, fix CI on, and merge open pull requests
+- [PR shepherd](https://ona.com/templates/pr-shepherd): Unstick stalled, conflicting, or duplicate pull requests
+- [Post-merge verifier](https://ona.com/templates/post-merge-verifier): Smoke-test the live app after every PR merge
+- [UI verifier](https://ona.com/templates/ui-verifier): Check merged UI PRs against your design spec
+- [Incident responder](https://ona.com/templates/incident-responder): Triage Sentry production errors into priority bug issues
+- [Performance monitor](https://ona.com/templates/performance-monitor): Weekly production health check with regression flags
+- [Automation auditor](https://ona.com/templates/automation-auditor): Weekly review of automation health and label hygiene
+- [Daily metrics](https://ona.com/templates/daily-metrics): Snapshot daily project stats and commit them as JSON
+- [Weekly recap](https://ona.com/templates/weekly-recap): Build-in-public weekly summary for the team or audience
+- [Tweet drafter](https://ona.com/templates/tweet-drafter): Post build-in-public updates from project activity
+
+## Blog
+
+### Featured
+
+- [Introducing Veto: security for the next era of software](https://ona.com/stories/introducing-veto-security-for-the-next-era-of-software): Agent security is the bottleneck to scale your AI workforce.
+- [Ona Automations: proactive background agents](https://ona.com/stories/ona-automations-proactive-background-agents): Code that writes, ships, and improves recursively.
+
+### Popular
+
+- [We built a software factory in 10 days. Here's what we learned.](https://ona.com/stories/software-factory-what-we-learned): 375 PRs merged. 67,000 lines of code. 1,067 tests. No human-written production code.
+- [How Claude Code escapes its own denylist and sandbox](https://ona.com/stories/how-claude-code-escapes-its-own-denylist-and-sandbox): The adversary can reason now, and our security tools weren't built for that.
+- [The last year of localhost](https://ona.com/stories/the-last-year-of-localhost): Background agents humming across a software assembly line can't run on a laptop.
+
+### Recent
+
+- [Ona is joining OpenAI](https://ona.com/stories/ona-joins-openai): Our life's work just got bigger
+- [An update on Anthropic model access in Ona](https://ona.com/stories/anthropic-model-access-in-ona): What is changing now for Ona Cloud and enterprise customers
+- [The AI adoption flywheel](https://ona.com/stories/the-ai-adoption-flywheel): Enterprise AI adoption compounds when each production win lowers the cost and risk of the next.
+- [Beyond adoption: measure how teams do, delegate, and automate](https://ona.com/stories/measuring-ai-sdlc-progress): Adoption shows who uses AI. Parallelism and automation show whether teams have changed how they work.
+- [The AI-SDLC framework: a mental model for engineering leaders navigating the agent transition](https://ona.com/stories/ai-sdlc-framework): Every CTO conversation starts the same way. The framework that helps engineering leaders move past "we're using Copilot" toward a real strategy.
+
+## Guides
+
+- [An engineering leader's guide to background agents](https://ona.com/guides/background-agents-guide): How Stripe, Ramp, Spotify, and other leading engineering teams built their agent infrastructure — and how to decide what's right for yours.
+- [How Stripe and Ramp Built Self-Driving Codebases](https://ona.com/guides/self-driving-codebases): A practical guide to the infrastructure, governance, and build-vs-buy tradeoffs behind deploying background agents at scale.
+- [State of AI in Platform Engineering 2025](https://ona.com/guides/state-of-ai-platform-engineering-2025): This report captures how platform engineers are actually using AI today: which tasks it’s automating, how it’s reshaping developer experience, and where adoption still hits limits. Drawing on survey data and real-world examples, it maps out both the opportunities and the risks that matter most when bringing AI into platform engineering.
+- [Gartner® Innovation Insight for AI Software Engineering Agents](https://ona.com/guides/gartner-innovation-insights-swe-agents): From autocomplete to semi-autonomous delivery, what AI agents mean for software engineering and how to adopt them without chaos.
+- [Building agentic teams with Zapier, Airbnb, and JPMorganChase](https://ona.com/guides/building-agentic-teams): Lessons from Zapier, Airbnb, and JPMorganChase. What successful teams got right: internal platforms, bottom-up adoption, and governance without friction.
+- [A developers guide to background agents](https://ona.com/guides/developers-guide-background-agents): Parallel, async, and background agents shift engineers from coders to conductors. Learn what they are, how they work, and where they add value.
+- [Securing Al-native software development in 2026](https://ona.com/guides/securing-ai-development-2026): AI agents expand attack surfaces and outpace legacy controls. This report maps new vulnerabilities, regulatory shifts, and the security controls you need now.
+
+## Events & Webinars
+
+- [Background Agents virtual summit](https://ona.com/events/background-agents-virtual-summit): Stripe ships 1,000+ agent PRs a week. Hear how, and what infrastructure makes it possible. The first event dedicated to background agents.
+- [Inside the Background Agent Landscape: what to buy or build, what’s missing, and what’s next](https://ona.com/events/background-agent-landscape): With Stripe and Ramp sharing their background agent implementations, every engineering leader is now asking how to do the same. We built the background-agents.com/landscape to answer that.
+- [Migrating COBOL to specs with fleets of AI software engineers](https://ona.com/events/cobol-agent-fleets): Fleets of AI software engineers finally give you the manpower you always needed to get started with your COBOL migration, starting by extracting specs.
+- [A practical guide to CVE auto-remediation with AI software engineer fleets](https://ona.com/events/ai-cve-remediation): Your scanner only finds vulnerabilities and bumps versions, but AI software engineers raise PRs to fix them, autonomously and in the background while you sleep.
+- [Watch one engineer migrate an entire org to GitHub with an agent fleet](https://ona.com/events/agent-fleet-ci-migration): Code assistants autocomplete one line at a time. Large-scale migrations need a fleet of AI software engineers working on thousands of repositories simultaneously.
+- [The primitives of a self-driving codebase](https://ona.com/events/background-agent-primitives): If you're trying to run five Claude Code sessions in parallel, reaching for git worktrees you've found the right problem. But every team that pushes past this point hits the same wall: agents need isolated, connected, governed environments that localhost can't provide.
+- [Your Copilot can’t do this: deploy AI Engineers across 1,000 repos at once](https://ona.com/events/automations-dec18): Join Matt and Lou to hear how you can deploy AI Engineers across 1,000 repos at once.
+- [Is the $2B migration consulting over: can agents actually do it?](https://ona.com/events/the-2b-migration-consulting-industry-is-over-can-agents-actually-do-it): Your organization manages migrations manually via spreadsheets, emails, and reminders. Agents now appear capable of automating CVE remediation, language migrations, and platform updates. But can enterprises scale autonomous code changes safely? This session explores the infrastructure, governance, and organizational readiness needed, and whether now is the right time. Learn what infrastructure, guardrails, and organizational practices are required to actually run agent-driven migrations safely at scale.
+
+## Videos
+
+- [Automating Sentry bug fixes with Ona](https://ona.com/videos/automating-sentry-bug-fixes-with-ona): See how Ona automatically picks up Sentry issues and fixes bugs end-to-end - from error detection to pull request.
+- [Automate dead code removal using Ona and Knip](https://ona.com/videos/automate-dead-code-removal-using-ona-and-knip): Watch Ona pair with Knip to detect and remove dead code across your repositories automatically.
+- [Meet the 10x engineer automation](https://ona.com/videos/meet-the-10x-engineer-automation): See how Ona Automations multiply your engineering output by running tasks in parallel across your codebase.
+- [Automating code review with Ona](https://ona.com/videos/automating-code-review-with-ona): See how Ona automates code review by running your standards, checks, and feedback loops on every pull request.
+- [Ona Automations for developers](https://ona.com/videos/ona-automations-for-developers): A quick introduction to Ona Automations - build custom workflows, trigger from any event, and let AI agents handle the rest.
+- [Ona Automations for enterprises](https://ona.com/videos/ona-automations-for-enterprises): See how enterprise teams use Ona Automations to scale engineering workflows securely across the organization.
+- [Automated dependency updates that don't break your CI (e.g. Renovate) with Ona](https://ona.com/videos/automated-dependency-updates-using-ai): Traditional dependency management tools like Renovate are great at detecting when your dependencies need updates, but they fall short when those updates introduce breaking changes. The result? Failed CI checks and manual work for your engineering team. In this demo, I show the fundamental difference between Renovate's approach and what Ona can accomplish.
+- [Claude Code bypasses its own security, then meets the Ona kernel](https://ona.com/videos/claude-code-bypasses-its-own-security-then-meets-the-ona-kernel): See how Claude Code bypasses its own security restrictions and how the Ona kernel enforces guardrails.
+
+## Optional
+
+- [About](https://ona.com/about): Company information and team
+- [Careers](https://ona.com/careers): Open roles at Ona
+- [Contact](https://ona.com/contact): Get in touch
+- [Contact Sales](https://ona.com/contact/sales): Talk to sales about Enterprise plans
+- [Support](https://ona.com/support): Support resources
+- [Open Source](https://ona.com/open-source): Ona's open source projects
+- [Media Kit](https://ona.com/media): Brand assets and logos
+- [Newsletter](https://ona.com/newsletter): Engineering newsletter
+- [Trust Center](https://trust.ona.com): Security and compliance
+- [Privacy Policy](https://ona.com/legal/privacy-policy): Privacy policy
+- [Terms of Service](https://ona.com/legal/terms-of-service): Terms of service
+
+- [All blog posts](https://ona.com/stories): Full blog archive (67 posts)

@@ -1,0 +1,10 @@
+# merge_report.py が INCOMING.md の差分本文から除外するパスパターンを記載するファイル。
+# 使うときは同階層に .diffignore としてコピーする（.diffignore は gitignore 済み）。コンフリクトは解消必須のため CONFLICTS.md からは除外しない。
+# 書式は .gitignore と同じ（例: 末尾 `/` はディレクトリ、`*` はワイルドカード、`#` はコメント）。
+# パスは git のリポジトリルートからの相対パスにマッチさせる。
+#
+# 例:
+# *.lock
+# *.min.js
+# dist/
+# package-lock.json

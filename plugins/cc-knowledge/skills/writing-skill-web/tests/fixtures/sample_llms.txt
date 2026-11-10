@@ -1,0 +1,20 @@
+---
+source: https://example.com/llms.txt
+fetched_at: 2026-01-01T00:00:00+00:00
+---
+
+## Getting Started
+
+- [Quickstart](https://example.com/docs/quickstart): Install and run your first example.
+- [Installation](https://example.com/docs/installation): Supported platforms and package managers.
+
+## Guides
+
+- [Authentication](https://example.com/docs/guides/auth): Configure API keys and OAuth.
+- [Webhooks](https://example.com/docs/guides/webhooks): Receive event callbacks.
+- [Rate Limits](https://example.com/docs/guides/rate-limits): Understand throttling behavior.
+
+## Reference
+
+- [API Reference](https://example.com/docs/reference/api): Full endpoint reference.
+- [Changelog](https://example.com/docs/reference/changelog): Release notes.

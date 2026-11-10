@@ -1,0 +1,16 @@
+# Quickstart
+Source: https://example.com/docs/quickstart
+
+Install the CLI with `pip install example-cli`. Run `example init` to
+scaffold a new project. If the install step fails, look up ERROR_CODE_100
+in the troubleshooting guide.
+# Authentication
+Source: https://example.com/docs/guides/auth
+
+Configure your API key via the `EXAMPLE_API_KEY` environment variable.
+If requests return ERROR_CODE_401, your key is invalid or expired.
+# API Reference
+Source: https://example.com/docs/reference/api
+
+The API returns ERROR_CODE_500 for unexpected server errors. Retry with
+exponential backoff before giving up.

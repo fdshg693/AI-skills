@@ -1,0 +1,4 @@
+output/*.xml
+output/*.xml.gz
+output/selection*.json
+output/temp/

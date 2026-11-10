@@ -1,0 +1,28 @@
+{
+  "source_repo": "colbymchenry/codegraph",
+  "ref": "main",
+  "docs_root": "site/src/content/docs",
+  "fetched_at": "2026-09-12T09:56:40.884460+00:00",
+  "files": [
+    "summary.md",
+    "core-concepts/how-it-works.md",
+    "core-concepts/knowledge-graph.md",
+    "core-concepts/resolution.md",
+    "getting-started/configuration.md",
+    "getting-started/installation.md",
+    "getting-started/introduction.md",
+    "getting-started/next-steps.md",
+    "getting-started/quickstart.md",
+    "getting-started/your-first-graph.md",
+    "guides/affected-tests.md",
+    "guides/framework-routes.md",
+    "guides/indexing.md",
+    "guides/viewer.md",
+    "reference/api.md",
+    "reference/cli.md",
+    "reference/integrations.md",
+    "reference/languages.md",
+    "reference/mcp-server.md",
+    "troubleshooting.md"
+  ]
+}

@@ -1,0 +1,86 @@
+version: ccusage 20.0.20
+fetched_at: '2026-09-07T17:21:13.005971+00:00'
+invocation: ccusage
+usage:
+- ccusage [daily] <OPTIONS>
+- ccusage <COMMANDS>
+description: ''
+commands:
+- name: daily
+  description: Show all detected coding (agent) CLI usage grouped by date
+- name: monthly
+  description: Show all detected coding (agent) CLI usage grouped by month
+- name: weekly
+  description: Show all detected coding (agent) CLI usage grouped by week
+- name: session
+  description: Show all detected coding (agent) CLI usage grouped by session
+- name: blocks
+  description: Show usage report grouped by session billing blocks
+- name: statusline
+  description: Display compact status line for Claude Code hooks with hybrid time+file caching (Beta)
+- name: claude
+  description: Show Claude Code usage commands
+- name: codex
+  description: Show Codex token usage commands
+- name: opencode
+  description: Show OpenCode token usage commands
+- name: amp
+  description: Show Amp token usage commands
+- name: droid
+  description: Show Droid usage commands
+- name: codebuff
+  description: Show Codebuff usage commands
+- name: hermes
+  description: Show Hermes usage commands
+- name: pi
+  description: Show pi-agent usage commands
+- name: goose
+  description: Show Goose usage commands
+- name: kilo
+  description: Show Kilo usage commands
+- name: copilot
+  description: Show GitHub Copilot CLI usage commands
+- name: gemini
+  description: Show Gemini CLI usage commands
+- name: kimi
+  description: Show Kimi usage commands
+- name: qwen
+  description: Show Qwen usage commands
+- name: openclaw
+  description: Show OpenClaw usage commands
+- name: grok
+  description: Show Grok Build CLI usage commands
+arguments: []
+options:
+- name: -j, --json
+  description: 'Output in JSON format (default: false)'
+- name: -s, --since <since>
+  description: Filter from date (YYYY-MM-DD or YYYYMMDD)
+- name: -u, --until <until>
+  description: Filter until date (inclusive)
+- name: -z, --timezone <timezone>
+  description: Timezone for date grouping (IANA)
+- name: --all
+  description: 'Accepted for compatibility; all detected supported agents are included by default (default: false)'
+- name: --sections <sections>
+  description: Emit multiple unified report sections from one load (daily, weekly, monthly, session)
+- name: --by-agent
+  description: 'Include per-agent JSON breakdowns in unified report rows (default: false)'
+- name: -O, --offline
+  description: 'Use cached pricing data where supported (default: false)'
+- name: --no-offline
+  description: Negatable of -O, --offline
+- name: --compact
+  description: 'Force compact table layout for narrow terminals (default: false)'
+- name: --no-cost
+  description: 'Hide cost information in table and JSON output (default: false)'
+- name: --color
+  description: 'Enable colored output. FORCE_COLOR=1 has the same effect. (default: auto)'
+- name: --no-color
+  description: 'Disable colored output. NO_COLOR=1 has the same effect. (default: auto)'
+- name: --config <config>
+  description: 'Path to configuration file (default: auto-discovery)'
+- name: -h, --help
+  description: Display this help message
+- name: -v, --version
+  description: Display this version

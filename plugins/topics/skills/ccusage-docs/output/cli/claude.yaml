@@ -1,0 +1,314 @@
+version: ccusage 20.0.20
+fetched_at: '2026-09-07T17:21:13.005971+00:00'
+invocation: ccusage claude
+usage:
+- ccusage claude <COMMANDS>
+description: Usage reports for claude.
+commands:
+- name: daily
+  description: Show usage report grouped by date
+- name: monthly
+  description: Show usage report grouped by month
+- name: weekly
+  description: Show usage report grouped by week
+- name: session
+  description: Show usage report grouped by conversation session
+- name: blocks
+  description: Show usage report grouped by session billing blocks
+- name: statusline
+  description: Display compact status line for Claude Code hooks with hybrid time+file caching (Beta)
+arguments: []
+options: []
+subcommands:
+  daily:
+    version: ccusage 20.0.20
+    fetched_at: '2026-09-07T17:21:13.005971+00:00'
+    invocation: ccusage claude daily
+    usage:
+    - ccusage claude daily <OPTIONS>
+    description: Show usage report grouped by date
+    commands: []
+    arguments: []
+    options:
+    - name: -s, --since <since>
+      description: Filter from date (YYYYMMDD format)
+    - name: -u, --until <until>
+      description: Filter until date (YYYYMMDD format)
+    - name: -j, --json
+      description: 'Output in JSON format (default: false)'
+    - name: -m, --mode [mode]
+      description: 'Cost calculation mode (default: auto, choices: auto | calculate | display)'
+    - name: -d, --debug
+      description: 'Show pricing mismatch information for debugging (default: false)'
+    - name: --debug-samples [debug-samples]
+      description: 'Number of sample discrepancies to show in debug output (default: 5)'
+    - name: -o, --order [order]
+      description: 'Sort order (default: asc, choices: desc | asc)'
+    - name: -b, --breakdown
+      description: 'Show per-model cost breakdown (default: false)'
+    - name: -O, --offline
+      description: 'Use cached pricing data for Claude models instead of fetching from API (default: false)'
+    - name: --no-offline
+      description: Negatable of -O, --offline
+    - name: --single-thread
+      description: 'Disable parallel JSONL file loading (default: false)'
+    - name: --color
+      description: 'Enable colored output. FORCE_COLOR=1 has the same effect. (default: auto)'
+    - name: --no-color
+      description: 'Disable colored output. NO_COLOR=1 has the same effect. (default: auto)'
+    - name: -z, --timezone <timezone>
+      description: 'Timezone for date grouping (e.g., UTC, America/New_York, Asia/Tokyo) (default: system timezone)'
+    - name: --config <config>
+      description: 'Path to configuration file (default: auto-discovery)'
+    - name: --compact
+      description: 'Force compact mode for narrow displays (better for screenshots) (default: false)'
+    - name: -h, --help
+      description: Display this help message
+    - name: -v, --version
+      description: Display this version
+    - name: -i, --instances
+      description: 'Show usage breakdown by project/instance (default: false)'
+    - name: -p, --project <project>
+      description: Filter to specific project name
+    - name: --project-aliases <project-aliases>
+      description: Comma-separated project aliases (e.g., 'ccusage=Usage Tracker,myproject=My Project')
+    - name: --last <last>
+      description: Show only the most recent N periods of the report (1 is today, this week, or this month)
+  monthly:
+    version: ccusage 20.0.20
+    fetched_at: '2026-09-07T17:21:13.005971+00:00'
+    invocation: ccusage claude monthly
+    usage:
+    - ccusage claude monthly <OPTIONS>
+    description: Show usage report grouped by month
+    commands: []
+    arguments: []
+    options:
+    - name: -s, --since <since>
+      description: Filter from date (YYYYMMDD format)
+    - name: -u, --until <until>
+      description: Filter until date (YYYYMMDD format)
+    - name: -j, --json
+      description: 'Output in JSON format (default: false)'
+    - name: -m, --mode [mode]
+      description: 'Cost calculation mode (default: auto, choices: auto | calculate | display)'
+    - name: -d, --debug
+      description: 'Show pricing mismatch information for debugging (default: false)'
+    - name: --debug-samples [debug-samples]
+      description: 'Number of sample discrepancies to show in debug output (default: 5)'
+    - name: -o, --order [order]
+      description: 'Sort order (default: asc, choices: desc | asc)'
+    - name: -b, --breakdown
+      description: 'Show per-model cost breakdown (default: false)'
+    - name: -O, --offline
+      description: 'Use cached pricing data for Claude models instead of fetching from API (default: false)'
+    - name: --no-offline
+      description: Negatable of -O, --offline
+    - name: --single-thread
+      description: 'Disable parallel JSONL file loading (default: false)'
+    - name: --color
+      description: 'Enable colored output. FORCE_COLOR=1 has the same effect. (default: auto)'
+    - name: --no-color
+      description: 'Disable colored output. NO_COLOR=1 has the same effect. (default: auto)'
+    - name: -z, --timezone <timezone>
+      description: 'Timezone for date grouping (e.g., UTC, America/New_York, Asia/Tokyo) (default: system timezone)'
+    - name: --config <config>
+      description: 'Path to configuration file (default: auto-discovery)'
+    - name: --compact
+      description: 'Force compact mode for narrow displays (better for screenshots) (default: false)'
+    - name: -h, --help
+      description: Display this help message
+    - name: -v, --version
+      description: Display this version
+    - name: --last <last>
+      description: Show only the most recent N periods of the report (1 is today, this week, or this month)
+  weekly:
+    version: ccusage 20.0.20
+    fetched_at: '2026-09-07T17:21:13.005971+00:00'
+    invocation: ccusage claude weekly
+    usage:
+    - ccusage claude weekly <OPTIONS>
+    description: Show usage report grouped by week
+    commands: []
+    arguments: []
+    options:
+    - name: -s, --since <since>
+      description: Filter from date (YYYYMMDD format)
+    - name: -u, --until <until>
+      description: Filter until date (YYYYMMDD format)
+    - name: -j, --json
+      description: 'Output in JSON format (default: false)'
+    - name: -m, --mode [mode]
+      description: 'Cost calculation mode (default: auto, choices: auto | calculate | display)'
+    - name: -d, --debug
+      description: 'Show pricing mismatch information for debugging (default: false)'
+    - name: --debug-samples [debug-samples]
+      description: 'Number of sample discrepancies to show in debug output (default: 5)'
+    - name: -o, --order [order]
+      description: 'Sort order (default: asc, choices: desc | asc)'
+    - name: -b, --breakdown
+      description: 'Show per-model cost breakdown (default: false)'
+    - name: -O, --offline
+      description: 'Use cached pricing data for Claude models instead of fetching from API (default: false)'
+    - name: --no-offline
+      description: Negatable of -O, --offline
+    - name: --single-thread
+      description: 'Disable parallel JSONL file loading (default: false)'
+    - name: --color
+      description: 'Enable colored output. FORCE_COLOR=1 has the same effect. (default: auto)'
+    - name: --no-color
+      description: 'Disable colored output. NO_COLOR=1 has the same effect. (default: auto)'
+    - name: -z, --timezone <timezone>
+      description: 'Timezone for date grouping (e.g., UTC, America/New_York, Asia/Tokyo) (default: system timezone)'
+    - name: --config <config>
+      description: 'Path to configuration file (default: auto-discovery)'
+    - name: --compact
+      description: 'Force compact mode for narrow displays (better for screenshots) (default: false)'
+    - name: -h, --help
+      description: Display this help message
+    - name: -v, --version
+      description: Display this version
+    - name: -w, --start-of-week [start-of-week]
+      description: 'Start day of the week (default: sunday, choices: sunday | monday | tuesday | wednesday | thursday | friday | saturday)'
+    - name: --last <last>
+      description: Show only the most recent N periods of the report (1 is today, this week, or this month)
+  session:
+    version: ccusage 20.0.20
+    fetched_at: '2026-09-07T17:21:13.005971+00:00'
+    invocation: ccusage claude session
+    usage:
+    - ccusage claude session <OPTIONS>
+    description: Show usage report grouped by conversation session
+    commands: []
+    arguments: []
+    options:
+    - name: -s, --since <since>
+      description: Filter from date (YYYYMMDD format)
+    - name: -u, --until <until>
+      description: Filter until date (YYYYMMDD format)
+    - name: -j, --json
+      description: 'Output in JSON format (default: false)'
+    - name: -m, --mode [mode]
+      description: 'Cost calculation mode (default: auto, choices: auto | calculate | display)'
+    - name: -d, --debug
+      description: 'Show pricing mismatch information for debugging (default: false)'
+    - name: --debug-samples [debug-samples]
+      description: 'Number of sample discrepancies to show in debug output (default: 5)'
+    - name: -o, --order [order]
+      description: 'Sort order (default: asc, choices: desc | asc)'
+    - name: -b, --breakdown
+      description: 'Show per-model cost breakdown (default: false)'
+    - name: -O, --offline
+      description: 'Use cached pricing data for Claude models instead of fetching from API (default: false)'
+    - name: --no-offline
+      description: Negatable of -O, --offline
+    - name: --single-thread
+      description: 'Disable parallel JSONL file loading (default: false)'
+    - name: --color
+      description: 'Enable colored output. FORCE_COLOR=1 has the same effect. (default: auto)'
+    - name: --no-color
+      description: 'Disable colored output. NO_COLOR=1 has the same effect. (default: auto)'
+    - name: -z, --timezone <timezone>
+      description: 'Timezone for date grouping (e.g., UTC, America/New_York, Asia/Tokyo) (default: system timezone)'
+    - name: --config <config>
+      description: 'Path to configuration file (default: auto-discovery)'
+    - name: --compact
+      description: 'Force compact mode for narrow displays (better for screenshots) (default: false)'
+    - name: -h, --help
+      description: Display this help message
+    - name: -v, --version
+      description: Display this version
+    - name: -i, --id <id>
+      description: Filter to specific session ID
+  blocks:
+    version: ccusage 20.0.20
+    fetched_at: '2026-09-07T17:21:13.005971+00:00'
+    invocation: ccusage claude blocks
+    usage:
+    - ccusage claude blocks <OPTIONS>
+    description: Show usage report grouped by session billing blocks
+    commands: []
+    arguments: []
+    options:
+    - name: -s, --since <since>
+      description: Filter from date (YYYYMMDD format)
+    - name: -u, --until <until>
+      description: Filter until date (YYYYMMDD format)
+    - name: -j, --json
+      description: 'Output in JSON format (default: false)'
+    - name: -m, --mode [mode]
+      description: 'Cost calculation mode (default: auto, choices: auto | calculate | display)'
+    - name: -d, --debug
+      description: 'Show pricing mismatch information for debugging (default: false)'
+    - name: --debug-samples [debug-samples]
+      description: 'Number of sample discrepancies to show in debug output (default: 5)'
+    - name: -o, --order [order]
+      description: 'Sort order (default: asc, choices: desc | asc)'
+    - name: -b, --breakdown
+      description: 'Show per-model cost breakdown (default: false)'
+    - name: -O, --offline
+      description: 'Use cached pricing data for Claude models instead of fetching from API (default: false)'
+    - name: --no-offline
+      description: Negatable of -O, --offline
+    - name: --single-thread
+      description: 'Disable parallel JSONL file loading (default: false)'
+    - name: --color
+      description: 'Enable colored output. FORCE_COLOR=1 has the same effect. (default: auto)'
+    - name: --no-color
+      description: 'Disable colored output. NO_COLOR=1 has the same effect. (default: auto)'
+    - name: -z, --timezone <timezone>
+      description: 'Timezone for date grouping (e.g., UTC, America/New_York, Asia/Tokyo) (default: system timezone)'
+    - name: --config <config>
+      description: 'Path to configuration file (default: auto-discovery)'
+    - name: --compact
+      description: 'Force compact mode for narrow displays (better for screenshots) (default: false)'
+    - name: -h, --help
+      description: Display this help message
+    - name: -v, --version
+      description: Display this version
+    - name: -a, --active
+      description: 'Show only active block with projections (default: false)'
+    - name: -r, --recent
+      description: 'Show blocks from last 3 days (including active) (default: false)'
+    - name: -t, --token-limit <token-limit>
+      description: Token limit for quota warnings (e.g., 500000 or "max")
+    - name: '-n, --session-length [session-length] Session block duration in hours (default: 5)'
+      description: ''
+  statusline:
+    version: ccusage 20.0.20
+    fetched_at: '2026-09-07T17:21:13.005971+00:00'
+    invocation: ccusage claude statusline
+    usage:
+    - ccusage claude statusline <OPTIONS>
+    description: Display compact status line for Claude Code hooks with hybrid time+file caching (Beta)
+    commands: []
+    arguments: []
+    options:
+    - name: -O, --offline
+      description: 'Use cached pricing data for Claude models instead of fetching from API (default: true)'
+    - name: --no-offline
+      description: Negatable of -O, --offline
+    - name: -B, --visual-burn-rate [visual-burn-rate]
+      description: 'Controls the visualization of the burn rate status (default: off, choices: off | emoji | text | emoji-text)'
+    - name: --cost-source [cost-source]
+      description: 'Session cost source (default: auto, choices: auto | ccusage | cc | both)'
+    - name: --cache
+      description: 'Enable cache for status line output (default: true)'
+    - name: --no-cache
+      description: Negatable of --cache
+    - name: --refresh-interval [refresh-interval]
+      description: 'Refresh interval in seconds for cache expiry (default: 1)'
+    - name: --context-low-threshold [context-low-threshold]
+      description: 'Context usage percentage below which status is shown in green (0-100) (default: 50)'
+    - name: '--context-medium-threshold [context-medium-threshold] Context usage percentage below which status is shown in yellow (0-100) (default: 80)'
+      description: ''
+    - name: -z, --timezone <timezone>
+      description: Timezone for date grouping (IANA)
+    - name: --config <config>
+      description: 'Path to configuration file (default: auto-discovery)'
+    - name: -d, --debug
+      description: 'Show pricing mismatch information for debugging (default: false)'
+    - name: -h, --help
+      description: Display this help message
+    - name: -v, --version
+      description: Display this version

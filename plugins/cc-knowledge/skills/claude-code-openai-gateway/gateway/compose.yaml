@@ -1,0 +1,27 @@
+# LiteLLM Proxy（Anthropic Messages 互換ゲートウェイ）
+# 使い方: .env.example を .env にコピーして値を埋め、`docker compose up -d --wait`
+services:
+  litellm:
+    # 既定はローリングの stable タグ。再現性が要るなら .env の LITELLM_IMAGE で
+    # リリースタグ＋digest（例 ...:v1.xx.y-stable@sha256:...）に固定する。
+    image: ${LITELLM_IMAGE:-docker.litellm.ai/berriai/litellm:main-stable}
+    container_name: claude-code-litellm
+    restart: unless-stopped
+    ports:
+      # loopback限定。"4000:4000" と書くと LAN へ露出するので書かない。
+      - "127.0.0.1:${LITELLM_PORT:-4000}:4000"
+    env_file:
+      - .env
+    volumes:
+      - ./config.yaml:/app/config.yaml:ro
+    command: ["--config", "/app/config.yaml", "--port", "4000"]
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+           'python -c "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen(''http://127.0.0.1:4000/health/liveliness'', timeout=2).status==200 else 1)"',
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s

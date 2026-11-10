@@ -1,0 +1,134 @@
+version: ccusage 20.0.20
+fetched_at: '2026-09-07T17:21:13.005971+00:00'
+invocation: ccusage pi
+usage:
+- ccusage pi <COMMANDS>
+description: Usage reports for pi.
+commands:
+- name: daily
+  description: Show pi-agent usage grouped by date
+- name: monthly
+  description: Show pi-agent usage grouped by month
+- name: session
+  description: Show pi-agent usage grouped by session
+arguments: []
+options: []
+subcommands:
+  daily:
+    version: ccusage 20.0.20
+    fetched_at: '2026-09-07T17:21:13.005971+00:00'
+    invocation: ccusage pi daily
+    usage:
+    - ccusage pi daily <OPTIONS>
+    description: Show pi-agent usage grouped by date
+    commands: []
+    arguments: []
+    options:
+    - name: -j, --json
+      description: 'Output in JSON format (default: false)'
+    - name: -s, --since <since>
+      description: Filter from date (YYYY-MM-DD or YYYYMMDD)
+    - name: -u, --until <until>
+      description: Filter until date (inclusive)
+    - name: -z, --timezone <timezone>
+      description: Timezone for date grouping (IANA)
+    - name: -O, --offline
+      description: 'Use cached pricing data instead of fetching from LiteLLM (default: false)'
+    - name: --no-offline
+      description: Negatable of -O, --offline
+    - name: --compact
+      description: 'Force compact table layout for narrow terminals (default: false)'
+    - name: --no-cost
+      description: 'Hide cost information in table and JSON output (default: false)'
+    - name: --color
+      description: 'Enable colored output. FORCE_COLOR=1 has the same effect. (default: auto)'
+    - name: --no-color
+      description: 'Disable colored output. NO_COLOR=1 has the same effect. (default: auto)'
+    - name: --config <config>
+      description: 'Path to configuration file (default: auto-discovery)'
+    - name: -h, --help
+      description: Display this help message
+    - name: -v, --version
+      description: Display this version
+    - name: --pi-path <pi-path>
+      description: Path or comma-separated paths to pi-agent sessions directories
+    - name: --last <last>
+      description: Show only the most recent N periods of the report (1 is today, this week, or this month)
+  monthly:
+    version: ccusage 20.0.20
+    fetched_at: '2026-09-07T17:21:13.005971+00:00'
+    invocation: ccusage pi monthly
+    usage:
+    - ccusage pi monthly <OPTIONS>
+    description: Show pi-agent usage grouped by month
+    commands: []
+    arguments: []
+    options:
+    - name: -j, --json
+      description: 'Output in JSON format (default: false)'
+    - name: -s, --since <since>
+      description: Filter from date (YYYY-MM-DD or YYYYMMDD)
+    - name: -u, --until <until>
+      description: Filter until date (inclusive)
+    - name: -z, --timezone <timezone>
+      description: Timezone for date grouping (IANA)
+    - name: -O, --offline
+      description: 'Use cached pricing data instead of fetching from LiteLLM (default: false)'
+    - name: --no-offline
+      description: Negatable of -O, --offline
+    - name: --compact
+      description: 'Force compact table layout for narrow terminals (default: false)'
+    - name: --no-cost
+      description: 'Hide cost information in table and JSON output (default: false)'
+    - name: --color
+      description: 'Enable colored output. FORCE_COLOR=1 has the same effect. (default: auto)'
+    - name: --no-color
+      description: 'Disable colored output. NO_COLOR=1 has the same effect. (default: auto)'
+    - name: --config <config>
+      description: 'Path to configuration file (default: auto-discovery)'
+    - name: -h, --help
+      description: Display this help message
+    - name: -v, --version
+      description: Display this version
+    - name: --pi-path <pi-path>
+      description: Path or comma-separated paths to pi-agent sessions directories
+    - name: --last <last>
+      description: Show only the most recent N periods of the report (1 is today, this week, or this month)
+  session:
+    version: ccusage 20.0.20
+    fetched_at: '2026-09-07T17:21:13.005971+00:00'
+    invocation: ccusage pi session
+    usage:
+    - ccusage pi session <OPTIONS>
+    description: Show pi-agent usage grouped by session
+    commands: []
+    arguments: []
+    options:
+    - name: -j, --json
+      description: 'Output in JSON format (default: false)'
+    - name: -s, --since <since>
+      description: Filter from date (YYYY-MM-DD or YYYYMMDD)
+    - name: -u, --until <until>
+      description: Filter until date (inclusive)
+    - name: -z, --timezone <timezone>
+      description: Timezone for date grouping (IANA)
+    - name: -O, --offline
+      description: 'Use cached pricing data instead of fetching from LiteLLM (default: false)'
+    - name: --no-offline
+      description: Negatable of -O, --offline
+    - name: --compact
+      description: 'Force compact table layout for narrow terminals (default: false)'
+    - name: --no-cost
+      description: 'Hide cost information in table and JSON output (default: false)'
+    - name: --color
+      description: 'Enable colored output. FORCE_COLOR=1 has the same effect. (default: auto)'
+    - name: --no-color
+      description: 'Disable colored output. NO_COLOR=1 has the same effect. (default: auto)'
+    - name: --config <config>
+      description: 'Path to configuration file (default: auto-discovery)'
+    - name: -h, --help
+      description: Display this help message
+    - name: -v, --version
+      description: Display this version
+    - name: --pi-path <pi-path>
+      description: Path or comma-separated paths to pi-agent sessions directories

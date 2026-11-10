@@ -1,0 +1,43 @@
+version: ccusage 20.0.20
+fetched_at: '2026-09-07T17:21:13.005971+00:00'
+invocation: ccusage monthly
+usage:
+- ccusage monthly <OPTIONS>
+description: Show all detected coding (agent) CLI usage grouped by month
+commands: []
+arguments: []
+options:
+- name: -j, --json
+  description: 'Output in JSON format (default: false)'
+- name: -s, --since <since>
+  description: Filter from date (YYYY-MM-DD or YYYYMMDD)
+- name: -u, --until <until>
+  description: Filter until date (inclusive)
+- name: -z, --timezone <timezone>
+  description: Timezone for date grouping (IANA)
+- name: --all
+  description: 'Accepted for compatibility; all detected supported agents are included by default (default: false)'
+- name: --sections <sections>
+  description: Emit multiple unified report sections from one load (daily, weekly, monthly, session)
+- name: --by-agent
+  description: 'Include per-agent JSON breakdowns in unified report rows (default: false)'
+- name: -O, --offline
+  description: 'Use cached pricing data where supported (default: false)'
+- name: --no-offline
+  description: Negatable of -O, --offline
+- name: --compact
+  description: 'Force compact table layout for narrow terminals (default: false)'
+- name: --no-cost
+  description: 'Hide cost information in table and JSON output (default: false)'
+- name: --color
+  description: 'Enable colored output. FORCE_COLOR=1 has the same effect. (default: auto)'
+- name: --no-color
+  description: 'Disable colored output. NO_COLOR=1 has the same effect. (default: auto)'
+- name: --config <config>
+  description: 'Path to configuration file (default: auto-discovery)'
+- name: -h, --help
+  description: Display this help message
+- name: -v, --version
+  description: Display this version
+- name: --last <last>
+  description: Show only the most recent N periods of the report (1 is today, this week, or this month)

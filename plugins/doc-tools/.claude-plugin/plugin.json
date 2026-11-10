@@ -1,0 +1,5 @@
+{
+  "name": "doc-tools",
+  "version": "0.1.0",
+  "description": "Document processing skills that bundle their own scripts (no tools/ install needed)"
+}

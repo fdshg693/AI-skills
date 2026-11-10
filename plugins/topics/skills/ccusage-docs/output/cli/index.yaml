@@ -1,0 +1,95 @@
+version: ccusage 20.0.20
+fetched_at: '2026-09-07T17:21:13.005971+00:00'
+commands:
+- name: (top-level)
+  file: help_result.yaml
+  invocation: ccusage
+  description: Top-level ccusage help
+- name: daily
+  file: daily.yaml
+  invocation: ccusage daily
+  description: Show all detected coding (agent) CLI usage grouped by date
+- name: monthly
+  file: monthly.yaml
+  invocation: ccusage monthly
+  description: Show all detected coding (agent) CLI usage grouped by month
+- name: weekly
+  file: weekly.yaml
+  invocation: ccusage weekly
+  description: Show all detected coding (agent) CLI usage grouped by week
+- name: session
+  file: session.yaml
+  invocation: ccusage session
+  description: Show all detected coding (agent) CLI usage grouped by session
+- name: blocks
+  file: blocks.yaml
+  invocation: ccusage blocks
+  description: Show usage report grouped by session billing blocks
+- name: statusline
+  file: statusline.yaml
+  invocation: ccusage statusline
+  description: Display compact status line for Claude Code hooks with hybrid time+file caching (Beta)
+- name: claude
+  file: claude.yaml
+  invocation: ccusage claude
+  description: Show Claude Code usage commands
+- name: codex
+  file: codex.yaml
+  invocation: ccusage codex
+  description: Show Codex token usage commands
+- name: opencode
+  file: opencode.yaml
+  invocation: ccusage opencode
+  description: Show OpenCode token usage commands
+- name: amp
+  file: amp.yaml
+  invocation: ccusage amp
+  description: Show Amp token usage commands
+- name: droid
+  file: droid.yaml
+  invocation: ccusage droid
+  description: Show Droid usage commands
+- name: codebuff
+  file: codebuff.yaml
+  invocation: ccusage codebuff
+  description: Show Codebuff usage commands
+- name: hermes
+  file: hermes.yaml
+  invocation: ccusage hermes
+  description: Show Hermes usage commands
+- name: pi
+  file: pi.yaml
+  invocation: ccusage pi
+  description: Show pi-agent usage commands
+- name: goose
+  file: goose.yaml
+  invocation: ccusage goose
+  description: Show Goose usage commands
+- name: kilo
+  file: kilo.yaml
+  invocation: ccusage kilo
+  description: Show Kilo usage commands
+- name: copilot
+  file: copilot.yaml
+  invocation: ccusage copilot
+  description: Show GitHub Copilot CLI usage commands
+- name: gemini
+  file: gemini.yaml
+  invocation: ccusage gemini
+  description: Show Gemini CLI usage commands
+- name: kimi
+  file: kimi.yaml
+  invocation: ccusage kimi
+  description: Show Kimi usage commands
+- name: qwen
+  file: qwen.yaml
+  invocation: ccusage qwen
+  description: Show Qwen usage commands
+- name: openclaw
+  file: openclaw.yaml
+  invocation: ccusage openclaw
+  description: Show OpenClaw usage commands
+- name: grok
+  file: grok.yaml
+  invocation: ccusage grok
+  description: Show Grok Build CLI usage commands

@@ -1,0 +1,150 @@
+version: 2.1.220 (Claude Code)
+fetched_at: '2026-07-28T18:13:53.733912+00:00'
+usage:
+- claude [options] [command] [prompt]
+description: Claude Code - starts an interactive session by default, use -p/--print for non-interactive output
+commands:
+- name: agents [options]
+  description: Manage background agents
+- name: auth
+  description: Manage authentication
+- name: auto-mode
+  description: Inspect or reset auto mode classifier configuration
+- name: doctor
+  description: Check the health of your Claude Code installation. Reads settings files in the current directory without a trust prompt. For a full checkup that can also fix issues, run /doctor in a session.
+- name: gateway [options]
+  description: Run the enterprise auth/telemetry gateway
+- name: install [options] [target]
+  description: Install Claude Code native build. Use [target] to specify version (stable, latest, or specific version)
+- name: mcp
+  description: Configure and manage MCP servers
+- name: plugin|plugins
+  description: Manage Claude Code plugins
+- name: project
+  description: Manage Claude Code project state
+- name: setup-token
+  description: Set up a long-lived authentication token (requires Claude subscription)
+- name: ultrareview [options] [target]
+  description: Run a cloud-hosted multi-agent code review of the current branch (or a PR number / base branch) and print the findings
+- name: update|upgrade
+  description: Check for updates and install if available
+arguments:
+- name: prompt
+  description: Your prompt
+options:
+- name: --add-dir <directories...>
+  description: Additional directories to allow tool access to
+- name: --agent <agent>
+  description: Agent for the current session. Overrides the 'agent' setting.
+- name: --agents <json>
+  description: 'JSON object defining custom agents (e.g. ''{"reviewer": {"description": "Reviews code", "prompt": "You are a code reviewer"}}'')'
+- name: --allow-dangerously-skip-permissions
+  description: Enable bypassing all permission checks as an option, without it being enabled by default. Recommended only for sandboxes with no internet access.
+- name: --allowedTools, --allowed-tools <tools...>
+  description: Comma or space-separated list of tool names to allow (e.g. "Bash(git *) Edit")
+- name: --append-system-prompt <prompt>
+  description: Append a system prompt to the default system prompt
+- name: --ax-screen-reader
+  description: Render screen-reader friendly output (flat text, no decorative borders or animations).
+- name: --bg, --background
+  description: Start the session as a background agent and return immediately (manage with `claude agents`)
+- name: --bare
+  description: 'Minimal mode: skip hooks, LSP, plugin sync, attribution, auto-memory, background prefetches, keychain reads, and CLAUDE.md auto-discovery. Sets CLAUDE_CODE_SIMPLE=1. Anthropic auth is strictly ANTHROPIC_API_KEY or apiKeyHelper via --settings (OAuth and keychain are never read). 3P providers (Bedrock/Vertex/Foundry) use their own credentials. Skills still resolve via /skill-name. Explicitly provide context via: --system-prompt[-file], --append-system-prompt[-file], --add-dir (CLAUDE.md dirs), --mcp-config, --settings, --agents, --plugin-dir.'
+- name: --betas <betas...>
+  description: Beta headers to include in API requests (API key users only)
+- name: --brief
+  description: Enable SendUserMessage tool for agent-to-user communication
+- name: --chrome
+  description: Enable Claude in Chrome integration
+- name: -c, --continue
+  description: Continue the most recent conversation in the current directory
+- name: --dangerously-skip-permissions
+  description: Bypass all permission checks. Recommended only for sandboxes with no internet access.
+- name: -d, --debug [filter]
+  description: Enable debug mode with optional category filtering (e.g., "api,hooks" or "!1p,!file")
+- name: --debug-file <path>
+  description: Write debug logs to a specific file path (implicitly enables debug mode)
+- name: --disable-slash-commands
+  description: Disable all skills
+- name: --disallowedTools, --disallowed-tools <tools...>
+  description: Comma or space-separated list of tool names to deny (e.g. "Bash(git *) Edit")
+- name: --effort <level>
+  description: Effort level for the current session (low, medium, high, xhigh, max)
+- name: --exclude-dynamic-system-prompt-sections
+  description: 'Move per-machine sections (cwd, env info, memory paths, git status) from the system prompt into the first user message. Improves cross-user prompt-cache reuse. Only applies with the default system prompt (ignored with --system-prompt). (default: false)'
+- name: --fallback-model <model>
+  description: Enable automatic fallback to specified model(s) when the default model is overloaded or not available. Accepts a comma-separated list to try each in order. Re-tries the primary at the start of each user turn. (only works with --print)
+- name: --file <specs...>
+  description: 'File resources to download at startup. Format: file_id:relative_path (e.g., --file file_abc:doc.txt file_def:img.png)'
+- name: --fork-session
+  description: When resuming, create a new session ID instead of reusing the original (use with --resume or --continue)
+- name: --forward-subagent-text
+  description: Forward subagent text and thinking blocks as assistant/user messages with parent_tool_use_id set (only works with --print and --output-format=stream-json)
+- name: --from-pr [value]
+  description: Resume a session linked to a PR by PR number/URL, or open interactive picker with optional search term
+- name: -h, --help
+  description: Display help for command
+- name: --ide
+  description: Automatically connect to IDE on startup if exactly one valid IDE is available
+- name: --include-hook-events
+  description: Include all hook lifecycle events in the output stream (only works with --output-format=stream-json)
+- name: --include-partial-messages
+  description: Include partial message chunks as they arrive (only works with --print and --output-format=stream-json)
+- name: --input-format <format>
+  description: 'Input format (only works with --print): "text" (default), or "stream-json" (realtime streaming input) (choices: "text", "stream-json")'
+- name: --json-schema <schema>
+  description: 'JSON Schema for structured output validation. Example: {"type":"object","properties":{"name":{"type":"string"}},"required":["name"]}'
+- name: --max-budget-usd <amount>
+  description: Maximum dollar amount to spend on API calls (only works with --print)
+- name: --mcp-config <configs...>
+  description: Load MCP servers from JSON files or strings (space-separated)
+- name: --model <model>
+  description: Model for the current session. Provide an alias for the latest model (e.g. 'fable', 'opus', or 'sonnet') or a model's full name (e.g. 'claude-fable-5').
+- name: -n, --name <name>
+  description: Set a display name for this session (shown in the prompt box, /resume picker, and terminal title)
+- name: --no-chrome
+  description: Disable Claude in Chrome integration
+- name: --no-session-persistence
+  description: Disable session persistence - sessions will not be saved to disk and cannot be resumed (only works with --print)
+- name: --output-format <format>
+  description: 'Output format (only works with --print): "text" (default), "json" (single result), or "stream-json" (realtime streaming) (choices: "text", "json", "stream-json")'
+- name: --permission-mode <mode>
+  description: 'Permission mode to use for the session (choices: "acceptEdits", "auto", "bypassPermissions", "manual", "dontAsk", "plan")'
+- name: --plugin-dir <path>
+  description: 'Load a plugin from a directory or .zip for this session only (repeatable: --plugin-dir A --plugin-dir B.zip) (default: [])'
+- name: --plugin-url <url>
+  description: 'Fetch a plugin .zip from a URL for this session only (repeatable: --plugin-url A --plugin-url B) (default: [])'
+- name: -p, --print
+  description: 'Print response and exit (useful for pipes). Note: The workspace trust dialog is skipped when Claude is run in non-interactive mode (via -p, or when stdout is not a TTY, e.g. piped or redirected output). Only use this in directories you trust. Settings files that fail validation are silently ignored in this mode (no error dialog is shown).'
+- name: --prompt-suggestions [value]
+  description: 'Enable prompt suggestions. In print/SDK mode, emits a prompt_suggestion message after each turn with a predicted next user prompt (choices: "true", "false", "1", "0", "yes", "no", "on", "off", preset: "true")'
+- name: --remote-control [name]
+  description: Start an interactive session with Remote Control enabled (optionally named)
+- name: --remote-control-session-name-prefix <prefix>
+  description: 'Prefix for auto-generated Remote Control session names (default: hostname)'
+- name: --replay-user-messages
+  description: Re-emit user messages from stdin back on stdout for acknowledgment (only works with --input-format=stream-json and --output-format=stream-json)
+- name: -r, --resume [value]
+  description: Resume a conversation by session ID, or open interactive picker with optional search term
+- name: --safe-mode
+  description: Start with all customizations (CLAUDE.md, skills, plugins, hooks, MCP servers, custom commands and agents, output styles, workflows, custom themes, keybindings, and more) disabled — useful for troubleshooting a broken configuration. Admin-managed (policy) settings still apply. Auth, model selection, built-in tools, and permissions work normally. Sets CLAUDE_CODE_SAFE_MODE=1.
+- name: --session-id <uuid>
+  description: Use a specific session ID for the conversation (must be a valid UUID)
+- name: --setting-sources <sources>
+  description: Comma-separated list of setting sources to load (user, project, local).
+- name: --settings <file-or-json>
+  description: Path to a settings JSON file or a JSON string to load additional settings from
+- name: --strict-mcp-config
+  description: Only use MCP servers from --mcp-config, ignoring all other MCP configurations
+- name: --system-prompt <prompt>
+  description: System prompt to use for the session
+- name: --tmux
+  description: Create a tmux session for the worktree (requires --worktree). Uses iTerm2 native panes when available; use --tmux=classic for traditional tmux.
+- name: --tools <tools...>
+  description: Specify the list of available tools from the built-in set. Use "" to disable all tools, "default" to use all tools, or specify tool names (e.g. "Bash,Edit,Read").
+- name: --verbose
+  description: Override verbose mode setting from config
+- name: -v, --version
+  description: Output the version number
+- name: -w, --worktree [name]
+  description: Create a new git worktree for this session (optionally specify a name)

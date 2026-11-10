@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "doc-transcription"
+version = "0.1.0"
+description = "Extract selectable text from a PDF or PowerPoint file into Markdown"
+requires-python = ">=3.11"
+dependencies = [
+    "pypdf[crypto]>=6.13.0",
+]
+
+[project.scripts]
+doc-transcription = "doc_transcription:main"
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[tool.setuptools]
+package-dir = { "" = "scripts" }
+py-modules = [
+    "doc_transcription",
+    "extract_pdf",
+    "extract_pptx",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

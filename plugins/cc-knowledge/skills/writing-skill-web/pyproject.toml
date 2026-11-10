@@ -1,0 +1,41 @@
+# Packaging for the writing-skill-web meta-skill's bundled scripts/*.py
+# templates.
+#
+# This is NOT a "product" package -- scripts/ is a copy-and-adapt template
+# library (see README.md), not something meant to be pip/uv installed by
+# consumers. The only reason this file exists is to make `scripts/` (plus its
+# own `tests/`) a uv workspace member, so `uv sync && uv run pytest` from the
+# repo root can exercise the templates exactly as shipped here. Skills that
+# copy these templates do NOT get this pyproject.toml or tests/ -- see
+# tests/README.md for why.
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "writing-skill-web-templates"
+version = "0.1.0"
+description = "Copy-and-adapt web-reference script templates bundled with the writing-skill-web meta-skill"
+requires-python = ">=3.11"
+dependencies = [
+    "requests",
+    "typer",
+]
+
+[tool.setuptools]
+package-dir = { "" = "scripts" }
+py-modules = [
+    "download_web_reference",
+    "download_github_docs",
+    "check_urls",
+    "generate_llms_excerpt",
+    "check_llms_excerpt",
+    "inspect_section_markers",
+    "extract_doc_section",
+    "grep_doc_sections",
+    "download_url_index",
+    "select_url_index",
+    "fetch_selected_pages",
+    "webref_cli",
+]
