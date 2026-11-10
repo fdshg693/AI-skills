@@ -19,7 +19,7 @@ meta:
   requires_skills: antigravity-docs
   status: stable
   description: no description
-  version: 1.0.0
+  version: 1.0.1
 ---
 
 # Antigravity Subagents Reference
@@ -74,8 +74,6 @@ with YAML frontmatter, or transient ones created mid-session via the
 | Workspace | `.agents/agents/<name>.md` or `.agents/agents/<name>/agent.md`      | This repo/workspace   |
 | Global    | `~/.gemini/config/agents/<name>.md` or `.../agents/<name>/agent.md` | All workspaces        |
 | Plugin    | `plugins/<plugin_name>/agents/`                                     | Bundled with a plugin |
-
-(This repo maps `.agents/` → `_agents/`; see `_agents/README.md`.)
 
 ### Frontmatter fields
 

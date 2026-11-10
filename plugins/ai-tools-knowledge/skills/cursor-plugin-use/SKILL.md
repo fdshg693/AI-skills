@@ -11,7 +11,7 @@ meta:
   requires_skills: cursor-docs, cursor-skill-use
   status: experimental
   description: no description
-  version: 1.0.1
+  version: 1.0.2
 ---
 
 # Cursor プラグインの使い方
@@ -71,8 +71,6 @@ my-plugin/
   "author": { "name": "Your Name" }
 }
 ```
-
-> このリポジトリでは `cursor-plugins/meta/` がプラグイン（`.cursor-plugin/plugin.json` あり）。既存スキル（cursor-cli-docs 等）は公式既定の `skills/` ではなくプラグインルート直下に置かれている点に注意。ここへ追加する場合は既存配置に倣いつつ、Cursor の Customize 画面で実際に認識されるか確認する。
 
 ## プラグインのインストール
 

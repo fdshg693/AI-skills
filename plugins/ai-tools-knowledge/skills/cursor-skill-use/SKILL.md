@@ -12,7 +12,7 @@ meta:
   requires_skills: none
   status: experimental
   description: no description
-  version: 1.0.3
+  version: 1.0.4
 ---
 
 # Cursorでのスキルの使い方

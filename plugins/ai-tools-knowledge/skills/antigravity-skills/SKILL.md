@@ -16,7 +16,7 @@ meta:
   requires_skills: antigravity-docs
   status: stable
   description: no description
-  version: 1.0.3
+  version: 1.0.4
 ---
 
 # Antigravity Skills Reference
@@ -71,9 +71,6 @@ Antigravity scans these plugin locations automatically:
 
 - **Workspace**: `.agents/plugins/` (or `_agents/plugins/`) at the workspace root
 - **Global**: `~/.gemini/config/plugins/`
-
-This skill itself ships inside a workspace plugin
-(`.agents/plugins/antigravity-meta/skills/antigravity-skills/`).
 
 ## SKILL.md format
 

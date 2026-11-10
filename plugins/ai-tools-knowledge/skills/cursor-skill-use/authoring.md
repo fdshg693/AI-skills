@@ -67,7 +67,6 @@ my-plugin/
 
 - **ローカルテスト**: `~/.cursor/plugins/local/<plugin-name>/` に配置（シンボリックリンク可）してCursorを再起動、または **Developer: Reload Window** を実行し、Customizeでルール・スキル等の読み込みを確認する
 - **公開**: https://cursor.com/marketplace/publish から審査に提出する（全プラグインが手動レビュー対象・オープンソース必須）。マルチプラグインリポジトリは `.cursor-plugin/marketplace.json` を置く
-- このリポジトリでは `cursor-plugins/meta/` がプラグイン（`.cursor-plugin/plugin.json` あり）で、既存スキル（cursor-cli-docs 等）は公式既定の `skills/` ではなくプラグインルート直下に置かれている。ここに追加する場合は既存配置に倣いつつ、CursorのCustomize画面で実際に認識されるかを確認すること
 
 ## レビュー時のチェックリスト
 

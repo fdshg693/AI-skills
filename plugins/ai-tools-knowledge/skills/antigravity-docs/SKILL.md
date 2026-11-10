@@ -11,7 +11,7 @@ meta:
   requires_skills: none
   status: stable
   description: no description
-  version: 1.0.4
+  version: 1.0.5
 ---
 
 # Antigravity Documentation Reference
@@ -28,7 +28,7 @@ memory.
    unsure about options):
 
    ```bash
-   python .agents/plugins/antigravity-meta/skills/antigravity-docs/download_antigravity_reference.py
+   python <this-skill-dir>/download_antigravity_reference.py   # Claude Code: ${CLAUDE_SKILL_DIR}
    ```
 
    - Writes `output/llms.txt` (the official index of all pages)

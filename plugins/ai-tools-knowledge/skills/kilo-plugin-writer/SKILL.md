@@ -12,7 +12,7 @@ meta:
   requires_skills: kilo-code-docs
   status: experimental
   description: no description
-  version: 1.0.0
+  version: 1.0.1
 ---
 
 # Kilo Plugin Writer
@@ -25,7 +25,7 @@ Kilo Code（CLI/TUI/VS Code拡張、内部的にOpenCodeベース）用プラグ
 
 - **対象**: Kilo CLI / TUI / VS Code拡張に共通して読み込まれる Plugin（`@kilocode/plugin` の `Plugin` 型を実装し `{ id, server }` を default export する `.ts` / `.js` ファイル、または npm パッケージ）。
 - **非対象**: 単なる設定（`kilo.json` の provider/model/permission 設定など)。コードで拡張する必要がなければ Plugin にしない。
-- **非対象**: 一回限りの依頼、手順メモ、恒常的な手順知識。Kilo は Agent Skills仕様（`.kilo/skills/`、SKILL.md形式）を実装しており、手順・ドメイン知識はコード拡張が不要ならSkill（このリポジトリでは`.kilo/skills/`配下）またはこのリポジトリの`AGENTS.md`等の指示ファイルに書き、コードでの拡張が要るものだけをPluginにする。
+- **非対象**: 一回限りの依頼、手順メモ、恒常的な手順知識。Kilo は Agent Skills仕様（`.kilo/skills/`、SKILL.md形式）を実装しており、手順・ドメイン知識はコード拡張が不要ならSkill（`.kilo/skills/`配下）または`AGENTS.md`等の指示ファイルに書き、コードでの拡張が要るものだけをPluginにする。
 
 ## まず判断すること
 

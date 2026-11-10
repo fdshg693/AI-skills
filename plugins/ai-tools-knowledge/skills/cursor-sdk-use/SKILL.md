@@ -12,7 +12,7 @@ meta:
   requires_skills: cursor-docs
   status: stable
   description: no description
-  version: 1.1.1
+  version: 1.1.2
 ---
 
 # Cursor Python SDK
@@ -25,7 +25,7 @@ Cursor の Agent を Python アプリケーション、CI、Bot、オーケス�
 
 実装、レビュー、デバッグの開始時に、必ず `cursor-docs` スキルを使って最新情報を確認する。
 
-1. `cursor-plugins/meta/cursor-docs/output/llms.txt` から SDK ページを確認する。
+1. `cursor-docs` スキルの `output/llms.txt` から SDK ページを確認する。
 2. Python の本文ページ `https://cursor.com/docs/sdk/python.md` を取得して、該当する節を読む。
 3. 認証、MCP、Hooks、Cloud Agents、権限、料金などが関係する場合は、それぞれの公式ページも取得する。
 4. ローカルの記憶や古いサンプルだけで、パッケージ名、モデル ID、引数名、戻り値の形を決めない。公式ページの取得に失敗した場合は、失敗を明示して同梱のスナップショットを使い、変動しうる点を断定しない。

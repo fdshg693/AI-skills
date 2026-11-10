@@ -97,7 +97,7 @@ Follow these task-specific instructions...
 注意:
 
 - 公式 docs では、同名の global skill と project skill がある場合は global skill が優先される。
-- このリポジトリでは Cline 用スキルが `.cline/skills/` に置かれている。既存スキルを増やす時は、まず周辺の慣例に合わせる。
+- 既存スキルがあるリポジトリでは、まず周辺の慣例（置き場所・命名）に合わせる。
 - チームで共有するプロジェクトスキルは、通常 `.cline/skills/` を version control するのが分かりやすい。
 
 ## frontmatter

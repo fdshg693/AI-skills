@@ -95,7 +95,7 @@ Cursorは `CLAUDE.md` を `AGENTS.md` と同じように読む。ルートに置
 - **常時適用**。`alwaysApply` frontmatter があっても無視される（Claude Code互換のため）
 - 条件付きにしたい内容は `.cursor/rules/*.mdc` へ
 
-このリポジトリのように `CLAUDE.md` が `@./AGENTS.md` インポートだけの場合、Cursor側は両方読まれる点に注意（重複しうる）。ツール横断で1ソースにしたいなら `AGENTS.md` に実体を置き、Claude Code側は `@AGENTS.md`、Cursorは `AGENTS.md` を正とする運用が分かりやすい。
+`CLAUDE.md` が `@./AGENTS.md` インポートだけのリポジトリでは、Cursor側は両方読まれる点に注意（重複しうる）。ツール横断で1ソースにしたいなら `AGENTS.md` に実体を置き、Claude Code側は `@AGENTS.md`、Cursorは `AGENTS.md` を正とする運用が分かりやすい。
 
 ## User Rules
 

@@ -14,7 +14,7 @@ meta:
   requires_skills: cline-docs, cline-rule-writer
   status: stable
   description: no description
-  version: 1.0.1
+  version: 1.0.2
 ---
 
 # Cline Skill Writer

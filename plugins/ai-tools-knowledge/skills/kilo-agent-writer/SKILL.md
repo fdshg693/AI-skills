@@ -12,7 +12,7 @@ meta:
   requires_skills: kilo-code-docs
   status: experimental
   description: no description
-  version: 1.0.0
+  version: 1.0.1
 ---
 
 # Kilo Mode/Agent Writer
@@ -65,37 +65,35 @@ Kilo Code（CLI/TUI/VS Code拡張）用の**Mode（primary agent）とSubagent**
 
 ## 最小例
 
+primary agent（Custom Mode）: `.kilo/agents/docs-writer.md`
+
 ```markdown
-# .kilo/agents/docs-writer.md — primary agent（Custom Mode）
-
 ---
-
 description: Specialized for writing and editing technical documentation
 mode: primary
 color: "#10B981"
 permission:
-edit:
-"_.md": "allow"
-"_": "deny"
-bash: deny
+  edit:
+    "*.md": "allow"
+    "*": "deny"
+  bash: deny
 ---
 
 You are a technical documentation specialist. Only edit Markdown files.
 ```
 
+subagent: `.kilo/agents/code-reviewer.md`
+
 ```markdown
-# .kilo/agents/code-reviewer.md — subagent
-
 ---
-
 description: Reviews code for best practices and potential issues
 mode: subagent
 permission:
-edit: deny
-bash:
-"_": ask
-"git diff": allow
-"git log_": allow
+  edit: deny
+  bash:
+    "*": ask
+    "git diff": allow
+    "git log*": allow
 ---
 
 You are a code reviewer. Focus on security, performance, and maintainability.

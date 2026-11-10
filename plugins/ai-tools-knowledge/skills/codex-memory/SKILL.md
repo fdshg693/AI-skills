@@ -11,7 +11,7 @@ meta:
   requires_skills: codex-docs, codex-settings, codex-hooks
   status: stable
   description: no description
-  version: 1.0.3
+  version: 1.0.4
 ---
 
 # Codexのメモリ機構（AGENTS.md discovery / 生成メモリ）
@@ -79,7 +79,7 @@ Claude Codeのユーザーは「関連ファイルを触ったら自動でCLAUDE
         "hooks": [
           {
             "type": "command",
-            "command": "python3 \"$(git rev-parse --show-toplevel)/agent-tooling/agent_tooling/hooks/generated/codex/nested_agents_md.py\"",
+            "command": "python3 \"$(git rev-parse --show-toplevel)/.codex/hooks/nested_agents_md.py\"",
             "statusMessage": "Checking nested AGENTS.md",
             "additionalContextLimit": 4000
           }

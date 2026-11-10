@@ -11,7 +11,7 @@ meta:
   requires_skills: vscode-docs,github-copilot-docs,aim-cli
   status: stable
   description: no description
-  version: 1.0.6
+  version: 1.0.7
 ---
 
 # VS Code 内の GitHub Copilot 最新ドキュメント参照（抜粋版）
@@ -33,5 +33,5 @@ VS Code エディタに統合された GitHub Copilot 機能（Chat, Agent mode,
 3. **回答する**
 
    - 取得した本文に基づいて回答し、参照した URL を明示する
-   - `./output/copilot-excerpt.md` に該当ページが見つからない場合は、[vscode-docs](../vscode-docs/SKILL.md) スキルの `skills/plugins/others/skills/vscode-docs/output/llms.txt` 全体（VS Code の他機能も含む）を探すか、`https://code.visualstudio.com/docs` 配下を WebFetch 等で直接探索してもよい
+   - `./output/copilot-excerpt.md` に該当ページが見つからない場合は、`vscode-docs` スキル（others プラグイン）の `output/llms.txt` 全体（VS Code の他機能も含む）を探すか、`https://code.visualstudio.com/docs` 配下を WebFetch 等で直接探索してもよい
    - GitHub Copilot 全般（GitHub.com 側の機能、Copilot CLI 単体、plans/billing 等）については [github-copilot-docs](../github-copilot-docs/SKILL.md) スキルの方が適切な場合がある

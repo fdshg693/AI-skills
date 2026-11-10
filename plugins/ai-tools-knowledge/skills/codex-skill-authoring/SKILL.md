@@ -11,7 +11,7 @@ meta:
   requires_skills: none
   status: stable
   description: no description
-  version: 1.0.3
+  version: 1.0.4
 ---
 
 # Codexスキルの書き方
@@ -23,7 +23,7 @@ OpenAI Codex向けのスキルを設計・作成・レビューするための�
 - 1つのリポジトリや作業フォルダだけで使うなら、`$REPO_ROOT/.agents/skills/<skill-name>/SKILL.md` に置く。
 - ユーザー全体で使うなら、`$HOME/.agents/skills/<skill-name>/SKILL.md` に置く。
 - 複数人へ配布する、複数スキルをまとめる、MCPやコネクタも同梱するならプラグインにする。
-- このリポジトリのプラグインへ追加する場合は、対象プラグインの `skills/<skill-name>/SKILL.md` に置く。例えば `codex-plugins/meta/skills/<skill-name>/SKILL.md`。
+- 既存のプラグインへ追加する場合は、そのプラグインの `skills/<skill-name>/SKILL.md` に置く。
 
 ## 2. 最小構成を作る
 

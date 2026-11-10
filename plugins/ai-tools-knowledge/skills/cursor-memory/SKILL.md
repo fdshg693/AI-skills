@@ -19,7 +19,7 @@ meta:
   requires_skills: cursor-skill-use, cursor-docs, claude-code-memory
   status: stable
   description: no description
-  version: 1.0.3
+  version: 1.0.4
 ---
 
 # Cursorのメモリ設計（Rules / AGENTS.md）
