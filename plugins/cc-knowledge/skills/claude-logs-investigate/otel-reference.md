@@ -19,6 +19,7 @@
 | `OTEL_EXPORTER_OTLP_PROTOCOL`                                                 | `grpc` / `http/json` / `http/protobuf`                                             |
 | `OTEL_EXPORTER_OTLP_METRICS_ENDPOINT` / `_LOGS_ENDPOINT` / `_TRACES_ENDPOINT` | 信号ごとにエンドポイントを個別上書き(SIEM連携等でログだけ別送り先にする場合に使う) |
 | `OTEL_EXPORTER_OTLP_HEADERS`                                                  | 認証ヘッダ等を付与                                                                 |
+| `OTEL_EXPORTER_OTLP_{METRICS,LOGS,TRACES}_HEADERS`                            | 信号ごとの認証ヘッダ。汎用の `OTEL_EXPORTER_OTLP_HEADERS` とマージされる           |
 
 ## エクスポート間隔
 
@@ -29,14 +30,15 @@
 
 ## 送信内容の詳細度制御
 
-| 環境変数                              | 説明                                                                                                  |
-| ------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| `OTEL_LOG_USER_PROMPTS`               | ユーザープロンプト本文をログに含めるか                                                                |
-| `OTEL_LOG_ASSISTANT_RESPONSES`        | アシスタント応答本文を含めるか                                                                        |
-| `OTEL_LOG_TOOL_DETAILS`               | Bashコマンド内容・MCPサーバー名等のツール詳細を含めるか                                               |
-| `OTEL_LOG_TOOL_CONTENT`               | ツール入出力の内容まで含めるか(トレース有効化が前提)                                                  |
-| `OTEL_LOG_RAW_API_BODIES`             | APIリクエスト/レスポンスの生ボディを含めるか。`file:<dir>` を指定するとボディ全文をファイル保存できる |
-| `CLAUDE_CODE_OTEL_CONTENT_MAX_LENGTH` | OpenTelemetryのcontent系属性のトランケーション上限（デフォルト60KB）を変更する                        |
+| 環境変数                              | 説明                                                                                                                                                           |
+| ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `OTEL_LOG_USER_PROMPTS`               | ユーザープロンプト本文をログに含めるか                                                                                                                         |
+| `OTEL_LOG_ASSISTANT_RESPONSES`        | アシスタント応答本文を含めるか                                                                                                                                 |
+| `OTEL_LOG_TOOL_DETAILS`               | Bashコマンド内容・MCPサーバー名等のツール詳細を含めるか                                                                                                        |
+| `OTEL_LOG_TOOL_CONTENT`               | ツール入出力の内容まで含めるか(トレース有効化が前提)                                                                                                           |
+| `OTEL_LOG_RAW_API_BODIES`             | APIリクエスト/レスポンスの生ボディを含めるか。`file:<dir>` を指定するとボディ全文をファイル保存できる                                                          |
+| `CLAUDE_CODE_OTEL_CONTENT_MAX_LENGTH` | OpenTelemetryのcontent系属性のトランケーション上限（デフォルト60KB）を変更する                                                                                 |
+| `OTEL_LOG_MANAGED_SETTINGS`           | `1` で `managed_settings_resolved` イベントに墨消し済みの managed settings と SHA-256 ダイジェストを含める（既定は無効。project/local 設定では有効にならない） |
 
 ## カーディナリティ制御(メトリクスの属性を絞る)
 
@@ -47,6 +49,7 @@
 | `OTEL_METRICS_INCLUDE_ACCOUNT_UUID`        |
 | `OTEL_METRICS_INCLUDE_ENTRYPOINT`          |
 | `OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES` |
+| `OTEL_METRICS_INCLUDE_REPOSITORY`          |
 
 ## メトリクス名(8種)
 
@@ -85,6 +88,10 @@
 - `claude_code.hook_plugin_metrics`
 - `claude_code.compaction`
 - `claude_code.feedback_survey`
+- `claude_code.subagent_completed` — サブエージェント完了時。`agent_type`・`total_tool_uses` などを持つ
+- `claude_code.retention_sweep` — ローカルのトランスクリプト保持期間の掃除。一時停止時は `result` が `"skipped"` になる
+- `claude_code.managed_settings_resolved` — managed settings の解決結果(起動時・変更時)
+- `claude_code.system_prompt` — 詳細トレース(beta)と `OTEL_LOG_USER_PROMPTS=1` の併用時のみ送信される完全なシステムプロンプト
 
 MCPサーバーの接続や利用状況を監査したい場合は `mcp_server_connection` / `tool_result` / `tool_decision` を `OTEL_LOG_TOOL_DETAILS=1` と組み合わせて見る。
 

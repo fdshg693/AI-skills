@@ -29,17 +29,18 @@ Output styleは、Claudeが**何を知っているか**ではなく**どう応�
 
 ## 組み込みoutput style
 
-**Default**が既存のシステムプロンプトそのもの（ソフトウェアエンジニアリングタスクの効率的な遂行を目的とする）。加えて3つの組み込みスタイルがある。
+**Default**が既存のシステムプロンプトそのもの（ソフトウェアエンジニアリングタスクの効率的な遂行を目的とする）。加えて4つの組み込みスタイル（Proactive・Concise・Explanatory・Learning）がある。
 
 | 名前            | 内容                                                                                                                                                                                |
 | :-------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Proactive**   | 即座に実行し、日常的な判断では止まらず妥当な仮定を置いて進める。auto modeより強い自律実行指示だが、権限モード自体は変えないためツール実行前の権限確認プロンプトは引き続き表示される |
-| **Explanatory** | ソフトウェアエンジニアリングタスクを進めつつ、合間に教育的な「Insights」を挟む。実装判断やコードベースのパターンの理解を助ける                                                      |
+| **Concise**     | 結果を先頭に書き、前置き・作業の実況・末尾の要約を省く。作業自体の丁寧さはDefaultと同じ（v2.1.237で追加）                                                                           |
+| **Explanatory** | ソフトウェアエンジニアリングタスクを進めつつ、合間に教育的な`Insight`ブロックを挟む。実装判断やコードベースのパターンの理解を助ける                                                 |
 | **Learning**    | Explanatoryに加えて、Claudeが自分でコードを書かず、戦略的に小さな一部をユーザー自身に実装させる。コード中に`TODO(human)`マーカーを挿入する                                          |
 
 ## 切り替え方
 
-`/config` → **Output style** から選ぶ。選択内容はプロジェクトローカルの`.claude/settings.local.json`に保存される。
+`/output-style [name]` で切り替える（引数なしで一覧表示）。`/config` → **Output style** から選ぶこともできる。いずれも選択内容はプロジェクトローカルの`.claude/settings.local.json`に保存される。Remote Control・Web・モバイルからは組み込みスタイルのみ選択できる。
 
 設定ファイルの`outputStyle`フィールドを直接編集してもよい:
 
@@ -49,9 +50,9 @@ Output styleは、Claudeが**何を知っているか**ではなく**どう応�
 }
 ```
 
-> 独立した`/output-style`コマンドはv2.1.73で非推奨、v2.1.91で削除済み。`/config`か`outputStyle`設定の直接編集を使う。
+> `/output-style [name]`はv2.1.73で一度非推奨になったが、v2.1.269で再追加された（一覧表示と切り替えに使える）。
 
-Output styleはシステムプロンプトの一部であり、**セッション開始時に一度だけ**読み込まれる。変更を反映するには`/clear`か新規セッションが必要。
+スタイルを切り替えると、指示は**次のメッセージから**反映される（v2.1.251以降。それ以前は`/clear`か新規セッションが必要）。ターミナル版では、スタイルファイルを新規作成・編集したときにClaude Codeの再起動が必要（ファイルは起動時に読み込まれる）。
 
 ## 設定ファイルの書き方
 
@@ -97,7 +98,7 @@ Use `flowchart TD` for control flow and `sequenceDiagram` for request paths. Kee
 
 - すべてのoutput styleは、独自の指示がシステムプロンプトの末尾に追加される
 - すべてのoutput styleは、会話中もその指示に従うようリマインダーを発生させる
-- `keep-coding-instructions: true`を指定しない限り、カスタムoutput styleは**Claude Codeの組み込みソフトウェアエンジニアリング指示（変更範囲の絞り方・コメントの書き方・作業の検証方法など）を含めない**
+- `keep-coding-instructions: true`を指定しない限り、カスタムoutput styleは**Claude Codeの組み込みソフトウェアエンジニアリング指示（変更範囲の絞り方・コメントの書き方・作業の検証方法など）を含めない**。ただしこの指定は完全版のシステムプロンプトを使うときだけ効果がある。短いシステムプロンプトにはこのセクションが含まれないため、完全版を使うには環境変数`CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=0`を設定する
 
 Output styleは**メイン会話にのみ**適用される。[サブエージェント](https://code.claude.com/docs/en/sub-agents#what-loads-at-startup)は自分自身のシステムプロンプトで動くため、output styleの影響を受けない。例外は[フォーク](https://code.claude.com/docs/en/sub-agents#fork-the-current-conversation)で、親の会話のシステムプロンプトをそのまま引き継ぐため影響を受ける。
 
@@ -118,7 +119,7 @@ Output styleは**メイン会話にのみ**適用される。[サブエージェ
 ## 参考文献
 
 - Output styles全般（本記事の主な情報源）: https://code.claude.com/docs/en/output-styles
-- 設定ファイルと`outputStyle`フィールド: https://code.claude.com/docs/en/settings
+- 設定ファイルと`outputStyle`フィールド: https://code.claude.com/docs/en/settings-reference#outputstyle
 - 権限モードとProactiveスタイルの比較: https://code.claude.com/docs/en/permission-modes
-- プラグインでのoutput style配布: https://code.claude.com/docs/en/plugins
+- プラグインでのoutput style配布: https://code.claude.com/docs/en/plugins/components#themes-and-output-styles
 - 反映されない場合の切り分け: https://code.claude.com/docs/en/debug-your-config

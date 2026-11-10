@@ -40,7 +40,9 @@ Claude Codeの各セッションは空のコンテキストから始まる。過
   | Local          | `./CLAUDE.local.md`                                                         | 個人用のプロジェクト固有設定（`.gitignore`推奨） | 自分のみ          |
 
 - `AGENTS.md`との共存
-  - Claude Codeは`AGENTS.md`を直接読まない。`CLAUDE.md`に`@AGENTS.md`とインポートしてから、下にClaude固有の指示を追記する運用が推奨
+  - Claude Code（v2.1.277以降）は、作業ディレクトリとその上位に`CLAUDE.md`・`CLAUDE.local.md`・`.claude/CLAUDE.md`が無い場合に限り`AGENTS.md`を直接読む（既定。`~/.claude/CLAUDE.md`や`.claude/rules/`は数えない）。`AGENTS.local.md`・`AGENTS.override.md`は読まない
+  - 読み込み対象は`/config`の「Project instructions」、または`pluginConfigs["cc-plugin-agents-md@builtin"].options.instructionFiles`で変更できる（`claude-md-or-agents-md`（既定）/ `claude-md-and-agents-md` / `claude-md` / `managed-only`）
+  - `CLAUDE.md`に`@AGENTS.md`とインポートしてから、下にClaude固有の指示を追記する運用も引き続き有効（`CLAUDE.md`を併用する場合や、`AGENTS.md`を直接読めないセッションで推奨）
   - シンボリックリンクでも代用可（Windowsでは管理者権限 or 開発者モードが必要なため`@AGENTS.md`インポートの方が無難）
 - 書き方のコツ
   - 1ファイル200行未満を目安にする（長いと読み込みトークンが増えるだけでなく、遵守率も下がる）
@@ -64,7 +66,7 @@ https://code.claude.com/docs/en/memory#modular-rules-with-claude/rules/
 
 - `Symlinks`が使える（共有ルールセットを複数プロジェクトにリンクする用途に便利）
 - `/rules`配下であれば、直下でなくてもRULEファイルをサポートする（サブディレクトリで整理可能）
-- `~/.claude/rules/`はユーザー全プロジェクト共通のルールになり、プロジェクトのrulesより先に（＝優先度は低く）読み込まれる
+- `~/.claude/rules/`はユーザー全プロジェクト共通のルールになり、プロジェクトのrulesより先に読み込まれる。ただし優先関係はなく、どちらも他方を上書きしない（矛盾した場合どちらに従うかは定まらないため、両者は一貫させる）
 
 ### 例
 

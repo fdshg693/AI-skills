@@ -11,7 +11,7 @@ meta:
   requires_skills: claude-code-docs, writing-hooks, writing-skill
   status: stable
   description: no description
-  version: 1.0.0
+  version: 1.0.1
 ---
 
 # Claude Code設定ファイルの編集

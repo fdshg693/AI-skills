@@ -13,7 +13,7 @@ meta:
   requires_skills: claude-mechanisms, writing-subagents, claude-code-docs
   status: stable
   description: no description
-  version: 1.0.0
+  version: 1.0.1
 ---
 
 # Dynamic Workflow作成のベストプラクティス

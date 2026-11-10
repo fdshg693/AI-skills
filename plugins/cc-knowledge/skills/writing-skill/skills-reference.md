@@ -96,7 +96,7 @@ Source: [skills.md#frontmatter-reference](https://code.claude.com/docs/en/skills
 
 | フィールド                 | 必須 | 説明                                                                                                                                                                   |
 | :------------------------- | :--- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `name`                     | 任意 | スキル一覧に表示される名前。省略時はディレクトリ名。呼び出しコマンド名とは基本的に別（後述）                                                                           |
+| `name`                     | 任意 | `/`メニューに表示されるコマンド名。省略時はディレクトリ名。個人・プロジェクトのスキルでは入力するコマンド名にもなる（後述）                                            |
 | `description`              | 推奨 | スキルの内容と使用場面。Claudeの自動起動判断に使われる。`when_to_use`と合わせて1,536文字で切り詰められるため、重要なユースケースを先頭に書く                           |
 | `when_to_use`              | 任意 | 起動トリガーとなるフレーズなどの補足情報。`description`と結合されリスト表示される                                                                                      |
 | `argument-hint`            | 任意 | オートコンプリート時に表示される引数のヒント。例: `[issue-number]`                                                                                                     |
@@ -121,17 +121,17 @@ Source: [skills.md#frontmatter-reference](https://code.claude.com/docs/en/skills
 
 ### スキルのコマンド名の決まり方
 
-`name`フィールドは基本的に「一覧に表示される名前」であり、`/`の後に打つコマンド名とは別ソースになる点に注意。
+個人・プロジェクトのスキルでは、`name`フィールドが`/`メニューに表示されるコマンド名になり、`/`の後に打つ名前にもなる（同名の別コマンドが既にある場合を除く）。ディレクトリ名でも呼び出せる。プラグインのスキルでは、`name`がコマンドの末尾セグメントを置き換える（プラグイン名の名前空間は残る）。
 
-| 配置                                           | コマンド名の由来                                                     | 例                                                             |
-| :--------------------------------------------- | :------------------------------------------------------------------- | :------------------------------------------------------------- |
-| `~/.claude/skills/`または`.claude/skills/`配下 | ディレクトリ名                                                       | `.claude/skills/deploy-staging/SKILL.md` → `/deploy-staging`   |
-| ネストした`.claude/skills/`（名前衝突時）      | 作業ディレクトリからの相対パス+ディレクトリ名                        | `apps/web/.claude/skills/deploy/SKILL.md` → `/apps/web:deploy` |
-| `.claude/commands/`配下                        | 拡張子なしのファイル名                                               | `.claude/commands/deploy.md` → `/deploy`                       |
-| プラグインの`skills/`サブディレクトリ          | ディレクトリ名（プラグイン名で名前空間化）                           | `my-plugin/skills/review/SKILL.md` → `/my-plugin:review`       |
-| プラグインルートの`SKILL.md`                   | フロントマターの`name`（フォールバックでプラグインのディレクトリ名） | `name: review` → `/my-plugin:review`                           |
+| 配置                                           | コマンド名の由来                                                         | 例                                                                                                 |
+| :--------------------------------------------- | :----------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------- |
+| `~/.claude/skills/`または`.claude/skills/`配下 | フロントマター`name`、なければディレクトリ名                             | `.claude/skills/deploy-staging/SKILL.md` → `/deploy-staging`, or `/deploy` with `name: deploy`     |
+| ネストした`.claude/skills/`（名前衝突時）      | 作業ディレクトリからの相対パス+ディレクトリ名                            | `apps/web/.claude/skills/deploy/SKILL.md` → `/apps/web:deploy`                                     |
+| `.claude/commands/`配下                        | 拡張子なしのファイル名                                                   | `.claude/commands/deploy.md` → `/deploy`                                                           |
+| プラグインの`skills/`サブディレクトリ          | フロントマター`name`、なければディレクトリ名（プラグイン名で名前空間化） | `my-plugin/skills/review/SKILL.md` → `/my-plugin:review`, or `/my-plugin:fancy` with `name: fancy` |
+| プラグインルートの`SKILL.md`                   | フロントマターの`name`（フォールバックでプラグインのディレクトリ名）     | `name: review` → `/my-plugin:review`                                                               |
 
-プラグインルート直下の`SKILL.md`だけが、`name`がそのままコマンド名になる唯一のケース。
+プラグインルート直下の`SKILL.md`では、`name`がコマンドの末尾セグメント全体になる（省略時はプラグインのディレクトリ名）。
 
 ## 誰が呼び出せるかの制御
 
@@ -192,22 +192,24 @@ Source: [skills.md#frontmatter-reference](https://code.claude.com/docs/en/skills
    ```
    ````
 
-4. `shell`フロントマターで`bash`（既定）と`powershell`を切り替えられる（`powershell`利用には`CLAUDE_CODE_USE_POWERSHELL_TOOL=1`が必要）
+4. `shell`フロントマターで`bash`（既定）と`powershell`を切り替えられる。`powershell`を指定すると、PowerShellツールが有効な場合にPowerShellで実行される。PowerShellツールはWindowsでは既定で有効（Git Bash導入済みの場合はclaude.ai・Consoleアカウントのみ）。Amazon Bedrock・Google Cloud Agent Platform・Microsoft Foundryのセッションと、macOS・Linux・WSLでは`CLAUDE_CODE_USE_POWERSHELL_TOOL=1`が必要（PowerShell 7以降をPATHに置く）。`0`で無効化できる
 5. `"disableSkillShellExecution": true`を設定すると、この動的実行自体を無効化できる（無効化時は`[shell command execution disabled by policy]`に置換される）。組み込み・managedスキルは対象外で、主にmanaged settingsでの利用を想定
 
 ### 利用可能な文字列置換変数一覧
 
 Source: [skills.md#available-string-substitutions](https://code.claude.com/docs/en/skills)
 
-| 変数                    | 説明                                                                                         |
-| :---------------------- | :------------------------------------------------------------------------------------------- |
-| `$ARGUMENTS`            | 呼び出し時に渡された引数全体                                                                 |
-| `$ARGUMENTS[N]` / `$N`  | N番目（0始まり）の引数                                                                       |
-| `$name`                 | フロントマター`arguments`で宣言した名前付き引数                                              |
-| `${CLAUDE_SESSION_ID}`  | 現在のセッションID。ログ出力やセッション固有ファイルの命名に使える                           |
-| `${CLAUDE_EFFORT}`      | 現在のeffortレベル(`low`/`medium`/`high`/`xhigh`/`max`)。ultracodeは`xhigh`として報告される  |
-| `${CLAUDE_SKILL_DIR}`   | このスキルの`SKILL.md`が置かれているディレクトリ。同梱スクリプトの参照に使う                 |
-| `${CLAUDE_PROJECT_DIR}` | プロジェクトルート。hooksやMCPサーバーに渡されるものと同じ値（v2.1.196以降でスキルにも対応） |
+| 変数                    | 説明                                                                                                                                 |
+| :---------------------- | :----------------------------------------------------------------------------------------------------------------------------------- |
+| `$ARGUMENTS`            | 呼び出し時に渡された引数全体                                                                                                         |
+| `$ARGUMENTS[N]` / `$N`  | N番目（0始まり）の引数                                                                                                               |
+| `$name`                 | フロントマター`arguments`で宣言した名前付き引数                                                                                      |
+| `${CLAUDE_SESSION_ID}`  | 現在のセッションID。ログ出力やセッション固有ファイルの命名に使える                                                                   |
+| `${CLAUDE_EFFORT}`      | 現在のeffortレベル(`low`/`medium`/`high`/`xhigh`/`max`)。ultracodeは`xhigh`として報告される                                          |
+| `${CLAUDE_SKILL_DIR}`   | このスキルの`SKILL.md`が置かれているディレクトリ。同梱スクリプトの参照に使う                                                         |
+| `${CLAUDE_PROJECT_DIR}` | プロジェクトルート。hooksやMCPサーバーに渡されるものと同じ値（v2.1.196以降でスキルにも対応）                                         |
+| `${CLAUDE_PLUGIN_ROOT}` | プラグインのインストールディレクトリ。プラグインのスキルでのみ置換される。プラグイン内のスクリプトや共有ファイルの参照に使う         |
+| `${CLAUDE_PLUGIN_DATA}` | プラグインの永続データディレクトリ。プラグインのスキルでのみ置換される。プラグイン更新後も残すべき依存関係・生成物・キャッシュに使う |
 
 ### 拡張思考を有効化する
 

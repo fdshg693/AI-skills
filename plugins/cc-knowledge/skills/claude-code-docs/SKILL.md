@@ -13,7 +13,7 @@ meta:
   requires_skills: none
   status: stable
   description: no description
-  version: 1.0.3
+  version: 1.0.4
 ---
 
 !`python ${CLAUDE_SKILL_DIR}/download_claude_code_reference.py`

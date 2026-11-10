@@ -73,7 +73,7 @@ claude --agents '{
 }'
 ```
 
-- `--agents`は、ファイルベースのサブエージェントと同じフロントマターフィールド（`description`, `tools`, `disallowedTools`, `model`, `permissionMode`, `mcpServers`, `hooks`, `maxTurns`, `skills`, `initialPrompt`, `memory`, `effort`, `background`, `isolation`, `color`）に加えて、システムプロンプトに相当する`prompt`フィールドを受け付ける
+- `--agents`は、ファイルベースのサブエージェントと同じフロントマターフィールド（`description`, `tools`, `disallowedTools`, `model`, `permissionMode`, `mcpServers`, `hooks`, `maxTurns`, `autoCompactWindow`, `skills`, `initialPrompt`, `memory`, `effort`, `background`, `omitClaudeMd`, `isolation`, `color`, `experimental`）に加えて、システムプロンプトに相当する`prompt`フィールドを受け付ける
 - `--agent`をプロジェクトの`.claude/settings.json`の`agent`設定として恒久化することも可能。CLIフラグは設定より優先される
 - セッション全体を特定のサブエージェント定義で走らせたい場合（メインスレッド自体をそのサブエージェントにする）に`--agent`を使う。詳細は後述の「明示的な呼び出し方」を参照
 
@@ -83,22 +83,23 @@ Claude Codeには、自分で定義しなくても最初から使える組み込
 
 参考: https://code.claude.com/docs/en/sub-agents （「Built-in subagents」セクション）
 
-| 名前                | モデル                                                               | 利用ツール                       | 役割                                                                 |
-| :------------------ | :------------------------------------------------------------------- | :------------------------------- | :------------------------------------------------------------------- |
-| `Explore`           | メインの会話から継承（Claude API上ではOpus上限）。v2.1.198以降の挙動 | 読み取り専用（Write/Editは不可） | コードベースの検索・調査に特化した高速な読み取り専用エージェント     |
-| `Plan`              | メインの会話から継承                                                 | 読み取り専用（Write/Editは不可） | Plan Mode中に、計画提示前の下調べを行う調査エージェント              |
-| `general-purpose`   | メインの会話から継承                                                 | 全ツール                         | 調査と実際の変更（編集など）の両方が必要な、複雑・多段階のタスク向け |
-| `statusline-setup`  | Sonnet                                                               | -                                | `/statusline` 実行時にステータスラインを設定するために使われる       |
-| `claude-code-guide` | Haiku                                                                | -                                | Claude Codeの機能についての質問をしたときに使われる                  |
+| 名前                | モデル                                                                                                                                         | 利用ツール                         | 役割                                                                                                                       |
+| :------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------- | :--------------------------------- | :------------------------------------------------------------------------------------------------------------------------- |
+| `Explore`           | メインの会話のモデル。メインがFableの場合、サブスクリプション・Console・LLMゲートウェイ経由では`opus`エイリアス先（Bedrock等ではメインと同じ） | 読み取り専用（Write/Editは不可）   | コードベースの検索・調査に特化した高速な読み取り専用エージェント                                                           |
+| `Plan`              | メインの会話から継承                                                                                                                           | 読み取り専用（Write/Editは不可）   | Plan Mode中に、計画提示前の下調べを行う調査エージェント                                                                    |
+| `general-purpose`   | メインの会話から継承                                                                                                                           | 全ツール                           | 調査と実際の変更（編集など）の両方が必要な、複雑・多段階のタスク向け                                                       |
+| `claude`            | 独自のモデルは持たず、サブエージェントとして起動された場合はモデル解決順に従う                                                                 | サブエージェント利用可能な全ツール | 他のどの専用エージェントにも当てはまらないタスク向けのキャッチオール。バックグラウンドセッションの既定エージェントでもある |
+| `statusline-setup`  | Sonnet                                                                                                                                         | -                                  | `/statusline` 実行時にステータスラインを設定するために使われる                                                             |
+| `claude-code-guide` | Haiku                                                                                                                                          | -                                  | Claude Codeの機能についての質問をしたときに使われる                                                                        |
 
 ### 補足
 
-- `Explore`と`Plan`は、CLAUDE.mdファイルやメイン会話のgitステータスを読み込まない（調査を高速・低コストに保つため）。それ以外の組み込み・カスタムサブエージェントは両方を読み込む（[フォーク](#会話をフォークする-fork)を除く）。
+- `Explore`と`Plan`は、CLAUDE.mdファイルやメイン会話のgitステータスを読み込まない（調査を高速・低コストに保つため）。それ以外の組み込みサブエージェントと、`omitClaudeMd`を設定していないカスタムサブエージェントは両方を読み込む（[フォーク](#会話をフォークする-fork)を除く）。`omitClaudeMd: true`のカスタムサブエージェントは、ユーザー・プロジェクト・ローカルのCLAUDE.mdを読まない（managedポリシーは読み込まれる）。
 - `Explore`という名前で自分のプロジェクト/ユーザー用サブエージェントを定義すると、組み込みの`Explore`を上書きできる（例: `model: haiku`を指定して低コストに固定するなど）。
 - `Explore`・`Plan`は一度きり（one-shot）の実行で、エージェントIDを返さないため、後から`SendMessage`で再開（resume）することはできない。継続して作業させたい場合は`general-purpose`かカスタムサブエージェントを使う。
 - 特定の組み込みサブエージェントを無効化したい場合は、`settings.json`の`permissions.deny`に`Agent(Explore)`のような形式で追加する。`--disallowedTools`CLIフラグでも同様のことができる（例: `claude --disallowedTools "Agent(Explore)"`）。
-- `Explore`・`Plan`のみをまとめて無効化したい場合は環境変数`CLAUDE_CODE_DISABLE_EXPLORE_PLAN_AGENTS=1`を設定する（Claude Codeが直接ファイルを読み書き・調査するようになる。v2.1.198以降）。
-- 非対話モード（headless）やAgent SDKで、組み込みサブエージェント自体をすべて取り除いて自前のものだけを使いたい場合は`CLAUDE_AGENT_SDK_DISABLE_BUILTIN_AGENTS=1`を設定する。
+- `Explore`・`Plan`のみをまとめて無効化したい場合は環境変数`CLAUDE_CODE_DISABLE_EXPLORE_PLAN_AGENTS=1`を設定する（Claudeは検索ツールまたは`general-purpose`で調査するようになる。プランモードは`Explore`・`Plan`を起動せずファイルを直接読む。v2.1.198以降）。
+- 非対話モード（headless）やAgent SDKで、組み込みサブエージェント自体をすべて取り除いて自前のものだけを使いたい場合は`CLAUDE_AGENT_SDK_DISABLE_BUILTIN_AGENTS=1`を設定する。これにより`general-purpose`も外れるため、`Agent`呼び出しで`subagent_type`を省略すると`subagent_type is required`で失敗する。
 - サブエージェント自体を一切使わせたくない場合は、`Agent`ツール自体を`permissions.deny`で拒否する。
 
 ## サブエージェントの設定ファイルの書き方
@@ -122,36 +123,41 @@ Source: [sub-agents.md#supported-frontmatter-fields](https://code.claude.com/doc
 
 必須なのは`name`と`description`のみ。
 
-| フィールド        | 必須 | 説明                                                                                                                                                                                                                                                                                                      |
-| :---------------- | :--- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `name`            | 必須 | 小文字英数字とハイフンで構成される一意な識別子。[フック](#補足-2)は`agent_type`としてこの値を受け取る。ファイル名と一致している必要はない                                                                                                                                                                 |
-| `description`     | 必須 | Claudeがこのサブエージェントに委譲すべき状況の説明                                                                                                                                                                                                                                                        |
-| `tools`           | 任意 | 利用可能な[ツール](#ツールアクセスの制御)。省略時は全ツールを継承。スキルを事前ロードしたい場合は`Skill`を並べるのではなく`skills`フィールドを使う                                                                                                                                                        |
-| `disallowedTools` | 任意 | 継承・指定されたリストから除外するツール                                                                                                                                                                                                                                                                  |
-| `model`           | 任意 | 使用モデル: `sonnet`, `opus`, `haiku`, `fable`、または`claude-opus-4-8`のようなフルモデルID、`inherit`。省略時は`inherit`                                                                                                                                                                                 |
-| `permissionMode`  | 任意 | `default`, `acceptEdits`, `auto`, `dontAsk`, `bypassPermissions`, `plan`, `manual`（`default`のエイリアス、v2.1.200以降）。プラグイン提供のサブエージェントでは無視される                                                                                                                                 |
-| `maxTurns`        | 任意 | サブエージェントが停止するまでの最大ターン数                                                                                                                                                                                                                                                              |
-| `skills`          | 任意 | 起動時にこのサブエージェントのコンテキストへ事前ロードするスキル（説明文だけでなく本体全文が注入される）。ここに列挙しなくても、プロジェクト/ユーザー/プラグインのスキルは`Skill`ツール経由で実行時に呼び出せる                                                                                           |
-| `mcpServers`      | 任意 | このサブエージェントで使える[MCPサーバー](https://code.claude.com/docs/en/mcp)。既存サーバー名の参照、またはインライン定義。プラグイン提供のサブエージェントでは無視される                                                                                                                                |
-| `hooks`           | 任意 | このサブエージェントに紐づく[ライフサイクルフック](#補足-2)。プラグイン提供のサブエージェントでは無視される                                                                                                                                                                                               |
-| `memory`          | 任意 | [永続メモリ](#永続メモリ-memory)のスコープ: `user`, `project`, `local`                                                                                                                                                                                                                                    |
-| `background`      | 任意 | `true`にすると、Claudeが結果をすぐ必要とする場合でも常に[バックグラウンドタスク](#フォアグラウンドバックグラウンド実行)として実行する。省略時はClaudeが判断（v2.1.198以降はデフォルトでバックグラウンド実行）                                                                                             |
-| `effort`          | 任意 | このサブエージェント有効時のeffortレベル(`low`/`medium`/`high`/`xhigh`/`max`)。省略時はセッションの設定を継承                                                                                                                                                                                             |
-| `isolation`       | 任意 | `worktree`を指定すると、一時的な[git worktree](https://code.claude.com/docs/en/worktrees)（既定では親セッションのHEADではなく[デフォルトブランチ](https://code.claude.com/docs/en/worktrees#choose-the-base-branch)から分岐）で実行される。サブエージェントが変更を加えなければ自動でクリーンアップされる |
-| `color`           | 任意 | タスク一覧・トランスクリプト上の表示色: `red`, `blue`, `green`, `yellow`, `purple`, `orange`, `pink`, `cyan`                                                                                                                                                                                              |
-| `initialPrompt`   | 任意 | このエージェントが`--agent`や`agent`設定でメインセッションとして実行された場合に、最初のユーザーターンとして自動送信される内容。[コマンド](https://code.claude.com/docs/en/commands)・[スキル](https://code.claude.com/docs/en/skills)呼び出しも処理され、ユーザー入力があればその前に付加される          |
+| フィールド          | 必須 | 説明                                                                                                                                                                                                                                                                                                      |
+| :------------------ | :--- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `name`              | 必須 | 小文字英数字とハイフンで構成される一意な識別子（256文字以内。`:`は使えない）。[フック](#補足-2)は`agent_type`としてこの値を受け取る。ファイル名と一致している必要はない                                                                                                                                   |
+| `description`       | 必須 | Claudeがこのサブエージェントに委譲すべき状況の説明                                                                                                                                                                                                                                                        |
+| `tools`             | 任意 | 利用可能な[ツール](#ツールアクセスの制御)。省略時は全ツールを継承。スキルを事前ロードしたい場合は`Skill`を並べるのではなく`skills`フィールドを使う                                                                                                                                                        |
+| `disallowedTools`   | 任意 | 継承・指定されたリストから除外するツール                                                                                                                                                                                                                                                                  |
+| `model`             | 任意 | 使用モデル: `sonnet`, `opus`, `haiku`, `fable`、または`claude-opus-5-5`のようなフルモデルID、`inherit`。省略時は[モデル解決順](#モデルの選び方)に従う                                                                                                                                                     |
+| `permissionMode`    | 任意 | `default`, `acceptEdits`, `auto`, `dontAsk`, `bypassPermissions`, `plan`, `manual`（`default`のエイリアス、v2.1.200以降）。プラグイン提供のサブエージェントでは無視される                                                                                                                                 |
+| `maxTurns`          | 任意 | サブエージェントが停止するまでの最大ターン数                                                                                                                                                                                                                                                              |
+| `autoCompactWindow` | 任意 | このサブエージェントだけ自動コンパクトを早める トークン数（`100000`〜`1000000`の整数。`200k`のような書き方は不可）。`CLAUDE_CODE_AUTO_COMPACT_WINDOW`が設定されている場合は環境変数が優先され、このフィールドは効かない。v2.1.296以降                                                                     |
+| `skills`            | 任意 | 起動時にこのサブエージェントのコンテキストへ事前ロードするスキル（先頭32件まで。説明文だけでなく本体全文が注入される）。ここに列挙しなくても、プロジェクト/ユーザー/プラグインのスキルは`Skill`ツール経由で実行時に呼び出せる                                                                             |
+| `mcpServers`        | 任意 | このサブエージェントで使える[MCPサーバー](https://code.claude.com/docs/en/mcp)。既存サーバー名の参照、またはインライン定義。プラグイン提供のサブエージェントでは無視される                                                                                                                                |
+| `hooks`             | 任意 | このサブエージェントに紐づく[ライフサイクルフック](#補足-2)。プラグイン提供のサブエージェントでは無視される                                                                                                                                                                                               |
+| `memory`            | 任意 | [永続メモリ](#永続メモリ-memory)のスコープ: `user`, `project`, `local`                                                                                                                                                                                                                                    |
+| `background`        | 任意 | `true`にすると、Claudeが結果をすぐ必要とする場合でも常に[バックグラウンドタスク](#フォアグラウンドバックグラウンド実行)として実行する。省略時はClaudeが判断（v2.1.198以降はデフォルトでバックグラウンド実行）                                                                                             |
+| `effort`            | 任意 | このサブエージェント有効時のeffortレベル(`low`/`medium`/`high`/`xhigh`/`max`)。省略時はセッションの設定を継承                                                                                                                                                                                             |
+| `isolation`         | 任意 | `worktree`を指定すると、一時的な[git worktree](https://code.claude.com/docs/en/worktrees)（既定では親セッションのHEADではなく[デフォルトブランチ](https://code.claude.com/docs/en/worktrees#choose-the-base-branch)から分岐）で実行される。サブエージェントが変更を加えなければ自動でクリーンアップされる |
+| `omitClaudeMd`      | 任意 | `true`にすると、ユーザー・プロジェクト・ローカルのCLAUDE.mdを読み込まずに起動する（managedポリシーファイルは読み込まれる）。必要な指示は委譲プロンプトで渡す想定。`--agent`や`agent`設定でメインセッションとして動く場合は無視される。v2.1.271以降                                                        |
+| `color`             | 任意 | タスク一覧・トランスクリプト上の表示色: `red`, `blue`, `green`, `yellow`, `purple`, `orange`, `pink`, `cyan`                                                                                                                                                                                              |
+| `initialPrompt`     | 任意 | このエージェントが`--agent`や`agent`設定でメインセッションとして実行された場合に、最初のユーザーターンとして自動送信される内容。[コマンド](https://code.claude.com/docs/en/commands)・[スキル](https://code.claude.com/docs/en/skills)呼び出しも処理され、ユーザー入力があればその前に付加される          |
+| `experimental`      | 任意 | 実験的オプションのマップ。`cacheTtl`キーに`5m`または`1h`を指定すると、このサブエージェントのプロンプトキャッシュの保持時間を選べる（サブエージェントのファイルでのみ読まれ、トップレベルに書いても無効）。サブスクリプションのusage creditsを使用中は`1h`は無視される。v2.1.248以降                       |
 
 ### モデルの選び方
 
 `model`フィールドの解決順序（優先度が高い順）:
 
-1. 環境変数`CLAUDE_CODE_SUBAGENT_MODEL`（エイリアスまたはモデルID指定時）
-2. Claudeが委譲時に渡す、呼び出しごとの`model`パラメータ
-3. サブエージェント定義の`model`フロントマター
+1. Claudeが委譲時に渡す、呼び出しごとの`model`パラメータ（エイリアスのみ）
+2. サブエージェント定義の`model`フロントマター（`inherit`はメイン会話のモデル）
+3. 環境変数`CLAUDE_CODE_SUBAGENT_MODEL`（エイリアスまたはモデルID指定時）
 4. メイン会話のモデル
 
+v2.1.251以前は`CLAUDE_CODE_SUBAGENT_MODEL`が1・2より先に適用され、`model: inherit`も上書きしていた。`CLAUDE_CODE_SUBAGENT_MODEL=inherit`は未設定時と同じ扱い。
+`CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1`（v2.1.257以降）を設定すると、上の1・2を無視してすべてのサブエージェントに`CLAUDE_CODE_SUBAGENT_MODEL`のモデルを適用する（未設定ならメイン会話のモデル。組み込みの`Explore`は自身の既定モデルのまま）。`CLAUDE_CODE_SUBAGENT_MODEL`を単独で設定しても、組み込みの`Explore`・`Plan`は変わらない。
 v2.1.196以降、`CLAUDE_CODE_SUBAGENT_MODEL=inherit`は未設定時と同じ扱いになり、以降の解決（呼び出しごとのパラメータ→フロントマター）が続行される（それ以前のバージョンでは`inherit`が強制的にメイン会話のモデルへ固定していた）。
-組織の[`availableModels`](https://code.claude.com/docs/en/model-config#restrict-model-selection)許可リストに反する値は、その値だけスキップされ継承モデルにフォールバックする。
+組織の[`availableModels`](https://code.claude.com/docs/en/model-config#restrict-model-selection)許可リストに反する値は、その値だけ、ファミリーエイリアス（例: `opus`）なら許可されている最新版へ、それ以外は継承モデルへ読み替えられる。
 v2.1.198以降、サブエージェントはメイン会話の拡張思考（extended thinking）設定もそのまま継承する（サブエージェント個別のON/OFF設定はない）。
 
 ### ツールアクセスの制御
@@ -183,6 +189,8 @@ MCPサーバー単位のパターンも使える: `mcp__<server>`または`mcp__
 - `ExitPlanMode`（`permissionMode: plan`の場合を除く）
 - `ScheduleWakeup`
 - `WaitForMcpServers`
+- `EndConversation`（メイン会話しか終了できない）
+- `Workflow`
 
 サブエージェントが**さらに他のサブエージェントを起動できるか**は`tools`に`Agent`を含めるかどうかで決まる（[入れ子のサブエージェント](#入れ子のサブエージェント)を参照）。`claude --agent`でメインスレッドとして動く場合に限り、`Agent(worker, researcher)`のように括弧内で起動できるサブエージェント種別を許可リスト化できる（サブエージェント定義内での`tools: Agent(...)`は括弧内が無視される）。
 
@@ -238,8 +246,9 @@ Source: [sub-agents.md#invoke-subagents-explicitly](https://code.claude.com/docs
 
 - **フォアグラウンド**: 完了するまでメイン会話をブロックする。権限確認プロンプトはそのままユーザーに渡される
 - **バックグラウンド**: メイン会話と並行して動く。v2.1.186以降、権限確認が必要な場面ではメインセッションにプロンプトが表示され（サブエージェント名付き）、承認すれば続行、Escでその1回だけ拒否できる（それ以前は自動拒否だった）
-- v2.1.198以降、サブエージェントはデフォルトでバックグラウンド実行になる（結果がすぐ必要な場合はClaudeがフォアグラウンドを選ぶ）
-- バックグラウンドのサブエージェントはフォアグラウンドより組み込みツールセットが狭い（フォーク実行は例外）。`AskUserQuestion`・`EnterPlanMode`・`ExitPlanMode`（`permissionMode: plan`のサブエージェントを除く）・`ScheduleWakeup`・`TaskOutput`などが使えない。`tools`にこれらを列挙すると、そのエージェントがバックグラウンド実行される限り「サブエージェントで利用不可」として弾かれる
+- v2.1.198以降、サブエージェントはデフォルトでバックグラウンド実行になる。`claude -p`・Agent SDKではClaudeが結果を待つ判断もできる。対話セッション（ターミナル・VS Code・デスクトップ）ではフォークモードがONの間は待機できず、待たせたい場合は`CLAUDE_CODE_FORK_SUBAGENT=0`でフォークモードを切る
+- バックグラウンドのサブエージェント（フォーク実行は例外）は組み込みツールが次の一覧に絞られる: `Read`, `Grep`, `Glob`, `LSP`, `Bash`, `PowerShell`, `Edit`, `Write`, `NotebookEdit`, `WebFetch`, `WebSearch`, `TodoWrite`, `Skill`, `ToolSearch`, `EnterWorktree`, `ExitWorktree`, `Monitor`, `TaskStop`, `SendMessage`, `Artifact`（MCPツールは全て残る）。それ以外は、継承されたものでも`tools`に列挙したものでも黙って外される（全部外れて何も残らない場合のみエラー）。そのため同じ定義でも、フォアグラウンドとバックグラウンドで使えるツールが変わる
+- `TaskOutput`は v2.1.277 で削除された。バックグラウンドタスクの出力は`Read`で出力ファイルを読む
 - `Ctrl+B`で実行中のタスクをバックグラウンドに送れる
 - `CLAUDE_CODE_DISABLE_BACKGROUND_TASKS=1`でバックグラウンド機能自体を無効化できる
 
@@ -267,9 +276,10 @@ v2.1.172以降、サブエージェントはさらに自分のサブエージェ
 
 フォークは、新規に始まるのではなく**会話全体をそのまま引き継ぐ**特殊なサブエージェント。システムプロンプト・ツール・モデル・メッセージ履歴がメインセッションと同一のため、背景説明なしに横道のタスクを任せられる。ツール呼び出し自体はメイン会話に出てこず、最終結果だけが返る点は通常のサブエージェントと同じ。
 
-- v2.1.117以降が必要。v2.1.161以降は`/fork`コマンドがデフォルトで有効（それ以前は環境変数`CLAUDE_CODE_FORK_SUBAGENT=1`が必要）。Claude自身にフォークを起動させる機能は実験的
-- `CLAUDE_CODE_FORK_SUBAGENT=1`で明示的に有効化、`0`で無効化（サーバー側の段階的ロールアウトより優先される）
-- `/fork <指示>`で自分から開始できる。バックグラウンドで動き、完了するとメイン会話にメッセージとして結果が届く
+- v2.1.117以降が必要。フォークモード（Claude自身がフォークを起動できる機能）は v2.1.302 以降、既定で有効（対話ターミナルでは v2.1.232 以降）
+- `CLAUDE_CODE_FORK_SUBAGENT=0`でフォークモードを無効化する。`permissions.deny`に`Agent(fork)`を入れると、フォークだけを止められる
+- `/subtask <指示>`で、会話全体を引き継いだフォークをセッション内で起動できる。バックグラウンドで動き、完了すると結果がメイン会話に届く
+- `/fork [指示]`は、会話を新しいバックグラウンドセッション（`claude agents`の一覧に出る）にコピーし、元のセッションでは作業を続けられる。エージェントビューを無効化している場合は、`/subtask`は使えず`/fork`がフォークを起動する
 - フォークはシステムプロンプト・ツール定義がメインと同一なため、最初のリクエストが親のプロンプトキャッシュを再利用でき、通常のサブエージェント起動よりコストが安くなりやすい
 - Claudeが`Agent`ツール経由でフォークを起動する際、`isolation: "worktree"`を指定すればファイル変更を別のgit worktreeに書き込める
 - フォークはさらに別のフォークを起動できない
@@ -288,11 +298,11 @@ v2.1.172以降、サブエージェントはさらに自分のサブエージェ
 
 - **システムプロンプト**: エージェント自身のプロンプト＋Claude Codeが付加する環境情報（フル版システムプロンプトではない）
 - **タスクメッセージ**: Claudeが委譲時に書く指示文
-- **CLAUDE.mdとメモリ**: メイン会話がロードする[メモリ階層](https://code.claude.com/docs/en/memory)（`~/.claude/CLAUDE.md`、プロジェクトルール、`CLAUDE.local.md`、managedポリシー等）を全レベル分。`Explore`・`Plan`はこれをスキップする
+- **CLAUDE.mdとメモリ**: メイン会話がロードする[メモリ階層](https://code.claude.com/docs/en/memory)（`~/.claude/CLAUDE.md`、プロジェクトルール、`CLAUDE.local.md`、managedポリシー等）を全レベル分。`Explore`・`Plan`はこれをスキップする。`omitClaudeMd: true`のカスタムサブエージェントは、ユーザー・プロジェクト・ローカルのCLAUDE.mdを省略し、managedポリシーファイルだけを読む（managed settings由来の定義では何も読まない）
 - **Gitステータス**: 親セッション開始時点のスナップショット。Gitリポジトリでない場合や`includeGitInstructions: false`の場合は含まれない。`Explore`・`Plan`は常にスキップ
 - **事前ロードされたスキル**: フロントマターの`skills`で指定したスキルの全文。組み込みエージェントはスキルを事前ロードしない
 
-`Explore`・`Plan`だけがCLAUDE.mdとGitステータスを省略する。この挙動を変えるフロントマターや個別設定は存在しない。
+`Explore`・`Plan`はCLAUDE.mdとGitステータスを省略する。カスタムサブエージェントでは、フロントマターの`omitClaudeMd: true`でCLAUDE.mdだけを省略できる（Gitステータスは省略されない）。
 
 ## API エラー時の挙動
 
