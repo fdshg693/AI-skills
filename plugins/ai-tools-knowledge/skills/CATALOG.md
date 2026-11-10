@@ -36,7 +36,7 @@ meta:
   requires_skills: none
   status: stable
   description: no description
-  version: 1.0.4
+  version: 1.0.5
 ---
 
 - antigravity-memory
@@ -85,7 +85,7 @@ meta:
   requires_skills: antigravity-docs
   status: stable
   description: no description
-  version: 1.0.3
+  version: 1.0.4
 ---
 
 - antigravity-subagents
@@ -110,7 +110,7 @@ meta:
   requires_skills: antigravity-docs
   status: stable
   description: no description
-  version: 1.0.0
+  version: 1.0.1
 ---
 
 - cline-cli-docs
@@ -263,7 +263,7 @@ meta:
   requires_skills: cline-docs, cline-rule-writer
   status: stable
   description: no description
-  version: 1.0.1
+  version: 1.0.2
 ---
 
 - codex-cli-docs
@@ -350,7 +350,7 @@ meta:
   requires_skills: codex-docs, codex-settings, codex-hooks
   status: stable
   description: no description
-  version: 1.0.3
+  version: 1.0.4
 ---
 
 - codex-sdk-use
@@ -401,7 +401,7 @@ meta:
   requires_skills: none
   status: stable
   description: no description
-  version: 1.0.3
+  version: 1.0.4
 ---
 
 - copilot-cli-docs
@@ -423,7 +423,7 @@ meta:
 
 - copilot-writing-plugins
 ---
-name: writing-plugins
+name: copilot-writing-plugins
 description: Use when creating, reviewing, installing, distributing, or troubleshooting a GitHub Copilot agent plugin for Copilot CLI, Copilot cloud agent, or VS Code. Covers plugin.json, bundled agents/skills/hooks/MCP/LSP, marketplace.json, enabledPlugins, local testing, host differences, and safe validation. Do not use for Claude Code plugins or VS Code extension API development.
 meta:
   tag: []
@@ -435,12 +435,12 @@ meta:
   requires_skills: github-copilot-docs, vscode-copilot-docs
   status: stable
   description: no description
-  version: 1.0.3
+  version: 1.0.4
 ---
 
 - copilot-writing-skills
 ---
-name: writing-skills
+name: copilot-writing-skills
 description: Use when creating, editing, reviewing, or validating a GitHub Copilot Agent Skill — including its SKILL.md frontmatter, directory layout, instructions, scripts, resources, trigger description, tool permissions, and gh skill distribution. This skill is for writing skills that GitHub Copilot consumes, not Claude Code skills.
 meta:
   tag: []
@@ -452,7 +452,7 @@ meta:
   requires_skills: github-copilot-docs
   status: stable
   description: no description
-  version: 1.0.3
+  version: 1.0.4
 ---
 
 - cursor-cli-docs
@@ -538,7 +538,7 @@ meta:
   requires_skills: cursor-skill-use, cursor-docs, claude-code-memory
   status: stable
   description: no description
-  version: 1.0.3
+  version: 1.0.4
 ---
 
 - cursor-plugin-use
@@ -555,7 +555,7 @@ meta:
   requires_skills: cursor-docs, cursor-skill-use
   status: experimental
   description: no description
-  version: 1.0.1
+  version: 1.0.2
 ---
 
 - cursor-sdk-use
@@ -573,7 +573,7 @@ meta:
   requires_skills: cursor-docs
   status: stable
   description: no description
-  version: 1.1.1
+  version: 1.1.2
 ---
 
 - cursor-skill-use
@@ -591,7 +591,7 @@ meta:
   requires_skills: none
   status: experimental
   description: no description
-  version: 1.0.3
+  version: 1.0.4
 ---
 
 - github-copilot-docs
@@ -660,7 +660,7 @@ meta:
   requires_skills: kilo-code-docs
   status: experimental
   description: no description
-  version: 1.0.0
+  version: 1.0.1
 ---
 
 - kilo-cli-guide
@@ -733,7 +733,7 @@ meta:
   requires_skills: kilo-code-docs
   status: experimental
   description: no description
-  version: 1.0.0
+  version: 1.0.1
 ---
 
 - kilo-skill-guide
@@ -768,7 +768,7 @@ meta:
   requires_skills: vscode-docs,github-copilot-docs,aim-cli
   status: stable
   description: no description
-  version: 1.0.6
+  version: 1.0.7
 ---
 
 - writing-copilot-instructions
