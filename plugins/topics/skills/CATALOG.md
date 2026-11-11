@@ -201,6 +201,23 @@ meta:
   version: 1.0.6
 ---
 
+- replit-docs
+---
+name: replit-docs
+description: Use when answering questions about Replit, including Agent modes, tools, checkpoints, Skills and project instructions, connected repositories, environments, publishing, deployment pricing, secrets, monitoring, and troubleshooting. Grounds answers in official Replit documentation rather than potentially outdated product knowledge.
+meta:
+  tag: []
+  requires_repo_tools: none
+  requires_env: none
+  dependencies: uv
+  requires_install: none
+  requires_hooks: none
+  requires_skills: none
+  status: experimental
+  description: Replit official documentation search and current page lookup
+  version: 1.0.0
+---
+
 - vercel-docs
 ---
 name: vercel-docs
