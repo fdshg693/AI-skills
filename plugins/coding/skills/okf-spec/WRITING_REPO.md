@@ -28,14 +28,14 @@ docs/
 
 `type`はOKF側で中央登録されない自由文字列。このリポジトリでは以下のような値を想定する。
 
-| `type`の値        | 使う場面                                                   |
-| ----------------- | ---------------------------------------------------------- |
-| `AI Tool`         | Claude Code / Cline / Codex 等、AIツール本体についての知識 |
-| `Plugin`          | `*-plugins/`配下の個別プラグインについての知識             |
-| `Skill`           | `SKILL.md`単体では書ききれない運用知識・落とし穴           |
-| `Wrapper Tool`    | `tools/`配下のラッパーCLI（`aim`、`claude-wrapper`等）     |
-| `Design Decision` | SSOT化・命名規則など、このリポジトリ固有の設計判断         |
-| `Known Issue`     | 既知の不具合・回避策                                       |
+| `type`の値        | 使う場面                                                                     |
+| ----------------- | ---------------------------------------------------------------------------- |
+| `AI Tool`         | Claude Code / Cline / Codex 等、AIツール本体についての知識                   |
+| `Plugin`          | `*-plugins/`配下の個別プラグインについての知識                               |
+| `Skill`           | `SKILL.md`単体では書ききれない運用知識・落とし穴                             |
+| `Wrapper Tool`    | `tools/`・`workflow/`配下のラッパーCLI（`aim`、`workflow/claude-wrapper`等） |
+| `Design Decision` | SSOT化・命名規則など、このリポジトリ固有の設計判断                           |
+| `Known Issue`     | 既知の不具合・回避策                                                         |
 
 `generated.by` / `verified[].by`のactor記法（`<producer>/<version>` / `human:<id>` / `process:<id>`）は、このリポジトリでは実務上こう対応させる。
 
