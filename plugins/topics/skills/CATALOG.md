@@ -126,6 +126,26 @@ meta:
   version: 1.0.3
 ---
 
+- linear-docs
+---
+name: linear-docs
+description: Use when answering questions about Linear, the linear.app issue tracker and product planning tool — issues, projects, cycles, initiatives, roadmaps, triage, intake, views, labels, workflows, SLAs, customer requests, Linear Agents and automation, integrations (GitHub, GitLab, Slack, Zendesk, etc.), workspace administration, importers, the Linear GraphQL API, the @linear/sdk TypeScript SDK, webhooks, OAuth apps, agent development, and the Linear MCP server. Grounds answers in the latest official Linear documentation instead of training-data memory. Not for linear algebra or other uses of the word "linear".
+allowed-tools: Bash(python ${CLAUDE_SKILL_DIR}/*.py *) Bash(uv run ${CLAUDE_SKILL_DIR}/*.py *)
+# スキル起動時に linear.app/llms.txt の索引スナップショットを取得する（24時間freshness、--forceで再取得）。
+# network access to linear.app (and raw.githubusercontent.com for the GraphQL schema) is required.
+meta:
+  tag: []
+  requires_repo_tools: aim
+  requires_env: none
+  dependencies: requests, typer, uv
+  requires_install: none
+  requires_hooks: none
+  requires_skills: none
+  status: experimental
+  description: Linear documentation index snapshot (linear.app/llms.txt) plus per-page .md fetch, on-demand GraphQL schema and changelog fetch
+  version: 1.0.0
+---
+
 - litellm-docs
 ---
 name: litellm-docs
