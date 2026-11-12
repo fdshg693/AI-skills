@@ -73,7 +73,7 @@ meta:
 ---
 name: pr-check
 description: PRの作成・状態確認・レビュー依頼・GitHub Actions操作を行う
-allowed-tools: Bash(gh *), Bash(git *), Bash(python skills/plugins/use-github/skills/pr-check/*.py *)
+allowed-tools: Bash(gh *), Bash(git *), Bash(python *pr-check/*.py*)
 meta:
   tag: []
   requires_repo_tools: none
@@ -83,8 +83,8 @@ meta:
   requires_hooks: none
   requires_skills: none
   status: stable
-  description: no description
-  version: 1.0.4
+  description: 現在のブランチのPR作成・状態確認・Copilotレビュー依頼・マージとGitHub Actionsの実行・ログ取得
+  version: 1.0.5
 ---
 
 - proposing-flow

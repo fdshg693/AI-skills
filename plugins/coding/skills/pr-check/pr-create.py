@@ -5,11 +5,12 @@
   python pr-create.py [--draft] [--base <branch>] [--title <title>] [--body <body>|--body-file <path>]
 省略時:
   base   : デフォルトブランチ（gh repo view から取得）
-  title  : 直近コミットの件名
+  title  : base との差分が 1 コミットならその件名。2 コミット以上なら --title 必須
   body   : 空（gh がコミット履歴から生成）
 事前チェック:
   - 未コミット変更がある場合は警告
   - 既に同ブランチからPRが開いている場合は中断
+  - リモート未作成、またはローカルが origin/<branch> より先行していれば push する
 """
 
 from __future__ import annotations
@@ -57,14 +58,34 @@ def main() -> int:
         print(f"既にオープンなPRが存在します: {json.dumps(existing[0])}", file=sys.stderr)
         return 1
 
+    base = args.base or default
+    run(["git", "fetch", "--quiet", "origin"], check=False)
+
+    commits = run(
+        ["git", "log", "--oneline", f"origin/{base}..HEAD"], check=False
+    ).stdout.splitlines()
+    if not commits:
+        print(f"origin/{base} との差分コミットがありません", file=sys.stderr)
+        return 1
+    if len(commits) > 1 and not args.title:
+        print(
+            f"origin/{base} との差分が {len(commits)} コミットあります。"
+            "全体を表す --title を指定してください:\n" + "\n".join(commits),
+            file=sys.stderr,
+        )
+        return 1
+
     verify = run(["git", "rev-parse", "--verify", "--quiet", f"origin/{branch}"], check=False)
     if verify.returncode != 0:
         print(f"リモートに {branch} が未push。push します...")
         subprocess.run(["git", "push", "-u", "origin", branch], check=True)
+    else:
+        ahead = run(["git", "rev-list", "--count", f"origin/{branch}..HEAD"]).stdout.strip()
+        if ahead != "0":
+            print(f"ローカルが origin/{branch} より {ahead} コミット先行。push します...")
+            subprocess.run(["git", "push", "origin", branch], check=True)
 
-    gh_args = ["gh", "pr", "create", "--head", branch]
-    if args.base:
-        gh_args += ["--base", args.base]
+    gh_args = ["gh", "pr", "create", "--head", branch, "--base", base]
     if args.draft:
         gh_args.append("--draft")
 

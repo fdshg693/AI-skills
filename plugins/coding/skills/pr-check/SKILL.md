@@ -1,7 +1,7 @@
 ---
 name: pr-check
 description: PRの作成・状態確認・レビュー依頼・GitHub Actions操作を行う
-allowed-tools: Bash(gh *), Bash(git *), Bash(python skills/plugins/use-github/skills/pr-check/*.py *)
+allowed-tools: Bash(gh *), Bash(git *), Bash(python *pr-check/*.py*)
 meta:
   tag: []
   requires_repo_tools: none
@@ -11,8 +11,8 @@ meta:
   requires_hooks: none
   requires_skills: none
   status: stable
-  description: no description
-  version: 1.0.4
+  description: 現在のブランチのPR作成・状態確認・Copilotレビュー依頼・マージとGitHub Actionsの実行・ログ取得
+  version: 1.0.5
 ---
 
 # PR確認・管理スキル
@@ -52,7 +52,7 @@ meta:
 
 ## PR作成
 
-`pr-create.py` を使う。事前に未コミット変更・既存PR・リモートpush状態をチェックする。
+`pr-create.py` を使う。事前に未コミット変更・既存PR・リモートpush状態をチェックし、ブランチが未pushまたは `origin/<branch>` より先行していれば push してから作る。
 
 | 目的                                 | コマンド                                                                                 |
 | ------------------------------------ | ---------------------------------------------------------------------------------------- |
@@ -63,7 +63,8 @@ meta:
 | 本文をファイルから                   | `python "${CLAUDE_SKILL_DIR}/pr-create.py" --body-file .github/pull_request_template.md` |
 
 - 作成は**ユーザーの明示的な指示**があった場合のみ実行する
-- 大きな変更の場合は先に `git log origin/<base>..HEAD` でコミット一覧を確認して、タイトル・本文の方針をユーザーに提示してから実行する
+- base との差分が 2 コミット以上あるときは `--title` が必須（直近コミットの件名では PR 全体を表せないため、省略するとコミット一覧を出して中断する）。`git log origin/<base>..HEAD` を見て全体を表すタイトルを付ける
+- 大きな変更の場合は先にコミット一覧を確認して、タイトル・本文の方針をユーザーに提示してから実行する
 
 ## GitHub Actions
 
@@ -100,5 +101,6 @@ GitHub Copilot にコードレビューを依頼する。**個人アカウント
 
 - マージは**必ずユーザーの明示的な指示**があった場合のみ実行する
 - マージ前にCI状態とレビュー承認状態を改めて確認し報告する
-- 実行コマンド: `gh pr merge <N>` （オプション: `--squash`, `--rebase`, `--delete-branch`）
-- マージ方法の指定がなければユーザーに確認する
+- 実行コマンド: `gh pr merge <N> --merge|--squash|--rebase` （任意: `--delete-branch`）
+- マージ方法は、リポジトリの規約（`AGENTS.md`・`CONTRIBUTING.md`・ブランチ運用のドキュメント等）に指定があればそれに従う。作業ブランチを使い続ける運用では squash・rebase にすると作業ブランチの commit が base の祖先にならないので、規約が merge commit ならそれ以外を選ばない
+- 規約にもユーザーの指示にも指定がなければユーザーに確認する
