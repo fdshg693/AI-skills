@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """PR番号を引数に取り、詳細・レビューコメント・レビューを取得する。
 
-使い方: python pr-detail.py <PR番号> [section...]
+使い方: python pr-detail.py [-R OWNER/REPO] <PR番号> [section...]
   section省略時: 3つ全て取得
   section: view | comments | reviews | all （複数指定可・スペース区切り）
   例: python pr-detail.py 42 view comments
@@ -15,7 +15,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from pr_common import run, run_json, repo_name_with_owner, run_cli
+from pr_common import run, run_json, repo_name_with_owner, run_cli, set_repo
 
 SECTIONS = ("view", "comments", "reviews")
 
@@ -75,9 +75,13 @@ def parse_sections(raw: list[str]) -> list[str]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(prog="pr-detail.py")
+    parser.add_argument(
+        "-R", "--repo", help="対象リポジトリ OWNER/REPO（既定: カレントディレクトリのリポジトリ）"
+    )
     parser.add_argument("pr_number")
     parser.add_argument("sections", nargs="*", metavar="section")
     args = parser.parse_args()
+    set_repo(args.repo)
 
     repo = repo_name_with_owner()
     sections = parse_sections(args.sections)
