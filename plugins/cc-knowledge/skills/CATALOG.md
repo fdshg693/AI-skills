@@ -217,7 +217,7 @@ meta:
   requires_skills: claude-code-docs
   status: stable
   description: no description
-  version: 1.0.6
+  version: 1.0.7
 ---
 
 - writing-output-styles
