@@ -1,6 +1,6 @@
 # claudeコマンドでの、プラグインの利用方法
 
-> 参考文献: [Create plugins](https://code.claude.com/docs/en/plugins) / [Plugins reference](https://code.claude.com/docs/en/plugins-reference) / [Discover and install plugins](https://code.claude.com/docs/en/discover-plugins) / [Create and distribute a plugin marketplace](https://code.claude.com/docs/en/plugin-marketplaces)
+> 参考文献: [Create plugins](https://code.claude.com/docs/en/plugins/create) / [Plugins reference](https://code.claude.com/docs/en/plugins/manifest-reference) / [Discover and install plugins](https://code.claude.com/docs/en/plugins/install) / [Create and distribute a plugin marketplace](https://code.claude.com/docs/en/plugins/create-marketplace)
 
 ## 目次
 
@@ -58,7 +58,7 @@
 
 ## プラグインのフォルダ構造
 
-Source: [plugins.md#plugin-structure-overview](https://code.claude.com/docs/en/plugins#plugin-structure-overview)
+Source: [plugins/create#plugin-layout](https://code.claude.com/docs/en/plugins/create#plugin-layout)
 
 | ディレクトリ／ファイル | 場所           | 用途                                                                               |
 | :--------------------- | :------------- | :--------------------------------------------------------------------------------- |
@@ -106,6 +106,8 @@ Source: [plugins.md#plugin-structure-overview](https://code.claude.com/docs/en/p
 | `skills`                                        | string\|array         | デフォルトの`skills/`走査に**追加**するディレクトリ                                  |
 | `commands`                                      | string\|array         | デフォルトの`commands/`を**置き換える**                                              |
 | `agents`                                        | string\|array         | デフォルトの`agents/`を**置き換える**                                                |
+| `outputStyles`                                  | string\|array         | デフォルトの`output-styles/`を**置き換える**                                         |
+| `workflows`                                     | string\|array         | デフォルトの`workflows/`（`workflows/*.js`）を**置き換える**                         |
 | `hooks`                                         | string\|array\|object | フック設定ファイルパス、またはインライン設定                                         |
 | `mcpServers`                                    | string\|array\|object | MCP設定ファイルパス、またはインライン設定                                            |
 | `lspServers`                                    | string\|array\|object | LSP設定ファイルパス、またはインライン設定                                            |
@@ -113,7 +115,7 @@ Source: [plugins.md#plugin-structure-overview](https://code.claude.com/docs/en/p
 | `userConfig`                                    | object                | プラグイン有効化時にユーザーへ入力を促す値（下記参照）                               |
 | `dependencies`                                  | array                 | このプラグインが依存する他プラグイン（semverレンジ指定可）                           |
 
-パスはすべてプラグインルートからの相対パスで`./`から始める必要がある。`skills`だけは「追加」、それ以外（`commands`/`agents`/`outputStyles`/`experimental.*`）は「置き換え」である点に注意（両方欲しい場合はデフォルトパスも明示的に列挙する）。
+パスはすべてプラグインルートからの相対パスで`./`から始める必要がある。`skills`だけは「追加」、それ以外（`commands`/`agents`/`outputStyles`/`workflows`/`experimental.*`）は「置き換え」である点に注意（両方欲しい場合はデフォルトパスも明示的に列挙する）。
 
 ### ユーザー設定（`userConfig`）
 
@@ -242,7 +244,7 @@ claude plugin install plugin-name@marketplace-name --scope project
 /reload-plugins
 ```
 
-公式マーケットプレイス`claude-plugins-official`は初回起動時に自動登録される（`github`, `pr-review-toolkit`, `security-guidance`, 各言語の`*-lsp`など）。コミュニティ審査を通過したものは`claude-plugins-community`（手動追加が必要）。
+公式マーケットプレイス`claude-plugins-official`は初回起動時に自動登録される（`github`, `pr-review-toolkit`, `security-guidance`, 各言語の`*-lsp`など）。コミュニティ審査を通過したものはコミュニティマーケットプレイス`claude-community`（リポジトリは`anthropics/claude-plugins-community`。手動追加が必要）。
 
 ### マーケットプレイス自体を作る（`marketplace.json`）
 
@@ -328,6 +330,11 @@ claude plugin list [--json] [--available]
 claude plugin details <plugin>     # コンポーネント一覧とトークンコスト見積り
 claude plugin validate <path> [--strict]
 claude plugin prune [--dry-run]    # 依存関係で自動導入されたが不要になったプラグインの削除
+claude plugin configure <plugin> [--values-stdin]  # userConfigの現在値を表示、またはstdinから保存
+claude plugin eval [target] [options]  # eval スイートを実行し採点結果を出力（要 Claude Code v2.1.269 以降）
+claude plugin eval init [name] [options]  # eval スイートの雛形を作成
+claude plugin test [directory]     # mod（イベントハンドラを登録するプラグイン）のテストを実行
+claude plugin tag [path] [options]  # `<name>--v<version>` のgit tagを作成（plugin.jsonとマーケットプレイスのversion一致を確認）
 
 claude plugin marketplace add <source> [--scope user|project|local] [--sparse <paths...>]
 claude plugin marketplace list [--json]
@@ -343,8 +350,10 @@ claude plugin marketplace update [name]
 
 ## 参考文献
 
-- プラグインの作成方法全般（本記事の主な情報源）: https://code.claude.com/docs/en/plugins
-- 技術リファレンス（スキーマ・CLIコマンド・全コンポーネント仕様）: https://code.claude.com/docs/en/plugins-reference
-- プラグインの発見・インストール: https://code.claude.com/docs/en/discover-plugins
-- マーケットプレイスの作成・配布: https://code.claude.com/docs/en/plugin-marketplaces
-- 依存関係のバージョン制約: https://code.claude.com/docs/en/plugin-dependencies
+- プラグインの作成方法全般（本記事の主な情報源）: https://code.claude.com/docs/en/plugins/create
+- 技術リファレンス（スキーマ・全コンポーネント仕様）: https://code.claude.com/docs/en/plugins/manifest-reference
+- CLIコマンドリファレンス: https://code.claude.com/docs/en/plugins/cli-reference
+- コンポーネントの追加方法: https://code.claude.com/docs/en/plugins/components
+- プラグインの発見・インストール: https://code.claude.com/docs/en/plugins/install
+- マーケットプレイスの作成・配布: https://code.claude.com/docs/en/plugins/create-marketplace
+- 依存関係のバージョン制約: https://code.claude.com/docs/en/plugins/dependencies

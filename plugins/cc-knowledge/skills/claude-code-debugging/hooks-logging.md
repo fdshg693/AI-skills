@@ -73,13 +73,13 @@ hook機構そのもの（`writing-hooks`スキルの`hooks.md`相当）の内容
 
 ハンドラーの `type` フィールドで5種類から選べる。全て並列実行され、同一のハンドラー（コマンド文字列＋argsが同じ、URLが同じ等）は自動的に重複排除される。
 
-| type       | 概要                                                                                       |
-| ---------- | ------------------------------------------------------------------------------------------ |
-| `command`  | シェルコマンドを実行。stdinでJSON入力を受け取り、exit codeとstdout/stderrで結果を返す      |
-| `http`     | イベントのJSONをPOSTリクエストのボディとして送信。レスポンスボディで結果を返す             |
-| `mcp_tool` | 接続済みのMCPサーバー上のツールを呼び出す                                                  |
-| `prompt`   | Claudeモデル（デフォルトHaiku）に単発で判定させる。yes/noの構造化JSONを返させる            |
-| `agent`    | サブエージェントを起動し、Read/Grep/Globなどのツールを使って条件を検証させる（実験的機能） |
+| type       | 概要                                                                                                     |
+| ---------- | -------------------------------------------------------------------------------------------------------- |
+| `command`  | シェルコマンドを実行。stdinでJSON入力を受け取り、exit codeとstdout/stderrで結果を返す                    |
+| `http`     | イベントのJSONをPOSTリクエストのボディとして送信。レスポンスボディで結果を返す                           |
+| `mcp_tool` | 接続済みのMCPサーバー上のツールを呼び出す                                                                |
+| `prompt`   | Claudeモデル（既定は background functionality 用モデル）に単発で判定させる。yes/noの構造化JSONを返させる |
+| `agent`    | サブエージェントを起動し、Read/Grep/Globなどのツールを使って条件を検証させる（実験的機能）               |
 
 ### command（コマンドフック）
 
@@ -108,13 +108,14 @@ hook機構そのもの（`writing-hooks`スキルの`hooks.md`相当）の内容
 - `server`（必須）, `tool`（必須）, `input` を持つ。
 - 対象のMCPサーバーは**既に接続済み**である必要がある。フック経由でOAuth等の接続フローがトリガーされることはない。
 - ツールの返すテキストが有効なJSON出力ならデシジョンとして処理され、そうでなければ単なるテキストとして扱われる。サーバー未接続や `isError: true` の場合は非ブロッキングエラーになる。
+- 起動時の `SessionStart`（`--continue`/`--resume` を含む）と `Setup` では、MCPサーバーがまだ利用できないため `mcp_tool` フックはツールを呼ばずにスキップされる（デバッグログに記録される）。起動時に必要な処理は `command` フックを使う。`SessionStart` が `/clear` や compaction の後に再発火した場合は `mcp_tool` フックも動く。
 
 ### prompt / agent（判断が必要なフック）
 
 - 決定的なルールではなく「判断」が必要な場合に使う。
 - `prompt` は1回のLLM呼び出しで `{"ok": true/false, "reason": "..."}` を返させるだけ（デフォルトタイムアウト30秒）。
 - `agent` はサブエージェントを起動し、最大50ターンのツール呼び出し（Read/Grep/Globなど）を使って実際のファイルやテスト結果を検証してから同じ形式のJSONを返す（デフォルトタイムアウト60秒）。**実験的機能であり、本番運用では非推奨。**
-- 全イベントが対応しているわけではない。`SessionStart`/`Setup` は `command`/`mcp_tool` のみ対応、`ConfigChange`/`CwdChanged`/`FileChanged`/`Notification`/`SessionEnd` などは `command`/`http`/`mcp_tool` のみ対応で `prompt`/`agent` 非対応。
+- 全イベントが対応しているわけではない。`SessionStart` は `command`/`mcp_tool`、`Setup` は `command` のみ対応（ただし起動時の `mcp_tool` はスキップされる。上記参照）。`ConfigChange`/`CwdChanged`/`FileChanged`/`Notification`/`SessionEnd` などは `command`/`http`/`mcp_tool` のみ対応で `prompt`/`agent` 非対応。
 
 > `http` / `mcp_tool` / `prompt` / `agent` の4種は今回の実地検証（Step3）では未検証（副作用・外部呼び出し・課金を伴うため、ログ仕込み用途の主軸である`command`型を優先して検証した）。上記はドキュメント記載をそのまま転記したものであり、実機確認済みなのは`command`型のみである点に注意。
 
@@ -210,9 +211,9 @@ hook機構そのもの（`writing-hooks`スキルの`hooks.md`相当）の内容
 
 ⚠️ **落とし穴**:
 
-- **exit code 1は「失敗」として扱われない**。Unix的には1は失敗コードだが、Claude Codeでは非ブロッキングエラー扱いで処理が継続してしまう（上記実地検証で確認済み）。ポリシーを強制したいなら必ず **`exit 2`** を使うこと。唯一の例外は `WorktreeCreate` で、ここだけは0以外の全コードでworktree作成が中止される。
+- **exit code 1は「失敗」として扱われない**。Unix的には1は失敗コードだが、Claude Codeでは非ブロッキングエラー扱いで処理が継続してしまう（上記実地検証で確認済み）。ポリシーを強制したいなら必ず **`exit 2`** を使うこと。例外は `WorktreeCreate`（0以外の全コードでworktree作成が中止される）と `WorktreeRemove`（0以外の全コードで、ディレクトリが残っていれば削除が失敗する。JSON出力は破棄される）。
 - exit 2とJSON出力は**併用不可**。exit 2で終了すると、stdoutに書いたJSONは丸ごと無視される。構造化制御をしたいなら exit 0 + JSON、ブロックだけしたいなら exit 2 + stderr、のどちらかに統一する。
-- ブロック可能かどうかはイベントごとに異なる。`SessionStart`, `Setup`, `Notification`, `SubagentStart`, `SessionEnd`, `CwdChanged`, `FileChanged`, `PostCompact`, `WorktreeRemove`, `InstructionsLoaded`, `StopFailure` などは**ブロック不可**で、exit 2でもユーザーへの表示のみに留まる。
+- ブロック可能かどうかはイベントごとに異なる。`SessionStart`, `Setup`, `Notification`, `SubagentStart`, `SessionEnd`, `CwdChanged`, `FileChanged`, `PostCompact`, `InstructionsLoaded`, `StopFailure` などは**ブロック不可**で、exit 2でもユーザーへの表示のみに留まる。
 
 ### JSON出力
 
@@ -239,9 +240,9 @@ hook機構そのもの（`writing-hooks`スキルの`hooks.md`相当）の内容
 
 ツールは既に実行済みなので、`PostToolUse`フックで結果をブロック/取り消すことはできない（`updatedToolOutput`で結果を差し替えることはできるが、副作用自体は元に戻らない）。
 
-### `Stop`フックが8回で強制解除される
+### `Stop`フックが連続8回のブロックで強制解除される
 
-`Stop`フックが**8回連続でブロック**すると、Claude Codeは強制的に停止させる（無限ループ防止）。入力の `stop_hook_active` フィールドが`true`のときは既に継続中であることを示すので、これをチェックして早期`exit 0`しないと簡単に上限に達してしまう。上限は環境変数 `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP` で変更可能。
+`Stop`フックが**tool call を挟まずに8回連続でブロック**すると、Claude Codeは次のブロックを無視してターンを終了させる（無限ループ防止）。Claudeが tool call を行うと連続カウントはリセットされる。入力の `stop_hook_active` フィールドが`true`のときは既に継続中であることを示すので、これをチェックして早期`exit 0`しないと簡単に上限に達してしまう。上限は環境変数 `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP` で変更可能（既定 8、`0` で上限を無効化）。
 
 ### `PreToolUse`は`@`参照では発火しない
 

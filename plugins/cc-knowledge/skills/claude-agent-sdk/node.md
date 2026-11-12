@@ -4,7 +4,7 @@ Claude Codeをライブラリとして組み込むNode.js/TypeScriptアプリケ
 
 ## 対象範囲
 
-- パッケージは `@anthropic-ai/claude-agent-sdk`、Node.js 18以上を前提にする。
+- パッケージは `@anthropic-ai/claude-agent-sdk`、Node.js 18.14以上を前提にする。
 - TypeScriptの型、async iterator、セッション、ストリーミング、権限、フック、MCP、カスタムツール、サブエージェント、Agent Skills、構造化出力、コスト・運用・デプロイを扱う。
 - Python SDKのAPI名（`ClaudeAgentOptions`、snake_caseのオプション等）やコード例を混ぜない。
 

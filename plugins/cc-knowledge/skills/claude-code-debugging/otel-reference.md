@@ -37,6 +37,7 @@ Claude Code自体が送信するOpenTelemetry(メトリクス・ログ、betaで
 | `OTEL_EXPORTER_OTLP_PROTOCOL`                                                 | `grpc` / `http/json` / `http/protobuf`                                             |
 | `OTEL_EXPORTER_OTLP_METRICS_ENDPOINT` / `_LOGS_ENDPOINT` / `_TRACES_ENDPOINT` | 信号ごとにエンドポイントを個別上書き(SIEM連携等でログだけ別送り先にする場合に使う) |
 | `OTEL_EXPORTER_OTLP_HEADERS`                                                  | 認証ヘッダ等を付与                                                                 |
+| `OTEL_EXPORTER_OTLP_METRICS_HEADERS` / `_LOGS_HEADERS` / `_TRACES_HEADERS`    | 信号ごとの認証ヘッダ。汎用の `OTEL_EXPORTER_OTLP_HEADERS` とマージされる           |
 
 ## エクスポート間隔
 
@@ -49,14 +50,15 @@ Claude Code自体が送信するOpenTelemetry(メトリクス・ログ、betaで
 
 ## 送信内容の詳細度制御
 
-| 環境変数                              | 説明                                                                                                  |
-| ------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| `OTEL_LOG_USER_PROMPTS`               | ユーザープロンプト本文をログに含めるか                                                                |
-| `OTEL_LOG_ASSISTANT_RESPONSES`        | アシスタント応答本文を含めるか                                                                        |
-| `OTEL_LOG_TOOL_DETAILS`               | Bashコマンド内容・MCPサーバー名等のツール詳細を含めるか                                               |
-| `OTEL_LOG_TOOL_CONTENT`               | ツール入出力の内容まで含めるか(トレース有効化が前提)                                                  |
-| `OTEL_LOG_RAW_API_BODIES`             | APIリクエスト/レスポンスの生ボディを含めるか。`file:<dir>` を指定するとボディ全文をファイル保存できる |
-| `CLAUDE_CODE_OTEL_CONTENT_MAX_LENGTH` | OpenTelemetryのcontent系属性のトランケーション上限（デフォルト60KB）を変更する                        |
+| 環境変数                              | 説明                                                                                                                                                                   |
+| ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `OTEL_LOG_USER_PROMPTS`               | ユーザープロンプト本文をログに含めるか                                                                                                                                 |
+| `OTEL_LOG_ASSISTANT_RESPONSES`        | アシスタント応答本文を含めるか                                                                                                                                         |
+| `OTEL_LOG_TOOL_DETAILS`               | Bashコマンド内容・MCPサーバー名等のツール詳細を含めるか                                                                                                                |
+| `OTEL_LOG_TOOL_CONTENT`               | ツール入出力の内容まで含めるか(トレース有効化が前提)                                                                                                                   |
+| `OTEL_LOG_RAW_API_BODIES`             | APIリクエスト/レスポンスの生ボディを含めるか。`file:<dir>` を指定するとボディ全文をファイル保存できる                                                                  |
+| `CLAUDE_CODE_OTEL_CONTENT_MAX_LENGTH` | OpenTelemetryのcontent系属性のトランケーション上限（デフォルト60KB）を変更する                                                                                         |
+| `OTEL_LOG_MANAGED_SETTINGS`           | `managed_settings_resolved` イベントに墨消し済みの managed settings と SHA-256 ダイジェストを含める（既定は無効。project/local 設定では有効にならない。v2.1.274 以降） |
 
 > **実地検証**: `OTEL_LOG_USER_PROMPTS` を設定しない状態(デフォルト)で `claude_code.user_prompt` / `claude_code.assistant_response` イベントを実際にLokiまで送信したところ、`prompt` / `response` 属性の値は文字列 `"<REDACTED>"` になっていた。`OTEL_LOG_USER_PROMPTS=1` を設定したコンソールエクスポータでの確認では、`prompt` 属性に実際のプロンプト文字列がそのまま載ることを確認した。デフォルトでは本文が伏せられる実装であることが実地で確認できている。
 
@@ -69,6 +71,7 @@ Claude Code自体が送信するOpenTelemetry(メトリクス・ログ、betaで
 | `OTEL_METRICS_INCLUDE_ACCOUNT_UUID`        |
 | `OTEL_METRICS_INCLUDE_ENTRYPOINT`          |
 | `OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES` |
+| `OTEL_METRICS_INCLUDE_REPOSITORY`          |
 
 ## メトリクス名(8種)
 
@@ -109,6 +112,10 @@ Claude Code自体が送信するOpenTelemetry(メトリクス・ログ、betaで
 - `claude_code.hook_plugin_metrics`
 - `claude_code.compaction`
 - `claude_code.feedback_survey`
+- `claude_code.subagent_completed`（サブエージェント終了時。`total_tool_uses` / `duration_ms` 等）
+- `claude_code.retention_sweep`（ローカル履歴の保持期間クリーンアップの結果。`result` は `complete` / `skipped`）
+- `claude_code.managed_settings_resolved`（managed settings の解決状態。`OTEL_LOG_MANAGED_SETTINGS=1` で墨消し済み設定を追加。v2.1.274 以降）
+- `claude_code.system_prompt`（詳細ベータトレース（`ENABLE_BETA_TRACING_DETAILED=1` + `BETA_TRACING_ENDPOINT`）かつ `OTEL_LOG_USER_PROMPTS=1` のときのみ。完全なシステムプロンプトを含む）
 
 MCPサーバーの接続や利用状況を監査したい場合は `mcp_server_connection` / `tool_result` / `tool_decision` を `OTEL_LOG_TOOL_DETAILS=1` と組み合わせて見る。
 

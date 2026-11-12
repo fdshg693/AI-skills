@@ -67,26 +67,27 @@
 
 ハンドラーの `type` フィールドで5種類から選べる。全て並列実行され、同一のハンドラー（コマンド文字列＋argsが同じ、URLが同じ等）は自動的に重複排除される。
 
-| type       | 概要                                                                                       |
-| ---------- | ------------------------------------------------------------------------------------------ |
-| `command`  | シェルコマンドを実行。stdinでJSON入力を受け取り、exit codeとstdout/stderrで結果を返す      |
-| `http`     | イベントのJSONをPOSTリクエストのボディとして送信。レスポンスボディで結果を返す             |
-| `mcp_tool` | 接続済みのMCPサーバー上のツールを呼び出す                                                  |
-| `prompt`   | Claudeモデル（デフォルトHaiku）に単発で判定させる。yes/noの構造化JSONを返させる            |
-| `agent`    | サブエージェントを起動し、Read/Grep/Globなどのツールを使って条件を検証させる（実験的機能） |
+| type       | 概要                                                                                                       |
+| ---------- | ---------------------------------------------------------------------------------------------------------- |
+| `command`  | シェルコマンドを実行。stdinでJSON入力を受け取り、exit codeとstdout/stderrで結果を返す                      |
+| `http`     | イベントのJSONをPOSTリクエストのボディとして送信。レスポンスボディで結果を返す                             |
+| `mcp_tool` | 接続済みのMCPサーバー上のツールを呼び出す                                                                  |
+| `prompt`   | Claudeモデル（既定は background functionality 用のモデル）に単発で判定させる。yes/noの構造化JSONを返させる |
+| `agent`    | サブエージェントを起動し、Read/Grep/Globなどのツールを使って条件を検証させる（実験的機能）                 |
 
 ### command（コマンドフック）
 
-- 共通フィールドに加えて `command`（必須）, `args`, `async`, `asyncRewake`, `shell` を持つ。
+- 共通フィールドに加えて `command`（必須）, `args`, `async`, `asyncRewake`, `shell`, `onFailure` を持つ。
 - `args` を指定すると **exec form**（シェルを介さず直接実行）、省略すると **shell form**（`sh -c` やGit Bash、PowerShell経由）になる。
   - パスにスペースや特殊文字を含む場合や、`${CLAUDE_PROJECT_DIR}` などのプレースホルダーを使う場合は exec form (`args: []`) を推奨。
 - `async: true` でバックグラウンド実行（後述の「落とし穴」参照）。
+- `onFailure`（`"continue"` が既定、`"block"` を指定可。v2.1.295以降）: 起動失敗・exit 0/2 以外の終了・タイムアウト・無効な出力などの失敗時に、トリガーとなった操作をブロックするかを決める。`"block"` のときは exit 2 と同じ扱いになる（`PermissionRequest` では拒否）。`Stop` / `SubagentStop` / `TaskCompleted` / `TeammateIdle` と、`async` / `asyncRewake` のフックでは効かない。
 
 ### http（HTTPフック）
 
-- `url`（必須）, `headers`, `allowedEnvVars` を持つ。
+- `url`（必須）, `headers`, `allowedEnvVars`, `onFailure` を持つ。
 - ヘッダー値は `$VAR_NAME` / `${VAR_NAME}` で環境変数展開できるが、`allowedEnvVars` に列挙した変数のみ展開される。
-- 非2xxレスポンスや接続失敗・タイムアウトは**すべて「ブロックしないエラー」**として扱われ、処理は継続する。ブロックしたい場合は2xxレスポンス＋JSONボディで `decision: "block"` や `permissionDecision: "deny"` を返す必要がある。
+- 非2xxレスポンスや接続失敗・タイムアウトは既定では**「ブロックしないエラー」**として扱われ、処理は継続する。`onFailure: "block"` を付けると、これらの失敗で操作をブロックする（`Stop` / `SubagentStop` / `TaskCompleted` / `TeammateIdle` では効かない。詳細は command の `onFailure` を参照）。2xxレスポンス＋JSONボディで `decision: "block"` や `permissionDecision: "deny"` を返してブロックすることもできる。
 
 ### mcp_tool（MCPツールフック）
 
@@ -99,7 +100,7 @@
 - 決定的なルールではなく「判断」が必要な場合に使う。
 - `prompt` は1回のLLM呼び出しで `{"ok": true/false, "reason": "..."}` を返させるだけ（デフォルトタイムアウト30秒）。
 - `agent` はサブエージェントを起動し、最大50ターンのツール呼び出し（Read/Grep/Globなど）を使って実際のファイルやテスト結果を検証してから同じ形式のJSONを返す（デフォルトタイムアウト60秒）。**実験的機能であり、本番運用では非推奨。**
-- 全イベントが対応しているわけではない。`SessionStart`/`Setup` は `command`/`mcp_tool` のみ対応、`ConfigChange`/`CwdChanged`/`FileChanged`/`Notification`/`SessionEnd` などは `command`/`http`/`mcp_tool` のみ対応で `prompt`/`agent` 非対応。
+- 全イベントが対応しているわけではない。`SessionStart` は `command`/`mcp_tool` のみ対応、`Setup` は `command` のみ対応（`mcp_tool` は `Setup` では常にスキップされる）。起動時（`--continue`/`--resume` を含む）の `SessionStart` と `Setup` は MCP サーバー接続前に発火するため、その時点の `mcp_tool` フックはスキップされる（`/clear` やコンパクション後の `SessionStart` では実行される）。起動時に必要な処理は `command` を使う。`ConfigChange`/`CwdChanged`/`FileChanged`/`Notification`/`SessionEnd` などは `command`/`http`/`mcp_tool` のみ対応で `prompt`/`agent` 非対応。
 - `ok: false`のとき何が起きるかはイベントごとに異なる。`Stop`/`SubagentStop`は`reason`がClaudeに返りそのまま続行。`PreToolUse`/`PostToolUse`はv2.1.210以降デフォルトでターンが終了し`reason`が警告として表示されるだけになった（それ以前はClaudeへのツールエラーとして返り続行していた）。続行させたい場合は`continueOnBlock: true`を設定する（`PostToolBatch`/`UserPromptSubmit`/`UserPromptExpansion`は`continueOnBlock`があっても常にターン終了）。
 
 ---
@@ -112,34 +113,35 @@
 - **ターンに1回**: `UserPromptSubmit`, `Stop`, `StopFailure`
 - **エージェントループ内のツール呼び出しごと**: `PreToolUse`, `PostToolUse`
 
-| イベント                            | 発火タイミング                                                                                            | マッチャーの対象                                                                        |
-| ----------------------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| `SessionStart`                      | セッション開始・再開時                                                                                    | 起動理由 (`startup`/`resume`/`clear`/`compact`)                                         |
-| `Setup`                             | `--init-only` や `-p --init`/`--maintenance` 実行時のみ                                                   | `init`/`maintenance`                                                                    |
-| `UserPromptSubmit`                  | プロンプト送信直後、Claudeが処理する前                                                                    | 非対応（毎回発火）                                                                      |
-| `UserPromptExpansion`               | スラッシュコマンド等がプロンプトに展開される前                                                            | コマンド名                                                                              |
-| `PreToolUse`                        | ツール呼び出しの実行前（ブロック可）                                                                      | ツール名                                                                                |
-| `PermissionRequest`                 | 権限確認ダイアログが出るとき                                                                              | ツール名                                                                                |
-| `PermissionDenied`                  | 自動モードの分類器がツール呼び出しを拒否したとき                                                          | ツール名                                                                                |
-| `PostToolUse`                       | ツール呼び出し成功後                                                                                      | ツール名                                                                                |
-| `PostToolUseFailure`                | ツール呼び出し失敗後                                                                                      | ツール名                                                                                |
-| `PostToolBatch`                     | 並列ツール呼び出しのバッチが全て解決した後                                                                | 非対応                                                                                  |
-| `Notification`                      | Claude Codeが通知を送るとき                                                                               | 通知種別                                                                                |
-| `MessageDisplay`                    | アシスタントのメッセージが画面表示されている間                                                            | 非対応                                                                                  |
-| `SubagentStart` / `SubagentStop`    | サブエージェント起動時／終了時                                                                            | エージェントタイプ                                                                      |
-| `TaskCreated` / `TaskCompleted`     | `TaskCreate`でタスク作成時／完了マーク時                                                                  | 非対応                                                                                  |
-| `Stop`                              | Claudeの応答が完了したとき                                                                                | 非対応                                                                                  |
-| `StopFailure`                       | APIエラーでターンが終了したとき                                                                           | エラー種別                                                                              |
-| `TeammateIdle`                      | agent teamのメンバーがアイドルになる直前                                                                  | 非対応                                                                                  |
-| `InstructionsLoaded`                | CLAUDE.mdや`.claude/rules/*.md`がロードされたとき                                                         | ロード理由                                                                              |
-| `ConfigChange`                      | 設定ファイルがセッション中に変更されたとき                                                                | 変更元                                                                                  |
-| `CwdChanged`                        | 作業ディレクトリが変わったとき（`cd`実行時など）                                                          | 非対応                                                                                  |
-| `FileChanged`                       | 監視対象ファイルがディスク上で変更されたとき                                                              | 監視するファイル名（後述）                                                              |
-| `WorktreeCreate` / `WorktreeRemove` | worktree作成時／削除時                                                                                    | 非対応                                                                                  |
-| `DirectoryAdded`                    | `/add-dir`またはSDKの`register_repo_root`でセッション中に作業ディレクトリが追加されたとき（v2.1.219以降） | 不明（要検証。公式リファレンスの本表に相当する記載が未確認、changelogのみで存在を確認） |
-| `PreCompact` / `PostCompact`        | コンテキスト圧縮の前後                                                                                    | 何が圧縮をトリガーしたか                                                                |
-| `Elicitation` / `ElicitationResult` | MCPサーバーがユーザー入力を要求したとき／その応答後                                                       | MCPサーバー名                                                                           |
-| `SessionEnd`                        | セッション終了時                                                                                          | 終了理由                                                                                |
+| イベント                             | 発火タイミング                                                                                                                                                                                                               | マッチャーの対象                                                                 |
+| ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `SessionStart`                       | セッション開始・再開時                                                                                                                                                                                                       | 起動理由 (`startup`/`resume`/`clear`/`compact`)                                  |
+| `Setup`                              | `--init-only` や `-p --init`/`--maintenance` 実行時のみ                                                                                                                                                                      | `init`/`maintenance`                                                             |
+| `UserPromptSubmit`                   | プロンプト送信直後、Claudeが処理する前                                                                                                                                                                                       | 非対応（毎回発火）                                                               |
+| `UserPromptExpansion`                | スラッシュコマンド等がプロンプトに展開される前                                                                                                                                                                               | コマンド名                                                                       |
+| `PreToolUse`                         | ツール呼び出しの実行前（ブロック可）                                                                                                                                                                                         | ツール名                                                                         |
+| `PermissionRequest`                  | 権限確認ダイアログが出るとき                                                                                                                                                                                                 | ツール名                                                                         |
+| `PermissionDenied`                   | 自動モードの分類器がツール呼び出しを拒否したとき                                                                                                                                                                             | ツール名                                                                         |
+| `PostToolUse`                        | ツール呼び出し成功後                                                                                                                                                                                                         | ツール名                                                                         |
+| `PostToolUseFailure`                 | ツール呼び出し失敗後                                                                                                                                                                                                         | ツール名                                                                         |
+| `PostToolBatch`                      | 並列ツール呼び出しのバッチが全て解決した後                                                                                                                                                                                   | 非対応                                                                           |
+| `Notification`                       | Claude Codeが通知を送るとき                                                                                                                                                                                                  | 通知種別                                                                         |
+| `MessageDisplay`                     | アシスタントのメッセージが画面表示されている間                                                                                                                                                                               | 非対応                                                                           |
+| `SubagentStart` / `SubagentStop`     | サブエージェント起動時／終了時                                                                                                                                                                                               | エージェントタイプ                                                               |
+| `TaskCreated` / `TaskCompleted`      | `TaskCreate`でタスク作成時／完了マーク時                                                                                                                                                                                     | 非対応                                                                           |
+| `Stop`                               | Claudeの応答が完了したとき                                                                                                                                                                                                   | 非対応                                                                           |
+| `StopFailure`                        | APIエラーでターンが終了したとき                                                                                                                                                                                              | エラー種別                                                                       |
+| `TeammateIdle`                       | agent teamのメンバーがアイドルになる直前                                                                                                                                                                                     | 非対応                                                                           |
+| `InstructionsLoaded`                 | CLAUDE.mdや`.claude/rules/*.md`がロードされたとき                                                                                                                                                                            | ロード理由                                                                       |
+| `ConfigChange`                       | 設定ファイルがセッション中に変更されたとき                                                                                                                                                                                   | 変更元                                                                           |
+| `CwdChanged`                         | 作業ディレクトリが変わったとき（`cd`実行時など）                                                                                                                                                                             | 非対応                                                                           |
+| `FileChanged`                        | 監視対象ファイルがディスク上で変更されたとき                                                                                                                                                                                 | 監視するファイル名（後述）                                                       |
+| `WorktreeCreate` / `WorktreeRemove`  | worktree作成時／削除時                                                                                                                                                                                                       | 非対応                                                                           |
+| `DirectoryAdded`                     | `/add-dir`またはSDKの`register_repo_root`でセッション中に作業ディレクトリが追加されたとき（v2.1.219以降）。ブロック不可                                                                                                      | 追加元（`slash_command` / `register_repo_root`）                                 |
+| `PreCompact` / `PostCompact`         | コンテキスト圧縮の前後                                                                                                                                                                                                       | 何が圧縮をトリガーしたか                                                         |
+| `PreModelSwitch` / `PostModelSwitch` | `PreModelSwitch`: ユーザーやクライアントが要求したモデル切替を適用する前（ブロック可。v2.1.251以降）。`PostModelSwitch`: セッションのモデルが変わった後（Claude Code自身による変更、再開時のモデル復元も含む。ブロック不可） | 切替先モデルの正規名（`to_model` から導出。`claude-opus-5` など。`[1m]` は無視） |
+| `Elicitation` / `ElicitationResult`  | MCPサーバーがユーザー入力を要求したとき／その応答後                                                                                                                                                                          | MCPサーバー名                                                                    |
+| `SessionEnd`                         | セッション終了時                                                                                                                                                                                                             | 終了理由                                                                         |
 
 ---
 
@@ -186,22 +188,24 @@
 
 ⚠️ **落とし穴**:
 
-- **exit code 1は「失敗」として扱われない**。Unix的には1は失敗コードだが、Claude Codeでは非ブロッキングエラー扱いで処理が継続してしまう。ポリシーを強制したいなら必ず **`exit 2`** を使うこと。唯一の例外は `WorktreeCreate` で、ここだけは0以外の全コードでworktree作成が中止される。
+- **exit code 1は「失敗」として扱われない**。Unix的には1は失敗コードだが、Claude Codeでは非ブロッキングエラー扱いで処理が継続してしまう。ポリシーを強制したいなら必ず **`exit 2`** を使うこと。例外は `WorktreeCreate`（0以外の全コードでworktree作成が中止される）と `WorktreeRemove`（0以外の終了で、ディレクトリが残っていれば削除が失敗扱いになる）。
 - exit 2とJSON出力は**併用不可**。exit 2で終了すると、stdoutに書いたJSONは丸ごと無視される。構造化制御をしたいなら exit 0 + JSON、ブロックだけしたいなら exit 2 + stderr、のどちらかに統一する。
-- ブロック可能かどうかはイベントごとに異なる。`SessionStart`, `Setup`, `Notification`, `SubagentStart`, `SessionEnd`, `CwdChanged`, `FileChanged`, `PostCompact`, `WorktreeRemove`, `InstructionsLoaded`, `StopFailure` などは**ブロック不可**で、exit 2でもユーザーへの表示のみに留まる。
+- ブロック可能かどうかはイベントごとに異なる。`SessionStart`, `Setup`, `Notification`, `SubagentStart`, `SessionEnd`, `CwdChanged`, `FileChanged`, `DirectoryAdded`, `PostCompact`, `PostModelSwitch`, `InstructionsLoaded`, `StopFailure` などは**ブロック不可**で、exit 2でもユーザーへの表示のみに留まる。
 
 ### JSON出力
 
 - 共通フィールド: `continue`（falseで全処理停止）, `stopReason`, `suppressOutput`, `systemMessage`, `terminalSequence`。
 - イベントごとにデシジョンの表現方法が異なるので注意（詳細は下表）。
 
-| イベント群                                                     | デシジョンの持ち方                                                                                                                       |
-| -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| `UserPromptSubmit`, `PostToolUse`, `Stop`, `SubagentStop` など | トップレベルの `decision: "block"` + `reason`                                                                                            |
-| `PreToolUse`                                                   | `hookSpecificOutput.permissionDecision`（`allow`/`deny`/`ask`/`defer`）+ `permissionDecisionReason`。**古い`decision`/`reason`は非推奨** |
-| `PermissionRequest`                                            | `hookSpecificOutput.decision.behavior`（`allow`/`deny`）                                                                                 |
-| `PermissionDenied`                                             | `hookSpecificOutput.retry: true`                                                                                                         |
-| `MessageDisplay`                                               | `hookSpecificOutput.displayContent`（画面表示のみ書き換え、Claude/トランスクリプトには影響しない）                                       |
+| イベント群                                                     | デシジョンの持ち方                                                                                                                                         |
+| -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `UserPromptSubmit`, `PostToolUse`, `Stop`, `SubagentStop` など | トップレベルの `decision: "block"` + `reason`                                                                                                              |
+| `PreToolUse`                                                   | `hookSpecificOutput.permissionDecision`（`allow`/`deny`/`ask`/`defer`）+ `permissionDecisionReason`。**古い`decision`/`reason`は非推奨**                   |
+| `PreModelSwitch`                                               | `hookSpecificOutput.permissionDecision`（`allow`/`deny`/`ask`）+ `permissionDecisionReason`。トップレベルの `decision: "block"` でも切替をキャンセルできる |
+| `PostModelSwitch`                                              | `hookSpecificOutput.additionalContext` でClaudeのコンテキストに追加するだけ（デシジョン不可）                                                              |
+| `PermissionRequest`                                            | `hookSpecificOutput.decision.behavior`（`allow`/`deny`）                                                                                                   |
+| `PermissionDenied`                                             | `hookSpecificOutput.retry: true`                                                                                                                           |
+| `MessageDisplay`                                               | `hookSpecificOutput.displayContent`（画面表示のみ書き換え、Claude/トランスクリプトには影響しない）                                                         |
 
 ⚠️ **落とし穴**:
 
@@ -217,11 +221,12 @@
 
 ### `Stop`フックが8回で強制解除される
 
-`Stop`フックが**8回連続でブロック**すると、Claude Codeは強制的に停止させる（無限ループ防止）。入力の `stop_hook_active` フィールドが`true`のときは既に継続中であることを示すので、これをチェックして早期`exit 0`しないと簡単に上限に達してしまう。上限は環境変数 `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP` で変更可能。
+`Stop`フックが**tool call を挟まずに8回連続でブロック**すると、Claude Codeは上限到達後の次のブロックを無視してターンを終了させる（無限ループ防止。警告が表示される）。tool call が行われると連続回数はリセットされる。入力の `stop_hook_active` フィールドが`true`のときは既に継続中であることを示すので、これをチェックして早期`exit 0`しないと簡単に上限に達してしまう。上限は環境変数 `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP` で変更可能（`0` で上限なし）。
 
 ### `PreToolUse`は`@`参照では発火しない
 
 プロンプト内で`@`によりファイル内容を直接埋め込んだ場合、これはツール呼び出しを経由しないため`PreToolUse`（`Read`にマッチさせても）は発火しない。特定パスを読ませたくない場合はパーミッションの`Read`拒否ルールを使う。
+`CLAUDE_CODE_DISABLE_FILE_MENTIONS=1`（v2.1.299以降）を設定すると、`@`の内容は埋め込まれず、Claudeが`Read`などのツールで読むことになるため、`PreToolUse`が発火する。この変数はシェルの環境変数・ユーザー設定・managed settingsで設定する（プロジェクト設定とローカル設定では無視される）。
 
 ---
 

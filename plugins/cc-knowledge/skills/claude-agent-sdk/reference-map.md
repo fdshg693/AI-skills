@@ -28,10 +28,11 @@ python ${CLAUDE_SKILL_DIR}/scripts/webref_cli.py grep "permission|allowed_tools|
 
 - `agent-sdk/overview` — SDK の位置づけ、Claude Code as a library、production agent
 - `agent-sdk/quickstart` — install、`query`、Python、TypeScript、first agent、環境変数
+- `agent-sdk/configuration` — options object、`ClaudeAgentOptions`、`Options`、`model`、`fallback_model`、`env`、settings files、`cwd`、`max_turns`、`max_budget_usd`、`maxTurns`、`maxBudgetUsd`
 - `agent-sdk/examples` — recipes、working examples、common agent patterns、sample code
 - `agent-sdk/agent-loop` — message lifecycle、assistant、tool、result、turn、context window
 - `agent-sdk/migration-guide` — Claude Code SDK、Claude Agent SDK、migration、breaking change、package
-- `agent-sdk/troubleshooting` — error、debug、API key、permissions、MCP、process、timeout
+- `agent-sdk/troubleshooting` — error、debug、API key、permissions、MCP、process、timeout、`CLINotFoundError`、`CLIConnectionError`、`ProcessError`、`ResultError`、error result、`structured_output` is `None`
 
 ### 言語別 API
 

@@ -18,7 +18,7 @@ meta:
   requires_skills: claude-code-docs
   status: stable
   description: no description
-  version: 1.0.0
+  version: 1.0.1
 ---
 
 !`python ${CLAUDE_SKILL_DIR}/generate_claude_help_yaml.py`

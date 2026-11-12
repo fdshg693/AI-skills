@@ -12,7 +12,7 @@ meta:
   requires_skills: claude-code-docs, writing-subagents, writing-hooks
   status: stable
   description: no description
-  version: 1.0.0
+  version: 1.0.1
 ---
 
 # プラグイン作成のベストプラクティス

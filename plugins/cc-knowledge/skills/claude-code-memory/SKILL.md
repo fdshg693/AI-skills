@@ -12,7 +12,7 @@ meta:
   requires_skills: claude-code-docs, writing-rules, writing-hooks, claude-settings
   status: stable
   description: no description
-  version: 1.0.1
+  version: 1.0.2
 ---
 
 # Claude Codeのメモリ設計

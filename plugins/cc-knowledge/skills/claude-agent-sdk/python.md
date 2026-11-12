@@ -90,5 +90,6 @@ SDKは `.env` を自動ロードしない。秘密情報をソース、ログ、
 - `cwd`、環境変数、MCP資格情報、ファイルシステム、ネットワークをテナントごとに分離し、外部入力をプロンプト・シェル・パス・MCP引数へ直接連結しない。
 - 本番化ではサブプロセス、コンテナやサンドボックス、セッション永続化、観測性、キャンセル、リソース上限、秘密管理を `hosting` / `secure-deployment` で確認する。
 - `ModuleNotFoundError` は実行中のPythonとSDKをインストールした環境が同じか確認する。APIキー、権限待ち、MCP接続、入力ジェネレーターの例外、`max_turns`、構造化出力のSchemaと結果subtypeを順に切り分ける。
+- error resultで終わった `query()` は `ResultError` を送出する（Python SDK 0.2.140以上。それ以前は素の `Exception`）。`ResultError` は `ProcessError` の派生なので、`except ResultError` を `except ProcessError` より先に書く。失敗の種類は `data["stop_reason"]`、`terminal_reason`、`subtype` の順に判定する。
 
 完了時には、Pythonのimportとsnake_caseのオプション名が一貫し、API選択、権限、セッション境界、失敗時の扱い、参照した公式Source URLが明示されていることを確認する。

@@ -14,7 +14,7 @@ meta:
   requires_skills: claude-code-docs,writing-skill-complex
   status: stable
   description: no description
-  version: 2.0.0
+  version: 2.0.1
 ---
 
 # スキル作成・評価

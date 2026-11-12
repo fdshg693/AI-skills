@@ -16,7 +16,7 @@ meta:
   requires_skills: claude-code-docs, claude-cli-docs
   status: stable
   description: no description
-  version: 1.0.1
+  version: 1.0.2
 ---
 
 # Claude Codeデバッグ包括スキル

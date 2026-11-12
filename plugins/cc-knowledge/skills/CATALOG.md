@@ -15,7 +15,7 @@ meta:
   requires_skills: claude-code-docs
   status: stable
   description: no description
-  version: 1.0.3
+  version: 1.0.4
 ---
 
 - claude-cli-docs
@@ -39,7 +39,7 @@ meta:
   requires_skills: claude-code-docs
   status: stable
   description: no description
-  version: 1.0.0
+  version: 1.0.1
 ---
 
 - claude-cli-use
@@ -84,7 +84,7 @@ meta:
   requires_skills: claude-code-docs, claude-cli-docs
   status: stable
   description: no description
-  version: 1.0.1
+  version: 1.0.2
 ---
 
 - claude-code-docs
@@ -103,7 +103,7 @@ meta:
   requires_skills: none
   status: stable
   description: no description
-  version: 1.0.3
+  version: 1.0.4
 ---
 
 - claude-code-memory
@@ -121,7 +121,7 @@ meta:
   requires_skills: claude-code-docs, writing-rules, writing-hooks, claude-settings
   status: stable
   description: no description
-  version: 1.0.1
+  version: 1.0.2
 ---
 
 - claude-code-openai-gateway
@@ -162,7 +162,7 @@ meta:
   requires_skills: writing-hooks, claude-code-docs, claude-cli-docs
   status: stable
   description: no description
-  version: 1.0.1
+  version: 1.0.2
 ---
 
 - claude-mechanisms
@@ -199,7 +199,7 @@ meta:
   requires_skills: claude-code-docs, writing-hooks, writing-skill
   status: stable
   description: no description
-  version: 1.0.0
+  version: 1.0.1
 ---
 
 - writing-hooks
@@ -217,7 +217,7 @@ meta:
   requires_skills: claude-code-docs
   status: stable
   description: no description
-  version: 1.0.6
+  version: 1.0.7
 ---
 
 - writing-output-styles
@@ -235,7 +235,7 @@ meta:
   requires_skills: claude-code-docs
   status: stable
   description: no description
-  version: 1.0.3
+  version: 1.0.4
 ---
 
 - writing-plugins
@@ -253,7 +253,7 @@ meta:
   requires_skills: claude-code-docs, writing-subagents, writing-hooks
   status: stable
   description: no description
-  version: 1.0.0
+  version: 1.0.1
 ---
 
 - writing-rules
@@ -295,7 +295,7 @@ meta:
   requires_skills: claude-code-docs,writing-skill-complex
   status: stable
   description: no description
-  version: 2.0.0
+  version: 2.0.1
 ---
 
 - writing-skill-complex
@@ -364,7 +364,7 @@ meta:
   requires_skills: claude-code-docs
   status: stable
   description: no description
-  version: 1.0.3
+  version: 1.0.4
 ---
 
 - writing-workflows
@@ -383,5 +383,5 @@ meta:
   requires_skills: claude-mechanisms, writing-subagents, claude-code-docs
   status: stable
   description: no description
-  version: 1.0.0
+  version: 1.0.1
 ---

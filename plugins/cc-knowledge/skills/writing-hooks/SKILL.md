@@ -12,7 +12,7 @@ meta:
   requires_skills: claude-code-docs
   status: stable
   description: no description
-  version: 1.0.6
+  version: 1.0.7
 ---
 
 # フック作成のベストプラクティス
@@ -31,7 +31,7 @@ meta:
 
 ## チェックリスト（ベストプラクティス）
 
-- [ ] ブロックしたい処理は **`exit 2`** を使う。`exit 1`は失敗として扱われず処理が継続してしまう（`WorktreeCreate`のみ例外で0以外全てが中止扱い）
+- [ ] ブロックしたい処理は **`exit 2`** を使う。`exit 1`は失敗として扱われず処理が継続してしまう（`WorktreeCreate`は0以外全てが中止扱い、`WorktreeRemove`も0以外で削除失敗扱い）
 - [ ] `exit 2`とstdoutのJSON出力は**併用しない**（exit 2ではJSONは無視される）。構造化制御は exit 0 + JSON、ブロックのみなら exit 2 + stderr、どちらかに統一
 - [ ] シェル変数は必ず `"$VAR"` のようにダブルクォートする（インジェクション・パス中のスペース対策）
 - [ ] スクリプトパスは絶対パス（`${CLAUDE_PROJECT_DIR}`等）で指定する
@@ -41,7 +41,7 @@ meta:
 - [ ] Windowsでexec formを使う場合、`command`は実ファイル（`.exe`等）である必要がある。npm/npx等の`.cmd`/`.bat`シムはexec formで起動できないため、直接スクリプトを叩くかshell formを使う
 - [ ] `"shell": "powershell"`使用時、`${CLAUDE_PROJECT_DIR}`は`${env:NAME}`形式でダブルクォート文字列内でのみ展開される（シングルクォート内では展開されない）。裸の`$CLAUDE_PROJECT_DIR`は未定義変数として`$null`になるので必ず`$env:`を付ける
 - [ ] shell profileに無条件`echo`があると標準出力に混ざりJSONパースが失敗する。プロファイル内のechoは対話シェル判定（`[[ $- == *i* ]]`）でガードする
-- [ ] `Stop`フック実装時は入力の`stop_hook_active`をチェックして早期`exit 0`し、8回連続ブロックでの強制解除を待たずに無限ループを避ける
+- [ ] `Stop`フック実装時は入力の`stop_hook_active`をチェックして早期`exit 0`し、tool call を挟まない8回連続ブロックによるターン強制終了（`CLAUDE_CODE_STOP_HOOK_BLOCK_CAP` で変更可）を待たずに無限ループを避ける
 - [ ] `async: true`は`command`タイプのみ対応。非同期フックはツール呼び出しをブロックできない点を前提に設計する
 - [ ] デプロイ前に `echo '{...}' | ./my-hook.sh` のようにサンプルJSONを標準入力に流し、`$?`とstdout/stderrを手元で確認する
 - [ ] **コマンドフックはユーザーの実行権限をフルで持つ**。設定を追加する前に内容を必ずレビューする

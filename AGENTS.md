@@ -4,6 +4,7 @@
 - 本文が `tools/<name>` の CLI のインストールを必須にするスキルはここに置かない（`tools/_plugin/my-tools/`）。このリポジトリの保守にしか意味がないスキルも置かない（アンブレラの `maintenance/plugin/`）。判定基準は [repo-layout](../maintenance/docs/repo-layout.md#置き場所の判定基準)。
 - スキルを書く・直すときの手引きは `plugins/cc-knowledge/skills/writing-skill/` にある。このフォルダの中なので Junction では見せていない。スキルとして起動されないため、ファイルとして読む。
 - プラグインの公開（マーケットプレイス・スキル公開サイト）は `_umbrella/registry/ai-tools.yaml` で決まる。プラグインを足したり消したりしたら、アンブレラ側で先にそこを更新する。
+- 既存プラグインの探索やスキル・プラグインの追加先を判断する前に、必ず [README.md](README.md) の一覧を確認する。
 
 ## このフォルダだけを開いたとき
 

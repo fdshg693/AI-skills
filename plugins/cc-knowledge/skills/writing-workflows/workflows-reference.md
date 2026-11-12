@@ -6,14 +6,14 @@
 
 「誰が次に何を実行するかを決めるか」が機構ごとに異なる。
 
-|                          | Subagent                | Skill                  | Agent teams                  | Workflow                       |
-| :----------------------- | :---------------------- | :--------------------- | :--------------------------- | :----------------------------- |
-| 実体                     | Claudeが起動するworker  | Claudeが従う手順書     | 複数セッションを束ねるリード | ランタイムが実行するスクリプト |
-| 次に何をするか決めるのは | Claude(ターンごと)      | Claude(手順書に従って) | リードagent(ターンごと)      | スクリプト自身                 |
-| 中間結果の置き場所       | Claudeのcontext window  | Claudeのcontext window | 共有タスクリスト             | スクリプト変数                 |
-| 再現可能なもの           | worker定義              | 手順書                 | チーム定義                   | オーケストレーションそのもの   |
-| 規模の目安               | 1ターンで数件のdelegate | subagentと同程度       | 数体の長時間稼働peer         | 1runで数十〜数百体             |
-| 中断時の挙動             | ターンがrestart         | ターンがrestart        | teammateは動き続ける         | 同一セッション内でresume可能   |
+|                          | Subagent                | Skill                  | Agent teams                  | Workflow                           |
+| :----------------------- | :---------------------- | :--------------------- | :--------------------------- | :--------------------------------- |
+| 実体                     | Claudeが起動するworker  | Claudeが従う手順書     | 複数セッションを束ねるリード | ランタイムが実行するスクリプト     |
+| 次に何をするか決めるのは | Claude(ターンごと)      | Claude(手順書に従って) | リードagent(ターンごと)      | スクリプト自身                     |
+| 中間結果の置き場所       | Claudeのcontext window  | Claudeのcontext window | 共有タスクリスト             | スクリプト変数                     |
+| 再現可能なもの           | worker定義              | 手順書                 | チーム定義                   | オーケストレーションそのもの       |
+| 規模の目安               | 1ターンで数件のdelegate | subagentと同程度       | 数体の長時間稼働peer         | 1runで数十〜数百体                 |
+| 中断時の挙動             | ターンがrestart         | ターンがrestart        | teammateは動き続ける         | resume可能(再開したセッション内で) |
 
 Workflowは「計画」そのものをコードに移す機構。分岐・ループ・中間結果の保持をスクリプトが持つため、Claudeのcontextには最終結果だけが残る。これにより「独立したagent同士に相互検証させる」「複数角度から草案を作って比較する」といった、精度を上げる定型パターンを毎回同じ形で繰り返せる。
 
@@ -29,11 +29,12 @@ Workflowは「計画」そのものをコードに移す機構。分岐・ルー
 
 CLIでは実行前に計画されたフェーズと選択肢(`Yes, run it` / `Yes, and don't ask again for <name> in <path>` / `View raw script` / `No`)が表示される。`Ctrl+G`でスクリプトをエディタで開ける。
 
-| Permission mode                            | プロンプトされるタイミング                                                         |
-| :----------------------------------------- | :--------------------------------------------------------------------------------- |
-| Default, accept edits                      | 毎回(そのworkflow・そのプロジェクトで`Yes, and don't ask again`を選んでいない限り) |
-| Auto                                       | 初回起動時のみ。以降は確認なし(ultracode有効時は完全にスキップ)                    |
-| Bypass permissions, `claude -p`, Agent SDK | プロンプトなし。即実行                                                             |
+| Permission mode        | プロンプトされるタイミング                                                                                                                                                                            |
+| :--------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Default, accept edits  | 毎回(そのworkflow・そのプロジェクトで`Yes, and don't ask again`を選んでいない限り)                                                                                                                    |
+| Auto                   | 初回起動時のみ。以降は確認なし(ultracode有効時は完全にスキップ)                                                                                                                                       |
+| Bypass permissions     | プロンプトなし。即実行                                                                                                                                                                                |
+| `claude -p`, Agent SDK | Claude Codeはプロンプトしない。ただし通常のツール呼び出しと同じ権限評価を通るため、`Workflow` / `Workflow(<name>)`のallowルール、autoモード、`PreToolUse` hookのallow等で起動を許可しておく必要がある |
 
 workflowが起動するsubagent自体は、セッションのpermission modeに関わらず常に`acceptEdits`モードで動き、セッションのtool allowlistを引き継ぐ(ファイル編集は自動承認)。allowlistに無いshellコマンド・web fetch・MCPツールはrun中にプロンプトされうるので、長時間runの前に必要なコマンドをallowlistへ追加しておくとよい。
 
@@ -46,7 +47,7 @@ workflowが起動するsubagent自体は、セッションのpermission modeに�
 
 保存すると以後`/<name>`として呼び出せる。モノレポで`.claude/`が複数階層にある場合、プロジェクト側の保存は作業ディレクトリからリポジトリルートまでの間で最も近い既存の`.claude/workflows/`に書き込まれる(無ければリポジトリルート)。読み込みもその経路上の全`.claude/workflows/`から行われ、同名が複数あれば作業ディレクトリに最も近いものが使われる。プロジェクト側とホーム側で同名がある場合は常にプロジェクト側が優先される。
 
-> **調査時点(2026-07-19)の情報**: workflowはプラグインのコンポーネントとして同梱できない。[Plugins reference](https://code.claude.com/docs/en/plugins-reference)のプラグインディレクトリ構造・File locations referenceが挙げるコンポーネントは`skills/` `commands/` `agents/` `output-styles/` `themes/` `hooks/hooks.json` `.mcp.json` `.lsp.json` `monitors/monitors.json` `bin/` `settings.json`のみで、`workflows/`は含まれない。`claude plugin init --with`が受け付けるコンポーネント一覧(`skills, agents, hooks, mcp, lsp, output-style, channel`)にも`workflow`は無い。チーム共有したいworkflowは、プラグイン化ではなく`.claude/workflows/`にコミットして配布するのが現行の唯一の手段。この状況は将来のバージョンで変わりうるため、プラグイン同梱を検討する際は**claude-code-docsスキル**で最新仕様を再確認すること。
+> **調査時点(2026-11-11)の情報**: workflowはプラグインのコンポーネントとして同梱できる。プラグインルートの`workflows/`ディレクトリに`.js`ファイルを置くか、マニフェストの[`workflows`フィールド](https://code.claude.com/docs/en/plugins/manifest-reference#fields)で別のパスを指定する。コンポーネントの一覧は[Plugins components](https://code.claude.com/docs/en/plugins/components)を参照。チーム共有は`.claude/workflows/`へのコミットか、プラグインとしての配布のどちらでも行える。仕様は将来変わりうるため、再確認が必要なときは**claude-code-docsスキル**を使うこと。
 
 ## argsによる入力
 
@@ -60,12 +61,12 @@ Run /triage-issues on issues 1024, 1025, and 1030
 
 ## 実行時の制約
 
-| 制約                                                         | 理由                                                                                                                  |
-| :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- |
-| run中にユーザー入力を挟めない                                | 一時停止できるのはagentのpermissionプロンプトのみ。ステージ間で承認を挟みたいなら各ステージを別workflowとして分割する |
-| スクリプト自身は直接ファイルシステム・shellにアクセスしない  | 読み書き・コマンド実行はagentが行い、スクリプトはagentの調整役に徹する                                                |
-| 同時実行agentは最大16体(CPUコアが少ない環境ではさらに少ない) | ローカルリソース使用量の上限                                                                                          |
-| 1 runあたり最大1,000 agent                                   | 暴走ループの防止                                                                                                      |
+| 制約                                                                                                                                           | 理由                                                                                                                  |
+| :--------------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- |
+| run中にユーザー入力を挟めない                                                                                                                  | 一時停止できるのはagentのpermissionプロンプトのみ。ステージ間で承認を挟みたいなら各ステージを別workflowとして分割する |
+| スクリプト自身は直接ファイルシステム・shellにアクセスしない                                                                                    | 読み書き・コマンド実行はagentが行い、スクリプトはagentの調整役に徹する                                                |
+| 同時実行agentは既定で最大16体(CPUコアが少ない環境ではさらに少ない。`CLAUDE_CODE_WORKFLOW_MAX_CONCURRENT_AGENTS`(1〜256、v2.1.269以降)で変更可) | ローカルリソース使用量の上限                                                                                          |
+| 1 runあたり最大1,000 agent                                                                                                                     | 暴走ループの防止                                                                                                      |
 
 ## 管理(`/workflows`)
 
@@ -83,7 +84,7 @@ Run /triage-issues on issues 1024, 1025, and 1030
 
 ### resume
 
-停止したrunは再開できる。完了済みagentはキャッシュされた結果を返し、残りだけが実際に走る。停止時に実行中だったagentは保存されず再開時にやり直しになるため、大きなagent1体より小さなagentに分けたworkflowの方が進捗を多く保持できる。resumeは同一セッション内でのみ有効で、Claude Codeを終了すると次のセッションではworkflowは最初から走る。
+停止したrunは再開できる。完了済みagentはキャッシュされた結果を返し、残りだけが実際に走る。停止時に実行中だったagentは保存されず再開時にやり直しになるため、大きなagent1体より小さなagentに分けたworkflowの方が進捗を多く保持できる。Claude Codeを終了しても、停止したrunの保存結果はセッションディレクトリ(`~/.claude/projects/`配下)に残る。`claude --resume`でそのセッションを開き、workflowの再起動を依頼すると保存結果から再開する。新規セッションでは以前のrunを再起動できないため、workflowは最初から走る。
 
 ### コスト管理
 
@@ -95,14 +96,14 @@ Run /triage-issues on issues 1024, 1025, and 1030
 | :------------- | :------------------- |
 | `unrestricted` | ガイドラインなし     |
 | `small`        | 5 agent未満を目指す  |
-| `medium`(既定) | 15 agent未満を目指す |
+| `medium`(既定) | 10 agent未満を目指す |
 | `large`        | 50 agent未満を目指す |
 
-既定値は`medium`(v2.1.219未満は`unrestricted`が既定)。`/config workflowSizeGuideline=small`のように`/config`から変更できるほか、v2.1.219以降は`workflowSizeGuideline`設定キーとしてどの設定ファイル(`settings.json`等)からでも指定でき、その場合は`/config`側の値より優先され`/config`の行自体が非表示になる。
+既定値は`medium`。Proプランでサインインし、Claude Code v2.1.271以降の場合は`small`が既定(v2.1.219未満は`unrestricted`が既定)。`/config workflowSizeGuideline=small`のように`/config`から変更できるほか、v2.1.219以降は`workflowSizeGuideline`設定キーとしてどの設定ファイル(`settings.json`等)からでも指定でき、その場合は`/config`側の値より優先され`/config`の行自体が非表示になる。
 
 runがスケジュールしたagentが25体を超える、または見込みトークン総量が150万を超えると、進捗表示に`Large workflow`警告が出る(runの一時停止・停止は`/workflows`から)。ultracode有効時はこの警告が出ない(既に大規模runへの同意済みとみなされるため)。
 
-セッションのモデルが各agentにも使われる。ステージごとに異なるモデルを使わせたい場合はスクリプト側でルーティングするか、`CLAUDE_CODE_SUBAGENT_MODEL`環境変数で上書きする。
+セッションのモデルが各agentにも使われる。ステージごとに異なるモデルを使わせたい場合はスクリプト側でルーティングするか、`CLAUDE_CODE_SUBAGENT_MODEL`環境変数で既定を指定する。workflowのagentだけを1つのモデルに固定したい場合は`CLAUDE_CODE_WORKFLOW_SUBAGENT_MODEL`(v2.1.296以降)を使うと、他のsubagentは各自のモデルを保つ。
 
 ### 無効化設定
 
