@@ -73,18 +73,18 @@ meta:
 ---
 name: pr-check
 description: PRの作成・状態確認・レビュー依頼・GitHub Actions操作を行う
-allowed-tools: Bash(gh *), Bash(git *), Bash(python skills/plugins/use-github/skills/pr-check/*.py *)
+allowed-tools: Bash(gh *) Bash(git *) Bash(uv run ${CLAUDE_SKILL_DIR}/*.py *) Bash(python ${CLAUDE_SKILL_DIR}/*.py *)
 meta:
   tag: []
   requires_repo_tools: none
   requires_env: none
-  dependencies: gh, git, python
+  dependencies: gh, git, uv
   requires_install: none
   requires_hooks: none
   requires_skills: none
   status: stable
-  description: no description
-  version: 1.0.4
+  description: PRの作成・状態確認・Copilotレビュー依頼・マージ・GitHub Actions操作
+  version: 1.1.0
 ---
 
 - proposing-flow
@@ -122,20 +122,20 @@ argument-hint:
     merge先ブランチ名 | PR番号/PRのURL (省略可。未コミット変更のレビューでは不要),
   ]
 arguments: [target]
-allowed-tools: Bash(python plugins/review/skills/review/*.py *)
-# Python依存: pathspec (`.diffignore` で除外パターンを指定する場合のみ必要。事前に `pip install pathspec` でグローバルインストールしておくこと)
+allowed-tools: Bash(uv run ${CLAUDE_SKILL_DIR}/*.py *) Bash(python ${CLAUDE_SKILL_DIR}/*.py *)
+# Python依存: pathspec（`.diffignore` を使う場合のみ）。各スクリプトの PEP 723 メタデータに書いてあり、`uv run` なら自動で入る
 # PRレビューのみ gh CLI(認証済み)が必須。無い場合はエラーで終了する
 meta:
   tag: []
   requires_repo_tools: none
   requires_env: none
-  dependencies: pathspec, git, python, gh
-  requires_install: pathspec
+  dependencies: git, uv, gh
+  requires_install: none
   requires_hooks: none
   requires_skills: none
   status: stable
-  description: no description
-  version: 1.1.1
+  description: ブランチ間差分・未コミット変更・既存PRを読み取り専用でレビューする
+  version: 1.2.0
 ---
 
 - systematic-debugging

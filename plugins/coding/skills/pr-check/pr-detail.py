@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.10"
+# dependencies = []
+# ///
 """PR番号を引数に取り、詳細・レビューコメント・レビューを取得する。
 
-使い方: python pr-detail.py <PR番号> [section...]
+使い方: uv run pr-detail.py <PR番号> [section...]（python でも可）
   section省略時: 3つ全て取得
   section: view | comments | reviews | all （複数指定可・スペース区切り）
   例: python pr-detail.py 42 view comments

@@ -21,7 +21,7 @@ GitHub上に既に存在するPRの差分とコメントを `gh` で取得して
    同梱の `pr_report.py` を実行する。
 
    ```
-   python ${CLAUDE_SKILL_DIR}/pr_report.py <PR番号またはURL>
+   uv run ${CLAUDE_SKILL_DIR}/pr_report.py <PR番号またはURL>
    ```
 
    - カレントディレクトリ以外のGitHubリポジトリのPRを番号で指定する場合: `--gh-repo OWNER/REPO`(URL指定ならURL内のリポジトリが使われるので不要)
@@ -44,11 +44,13 @@ GitHub上に既に存在するPRの差分とコメントを `gh` で取得して
 
 4. **差分をレビューする**
 
-   他のレビュー種別と同じ観点でレビューする(バグ・既存動作への影響・命名やスタイルの一貫性・テストの有無・意図しないファイルの混入など)。加えて、PR本文に書かれた意図と実際の差分が一致しているかも確認する。
+   `SKILL.md` の「レビュー観点」に沿ってレビューする。加えて、PR本文に書かれた意図と実際の差分が一致しているかも確認する。
 
    差分だけでは判断できず、変更ファイル全体の文脈が必要な場合は、ローカルをcheckoutせずに `gh api "repos/{owner}/{repo}/contents/<path>?ref=<headのSHA>" -H "Accept: application/vnd.github.raw"` で読む(headのSHAは標準出力または `INDEX.md` にある)。
 
 5. **結果を報告する**
+
+   `SKILL.md` の「結果の報告」の形式(blocker / should / nit)で報告し、以下も明記する。
 
    - これは既存PR(番号・URL)のレビューであり、PRへのコメント投稿・approve等やローカルのgit操作は一切行っていないこと
    - 差分ファイルと `COMMENTS.md` の出力先ディレクトリのパス

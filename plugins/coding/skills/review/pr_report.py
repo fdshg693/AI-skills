@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.10"
+# dependencies = ["pathspec"]
+# ///
 """GitHub上の既存PRの差分とコメントを gh CLI で取得して出力する。
 
 読み取り専用: gh pr view / gh pr diff / gh api (GET) のみを使用し、
@@ -6,8 +10,8 @@
 ローカルの作業ツリー・ブランチには触れないため、PRのブランチをcheckoutしていなくてよい。
 
 使い方:
-    python pr_report.py [PR] [--gh-repo OWNER/REPO] [--repo REPO] [--output-dir DIR]
-                        [--max-body-chars N]
+    uv run pr_report.py [PR] [--gh-repo OWNER/REPO] [--repo REPO] [--output-dir DIR]
+                         [--max-body-chars N]
 
     PR には PR番号(`123` / `#123`)またはPRのURLを指定する。省略時は
     現在のブランチに紐づくPRを gh で検出する。

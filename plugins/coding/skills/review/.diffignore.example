@@ -2,8 +2,18 @@
 # 書式は .gitignore と同じ（例: 末尾 `/` はディレクトリ、`*` はワイルドカード、`#` はコメント）。
 # パスは git のリポジトリルートからの相対パスにマッチさせる。
 #
-# 例:
+# 使うときは .diffignore にコピーする（.diffignore は gitignore 済み）。
+# 下の例のうち、レビューで読む必要のないものだけコメントを外す。
+#
+# ロックファイル
 # *.lock
+# uv.lock
+# pnpm-lock.yaml
+# package-lock.json
+# yarn.lock
+# Cargo.lock
+# 生成物・スナップショット
+# *.snapshot
+# __snapshots__/
 # *.min.js
 # dist/
-# package-lock.json

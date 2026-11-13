@@ -1,13 +1,17 @@
 #!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.10"
+# dependencies = []
+# ///
 """GitHub Actions（ワークフロー実行）の一覧・詳細・失敗ログ・手動実行を扱う。
 
 使い方:
-  python pr-actions.py list [branch]            # 直近のrun一覧（既定: 現在のブランチ、最大20件）
-  python pr-actions.py pr <PR番号>              # 対象PRのHEADコミットに紐づくrun一覧
-  python pr-actions.py view <run_id>            # run詳細（ジョブ毎の成否）
-  python pr-actions.py failed <run_id>          # 失敗したstepのログのみ
-  python pr-actions.py run <workflow> [ref]     # ワークフロー手動実行（workflow_dispatch必須）
-  python pr-actions.py watch <run_id>           # 完了まで追跡
+  uv run pr-actions.py list [branch] [--workflow <name>]  # 直近のrun一覧（既定: 現在のブランチ、最大20件）
+  uv run pr-actions.py pr <PR番号>              # 対象PRのHEADコミットに紐づくrun一覧
+  uv run pr-actions.py view <run_id>            # run詳細（ジョブ毎の成否）
+  uv run pr-actions.py failed <run_id>          # 失敗したstepのログのみ
+  uv run pr-actions.py run <workflow> [ref]     # ワークフロー手動実行（workflow_dispatch必須）
+  uv run pr-actions.py watch <run_id>           # 完了まで追跡
 """
 
 from __future__ import annotations
@@ -23,20 +27,16 @@ from pr_common import run_json, current_branch, run_cli
 
 def cmd_list(args) -> int:
     branch = args.branch or current_branch()
-    print(f"### ワークフロー実行一覧（branch: {branch}）")
-    runs = run_json(
-        [
-            "gh",
-            "run",
-            "list",
-            "--branch",
-            branch,
-            "--limit",
-            "20",
-            "--json",
-            "databaseId,displayTitle,workflowName,status,conclusion,event,headBranch,createdAt,url",
-        ]
-    )
+    label = f"branch: {branch}" + (f", workflow: {args.workflow}" if args.workflow else "")
+    print(f"### ワークフロー実行一覧（{label}）")
+    cmd = ["gh", "run", "list", "--branch", branch, "--limit", "20"]
+    if args.workflow:
+        cmd += ["--workflow", args.workflow]
+    cmd += [
+        "--json",
+        "databaseId,displayTitle,workflowName,status,conclusion,event,headBranch,createdAt,url",
+    ]
+    runs = run_json(cmd)
     for r in runs:
         print(
             f"[{r['databaseId']}] {r['workflowName']} | {r['status']}/{r.get('conclusion') or '-'} | {r['event']} | {r['displayTitle']}"
@@ -74,13 +74,13 @@ def cmd_view(args) -> int:
 
 
 def cmd_failed(args) -> int:
-    print(f"### Run {args.run_id} 失敗ログ")
+    print(f"### Run {args.run_id} 失敗ログ", flush=True)
     return subprocess.run(["gh", "run", "view", args.run_id, "--log-failed"]).returncode
 
 
 def cmd_run(args) -> int:
     ref = args.ref or current_branch()
-    print(f"### Dispatch: {args.workflow} (ref={ref})")
+    print(f"### Dispatch: {args.workflow} (ref={ref})", flush=True)
     result = subprocess.run(["gh", "workflow", "run", args.workflow, "--ref", ref])
     if result.returncode == 0:
         print("※ 実行開始はわずかに遅延する。'pr-actions.py list' で run_id を確認してください。")
@@ -97,6 +97,7 @@ def main() -> int:
 
     p_list = sub.add_parser("list", help="直近のrun一覧")
     p_list.add_argument("branch", nargs="?")
+    p_list.add_argument("--workflow", help="ワークフロー名またはファイル名で絞る")
     p_list.set_defaults(func=cmd_list)
 
     p_pr = sub.add_parser("pr", help="対象PRのHEADコミットに紐づくrun一覧")

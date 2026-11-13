@@ -46,6 +46,19 @@ def default_branch() -> str:
     ]
 
 
+def git_ok(args: list[str]) -> bool:
+    return run(["git", *args], check=False).returncode == 0
+
+
+def ahead_behind(left: str, right: str) -> tuple[int, int] | None:
+    """(left にだけある commit 数, right にだけある commit 数)。比較できなければ None。"""
+    result = run(["git", "rev-list", "--left-right", "--count", f"{left}...{right}"], check=False)
+    if result.returncode != 0:
+        return None
+    a, b = result.stdout.split()
+    return int(a), int(b)
+
+
 def run_cli(main) -> int:
     """main() を実行し、PrCheckError を error: 付きでstderrに出す共通エントリポイント。"""
     try:
