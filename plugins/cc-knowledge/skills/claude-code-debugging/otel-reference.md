@@ -170,11 +170,11 @@ Agent SDKはClaude Code CLIをそのまま子プロセスとして起動して�
 
 単発のコンソール出力を読むのではなく、継続的にクエリ可能なローカル専用の収集基盤(OTel Collector + Loki + Grafana)を`otel-stack/`配下に同梱している。テレメトリの向き先をいつでもこのローカル基盤に切り替えられる。
 
-**このスタックは、さくらのクラウドVM上で恒常稼働している個人ログ基盤 `tools/infra/ai-logs/`(実利用ログを収集する別インフラ。Lokiのホットは14日保持で、それ以前はAzure Blobへ日次アーカイブする。詳細は[README.md](../../../../../tools/infra/ai-logs/README.md))とは無関係の別物である。** デバッグ用の実験的なテレメトリ(スキル動作確認のノイズ)を実利用アーカイブに混ぜないため、独立して使い捨てで起動・破棄する用途に限定している。設定内容は`ai-logs`の`docker/`を参考にしているが、コード・データともに共有しない。
+**このスタックは、さくらのクラウドVM上で恒常稼働している個人ログ基盤 `infra/ai-logs/`(実利用ログを収集する別インフラ。Lokiのホットは14日保持で、それ以前はAzure Blobへ日次アーカイブする。詳細は[README.md](../../../../../infra/ai-logs/README.md))とは無関係の別物である。** デバッグ用の実験的なテレメトリ(スキル動作確認のノイズ)を実利用アーカイブに混ぜないため、独立して使い捨てで起動・破棄する用途に限定している。設定内容は`ai-logs`の`docker/`を参考にしているが、コード・データともに共有しない。
 
 ### `ai-logs`との構成上の違い
 
-| 項目             | `otel-stack/`(このスキル)                      | `tools/infra/ai-logs/`                                                 |
+| 項目             | `otel-stack/`(このスキル)                      | `infra/ai-logs/`                                                       |
 | ---------------- | ---------------------------------------------- | ---------------------------------------------------------------------- |
 | 稼働場所         | ローカル(Docker Desktop)、使う時だけ起動       | さくらのクラウドVM、恒常稼働                                           |
 | ポート公開       | 全ポートをループバック(`127.0.0.1`)のみに公開  | GrafanaはSSHトンネル経由のみ、OTLPは外部公開(トークン必須)             |
@@ -235,7 +235,7 @@ curl -G "http://localhost:3100/loki/api/v1/query_range" \
   --data-urlencode "limit=50"
 ```
 
-このクエリ構築方法(`{service_name="..."}` によるLogQLクエリ、`query_range`のパラメータ設計)は `tools/infra/ai-logs/scripts/fetch_logs.py` と同じであり、そのまま踏襲できることを実地確認した。
+このクエリ構築方法(`{service_name="..."}` によるLogQLクエリ、`query_range`のパラメータ設計)は `infra/ai-logs/scripts/fetch_logs.py` と同じであり、そのまま踏襲できることを実地確認した。
 
 同梱の [`scripts/query_otel_logs.py`](scripts/query_otel_logs.py) を使うと、上記のクエリをAI(Claude)自身が認証情報を直接扱わずにCLIから実行できる(`otel-stack/.env`をスクリプト自身が読み込む)。使い方は `python scripts/query_otel_logs.py --help` を参照。
 

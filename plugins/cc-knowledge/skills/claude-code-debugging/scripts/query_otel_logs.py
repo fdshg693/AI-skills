@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Query the local claude-code-debugging OTel stack's Loki instance directly.
 
-Unlike tools/infra/ai-logs/scripts/fetch_logs.py (which SSHes into a remote VM
+Unlike infra/ai-logs/scripts/fetch_logs.py (which SSHes into a remote VM
 and queries Loki via `docker exec ... wget`), this stack runs entirely on the
 local machine with Loki's HTTP API exposed on 127.0.0.1:3100, so this script
 talks to it directly over HTTP -- no SSH, no docker exec.
