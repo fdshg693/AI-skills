@@ -31,7 +31,7 @@ FRESHNESS = timedelta(days=7)
 # Fail fast rather than hang on a stalled gh/network call.
 GH_TIMEOUT_SECONDS = 60
 
-# Markdown links: [title](path.md) — ignore absolute URLs and bare anchors.
+# Markdown links: `[title](path.md)` — ignore absolute URLs and bare anchors.
 MD_LINK_RE = re.compile(r"\[[^\]]*\]\(([^)]+)\)")
 
 

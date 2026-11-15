@@ -1,2 +1,4 @@
 # textgraph: skip scraped docs (output/) whose links are site-absolute paths of the original site.
 exclude = ["plugins/*/skills/*/output/**"]
+# textgraph: skip test fixtures (string literals like "index.md") in check --scripts.
+scripts_exclude = ["**/tests/**"]
