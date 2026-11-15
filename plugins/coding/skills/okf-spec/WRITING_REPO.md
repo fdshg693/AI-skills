@@ -47,7 +47,7 @@ docs/
 
 `tags`は[README.md](../../../../../README.md)のフォルダ分類に揃える: `claude-code` / `cline` / `codex` / `copilot` / `cursor` / `antigravity` / `tools` / `repo-wide` / `maintenance` / `skills-site`。
 
-`resource`および`sources[].resource`は、このリポジトリ内のファイルを指す場合はリポジトリルートからの相対パス（例: `tools/aim/README.md`）をそのまま使う。外部ツールの公式ドキュメント等を指す場合は通常のURLを使う。
+`resource`および`sources[].resource`は、このリポジトリ内のファイルを指す場合はリポジトリルートからの相対パス（例: `tools/llm/aim/README.md`）をそのまま使う。外部ツールの公式ドキュメント等を指す場合は通常のURLを使う。
 
 以下は主要フィールドを一通り使ったサンプル（`docs/tools/aim.md`を想定）。
 
@@ -56,7 +56,7 @@ docs/
 type: Wrapper Tool
 title: aim CLI
 description: モデル呼び出しをラップするCLIツール。
-resource: tools/aim/
+resource: tools/llm/aim/
 tags: [tools, cli]
 generated: { by: human:fdshg693, at: 2026-07-10T09:00:00Z }
 verified:
@@ -66,7 +66,7 @@ status: stable
 stale_after: 2026-12-31
 sources:
   - id: aim-readme
-    resource: tools/aim/README.md
+    resource: tools/llm/aim/README.md
     title: aim README
     author: human:fdshg693
     last_modified: 2026-07-10

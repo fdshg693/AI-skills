@@ -68,4 +68,4 @@ res = client.chat.send(
 
 両ツールとも`parameters`辞書で細かい設定を渡せる（`WebSearchServerToolTypedDict`/`OpenRouterWebSearchServerTool`の`parameters: WebSearchConfig`、`WebFetchServerToolConfig`など）。個々のフィールドは上表のリンク先を参照。Server Toolsはあくまで「使ってよい」と伝えるだけで、実際に呼ぶかどうかはモデルがリクエストごとに判断する。
 
-このリポジトリでの実例は[tools/aim/aim_cli.py](../../../../../../tools/aim/aim_cli.py)。モジュールレベルで`WEB_TOOLS = [{"type": "openrouter:web_search"}, {"type": "openrouter:web_fetch"}]`を定義し、`--web`フラグ指定時に`tools=WEB_TOOLS if web else None`を`client.chat.send(...)`/`client.chat.send_async(...)`へ渡している。
+このリポジトリでの実例は[tools/llm/aim/aim_cli.py](../../../../../../tools/llm/aim/aim_cli.py)。モジュールレベルで`WEB_TOOLS = [{"type": "openrouter:web_search"}, {"type": "openrouter:web_fetch"}]`を定義し、`--web`フラグ指定時に`tools=WEB_TOOLS if web else None`を`client.chat.send(...)`/`client.chat.send_async(...)`へ渡している。

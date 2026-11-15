@@ -29,7 +29,7 @@ AI に読ませる判断フロー・引数・出力形式は [SKILL.md](SKILL.md
 
 ## なぜ `tav-cli` を直接使わないのか
 
-`tools/tav-cli/extract_url_content.py` を薄いオプションで呼べば同じことはできるが、以下が
+`tools/web-research/tav-cli/extract_url_content.py` を薄いオプションで呼べば同じことはできるが、以下が
 「1 URL だけ」の用途には見合わないコストになる:
 
 - `--topic` を付けなければ `ResultEnvelope`(投影済みとはいえ JSON 構造)を経由する、付ければ

@@ -7,7 +7,7 @@ description: Fetch the raw text/markdown content of a single already-known URL v
 
 # 前提条件(このスキル自体はセットアップ手順を提供しない):
 #   - tavily / python-dotenv がグローバルにインストール済みであること
-#     (`tools/tav-cli/README.md` の「前提条件」と同じ。未インストールならそちらを先に実施)
+#     (`tools/web-research/tav-cli/README.md` の「前提条件」と同じ。未インストールならそちらを先に実施)
 #   - TAVILY_API_KEY が環境変数、またはこのスキルと同階層(extract_page.py と同じフォルダ)の
 #     .env に設定済みであること(カレントディレクトリからの上方探索はしない)
 #
@@ -32,7 +32,7 @@ meta:
   requires_skills: none
   status: stable
   description: no description
-  version: 1.0.4
+  version: 1.0.5
 ---
 
 - web-lookup
