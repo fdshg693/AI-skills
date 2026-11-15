@@ -41,5 +41,5 @@ grep.app / Microsoft Learn / AWS Knowledge MCP / Tavily / Context7 を、スキ�
 - サブコマンド面と `available` の出力契約は CLI（`scripts/web_lookup.py` / `scripts/env_check.py`）が正本。オプション表は SKILL.md と各詳細ファイルに転記せず `--help` に任せる
 - 5系統の振り分けは SKILL.md 固有。各系統の判断フローは同階層の詳細ファイル固有（元の [ms-learn](../../../../../tools/_plugin/my-tools/skills/ms-learn/SKILL.md) / [aws-docs](../../../../../tools/_plugin/my-tools/skills/aws-docs/SKILL.md) / [use-context](../../../../../tools/_plugin/my-tools/skills/use-context/SKILL.md) / [grep-app](../../../../../tools/_plugin/my-tools/skills/grep-app/SKILL.md) / [tav-cli](../../../../../tools/_plugin/my-tools/skills/tav-cli/SKILL.md) の運用方針を、この CLI のサブセットに合わせて移植したもの）
 - CLI のサブコマンド名・`available` の列・env 名を変えたら SKILL.md の起動例と振り分け、および該当する詳細ファイルを突き合わせる
-- `tools/awsdocs` のサーバー実測挙動（`tools/awsdocs/memo/01-knowledge-mcp-server.md`）が変わったら、`scripts/backends.py` の AWS 判定（`_aws_unwrap` / read 要素の判定 / レート制限判定）と `aws.md` も突き合わせる
+- `tools/web-research/awsdocs` のサーバー実測挙動（`tools/web-research/awsdocs/memo/01-knowledge-mcp-server.md`）が変わったら、`scripts/backends.py` の AWS 判定（`_aws_unwrap` / read 要素の判定 / レート制限判定）と `aws.md` も突き合わせる
 - 元 CLI にあるがこちらに無いもの（`code-search` / `regions` / `availability` / `skill` / `map` / `crawl` / `research` / `tools` / `call` / `--topic` / `--detail` / `--json` / `--timeout` 等）を、詳細ファイルへ書き戻さないこと

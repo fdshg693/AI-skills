@@ -17,7 +17,7 @@ from typing import Any
 import requests
 
 GREP_ENDPOINT = "https://mcp.grep.app"
-# Cold-start grep.app can 504 around 20s and succeed near 40s (same as tools/grepapp).
+# Cold-start grep.app can 504 around 20s and succeed near 40s (same as tools/web-research/grepapp).
 GREP_TIMEOUT = 45.0
 GREP_TOOL = "searchGitHub"
 
@@ -31,7 +31,7 @@ AWS_TIMEOUT = 60.0
 AWS_SEARCH_TOOL = "aws___search_documentation"
 AWS_READ_TOOL = "aws___read_documentation"
 # The server silently ignores unknown topics (falls back to `general`), so the CLI
-# validates against this list (same as tools/awsdocs).
+# validates against this list (same as tools/web-research/awsdocs).
 AWS_TOPICS = (
     "reference_documentation",
     "current_awareness",

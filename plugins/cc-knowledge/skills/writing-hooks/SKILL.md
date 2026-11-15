@@ -52,7 +52,7 @@ meta:
 
 1. 正本は `agent-compat/agent-tooling/agent_tooling/hooks/`。`scenarios/<hook-id>/hook.yaml`（登録イベント・matcher・配布可否）と `adapters/<agent>/<hook-id>.py`（本体）を足し、`build/build.py` の `ENTRIES` に登録する。書き方は `agent-compat/agent-tooling/agent_tooling/hooks/AGENTS.md`
 2. `just --justfile agent-compat/agent-tooling/justfile generate` で `generated/` と `catalog.json` を再生成する
-3. リポジトリ直下で `just hooks-install`（新規）または `just hooks-update`（変更）を実行し、skill-tools に配置・登録させる。他プロジェクトへは `skill-tools hooks install --agent <agent> <hook-id>`
+3. 新規なら `.claude/skill-tools.hooks.yaml`（gitignore。サンプルは `.claude/skill-tools.hooks.example.yaml`）の `hooks.install` に hook id を足して `just hooks-install`、既存の変更なら `just hooks-update` を、リポジトリ直下で実行し、skill-tools に配置・登録させる。他プロジェクトへは `skill-tools hooks install --agent <agent> <hook-id>`
 
 全体の流れと設計判断は `maintenance/docs/hook-distribution.md`。
 

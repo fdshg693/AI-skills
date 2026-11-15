@@ -1,0 +1,12 @@
+# textgraph: skip scraped docs (output/) whose links are site-absolute paths of the original site.
+# Transcribed docs outside output/ need the same treatment: add them here when you add one.
+exclude = [
+  "plugins/*/skills/*/output/**",
+  # Cursor docs transcribed verbatim (links like /docs-static/..., /marketplace).
+  "plugins/ai-tools-knowledge/skills/cursor-memory/references/**",
+  "plugins/ai-tools-knowledge/skills/cursor-skill-use/references/**",
+  # Anthropic's skill authoring guide transcribed verbatim (/en/docs/... and example links).
+  "plugins/cc-knowledge/skills/writing-skill-complex/anthropic-best-practices.md",
+]
+# textgraph: skip test fixtures (string literals like "index.md") in check --scripts.
+scripts_exclude = ["**/tests/**"]

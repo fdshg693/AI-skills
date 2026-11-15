@@ -1,7 +1,7 @@
 ---
-name: pr-check
-description: PRの作成・状態確認・レビュー依頼・GitHub Actions操作を行う
-allowed-tools: Bash(gh *), Bash(git *), Bash(python skills/plugins/use-github/skills/pr-check/*.py *)
+name: gh-pr
+description: gh で現在のブランチのPRを作成・状態確認・マージし、GitHub Actions の run の一覧・詳細取得・手動実行・追跡を行う。Actions の失敗原因の調査は cicd プラグインの diagnosing-actions を使う。
+allowed-tools: Bash(gh *), Bash(git *), Bash(python *gh-pr/*.py*)
 meta:
   tag: []
   requires_repo_tools: none
@@ -11,13 +11,20 @@ meta:
   requires_hooks: none
   requires_skills: none
   status: stable
-  description: no description
-  version: 1.0.4
+  description: 現在のブランチのPR作成・状態確認・マージとGitHub Actionsのrun一覧・詳細・手動実行
+  version: 1.1.0
 ---
 
-# PR確認・管理スキル
+# gh-pr
 
-現在のブランチに関連するPull Requestの作成・確認・レビュー依頼・マージ、およびGitHub Actionsの実行・結果取得等をユーザーのリクエストに応じて行う。
+現在のブランチに関連するPull Requestの作成・確認・マージ、およびGitHub Actionsのrunの確認・手動実行等をユーザーのリクエストに応じて行う。
+
+## 対象リポジトリ
+
+スクリプトはカレントディレクトリの git remote から対象リポジトリを決める。サブモジュールやスキルのフォルダの中で実行すると別のリポジトリを見て `HTTP 404` になるので、次のどちらかにする。
+
+- 対象リポジトリのルートで実行する
+- `-R OWNER/REPO` を付ける（`pr-detail.py`・`pr-actions.py`）。`pr-actions.py` に Actions の URL を渡したときは URL のリポジトリが使われる
 
 ## 現在の状態
 
@@ -52,7 +59,7 @@ meta:
 
 ## PR作成
 
-`pr-create.py` を使う。事前に未コミット変更・既存PR・リモートpush状態をチェックする。
+`pr-create.py` を使う。事前に未コミット変更・既存PR・リモートpush状態をチェックし、ブランチが未pushまたは `origin/<branch>` より先行していれば push してから作る。
 
 | 目的                                 | コマンド                                                                                 |
 | ------------------------------------ | ---------------------------------------------------------------------------------------- |
@@ -63,42 +70,37 @@ meta:
 | 本文をファイルから                   | `python "${CLAUDE_SKILL_DIR}/pr-create.py" --body-file .github/pull_request_template.md` |
 
 - 作成は**ユーザーの明示的な指示**があった場合のみ実行する
-- 大きな変更の場合は先に `git log origin/<base>..HEAD` でコミット一覧を確認して、タイトル・本文の方針をユーザーに提示してから実行する
+- base との差分が 2 コミット以上あるときは `--title` が必須（直近コミットの件名では PR 全体を表せないため、省略するとコミット一覧を出して中断する）。`git log origin/<base>..HEAD` を見て全体を表すタイトルを付ける
+- 大きな変更の場合は先にコミット一覧を確認して、タイトル・本文の方針をユーザーに提示してから実行する
 
 ## GitHub Actions
 
-`pr-actions.py` でワークフロー実行の一覧・詳細・失敗ログ取得・手動実行を行う。ログ全量は巨大になるため `failed` を優先利用する。
+`pr-actions.py` でワークフロー実行の一覧・詳細・失敗ログ取得・手動実行を行う。`view`・`failed`・`watch` は run id のほか run/job の URL（`.../actions/runs/<id>`、`.../job/<id>`）を受け付ける。job URL ならその job だけを表示する。
+
+**失敗原因の調査を頼まれたら** cicd プラグインの `diagnosing-actions` スキルを使う（失敗ログを INDEX 付きのファイルに切り出し、必要な箇所だけ読める）。このスキルで済ませるときは次の順にする。
+
+1. `view` の ANNOTATIONS を読む。`::error::` で出したメッセージ（シークレット未設定など）はここで原因が分かる
+2. それで分からないときだけ `failed` で失敗stepのログを見る。ログ全量は巨大になるため `gh run view --log` は使わない
+3. シークレット未設定が疑われるときは `gh secret list`（environment のシークレットは `gh secret list --env <name>`）で登録の有無を確かめる
 
 | 目的                              | コマンド                                                          |
 | --------------------------------- | ----------------------------------------------------------------- |
 | 直近20件のrun一覧（現在ブランチ） | `python "${CLAUDE_SKILL_DIR}/pr-actions.py" list`                 |
 | 別ブランチのrun一覧               | `python "${CLAUDE_SKILL_DIR}/pr-actions.py" list <branch>`        |
 | 対象PRのHEADコミットに紐づくrun   | `python "${CLAUDE_SKILL_DIR}/pr-actions.py" pr <N>`               |
-| run詳細（ジョブ毎の成否）         | `python "${CLAUDE_SKILL_DIR}/pr-actions.py" view <run_id>`        |
-| 失敗ログのみ（推奨）              | `python "${CLAUDE_SKILL_DIR}/pr-actions.py" failed <run_id>`      |
+| run詳細（ジョブ毎の成否）         | `python "${CLAUDE_SKILL_DIR}/pr-actions.py" view <run_id\|URL>`   |
+| 失敗ログのみ                      | `python "${CLAUDE_SKILL_DIR}/pr-actions.py" failed <run_id\|URL>` |
 | ワークフロー手動実行              | `python "${CLAUDE_SKILL_DIR}/pr-actions.py" run <workflow> [ref]` |
-| 完了まで追跡                      | `python "${CLAUDE_SKILL_DIR}/pr-actions.py" watch <run_id>`       |
+| 完了まで追跡                      | `python "${CLAUDE_SKILL_DIR}/pr-actions.py" watch <run_id\|URL>`  |
+| 別リポジトリを対象にする          | 各コマンドに `-R OWNER/REPO` を付ける                             |
 
 - 手動実行は対象ワークフローに `workflow_dispatch` トリガーが必要
 - 手動実行も**ユーザーの明示的な指示**を前提とする
-
-## Copilot レビュー
-
-GitHub Copilot にコードレビューを依頼する。**個人アカウントのリポジトリでは Copilot を Collaborator として追加できない**ため、`gh pr edit --add-reviewer` や requested_reviewers API による正規のレビュアー指定は使えない（422で失敗する）。代わりに PRコメントで `@copilot review` メンションする方式を使う。
-
-| 目的                       | コマンド                                                                                 |
-| -------------------------- | ---------------------------------------------------------------------------------------- |
-| Copilotレビュー依頼        | `gh pr comment <N> --body "@copilot review"`                                             |
-| レビュー状態（依頼中含む） | `gh pr view <N> --json reviewRequests,reviews`                                           |
-| Copilot起点のレビュー本文  | `python "${CLAUDE_SKILL_DIR}/pr-detail.py" <N> reviews` （author が `copilot-*` のもの） |
-
-- `gh pr edit --add-reviewer copilot-pull-request-reviewer` や `gh api ... requested_reviewers` でレビュアー追加を強行**しない**。個人アカウントでは原理的に通らないため、失敗ループになるだけ（詳細は [README.md](./README.md#copilotレビュー依頼の制約リグレッション防止メモ) を参照）
-- レビュー反映までは数分かかることがある
-- Organization リポジトリで Copilot code review が Collaborator 扱いで追加可能な環境の場合のみ、旧来のレビュアー指定方式を検討してよいが、その場合もユーザーに環境を確認してから実行する
 
 ## マージ
 
 - マージは**必ずユーザーの明示的な指示**があった場合のみ実行する
 - マージ前にCI状態とレビュー承認状態を改めて確認し報告する
-- 実行コマンド: `gh pr merge <N>` （オプション: `--squash`, `--rebase`, `--delete-branch`）
-- マージ方法の指定がなければユーザーに確認する
+- 実行コマンド: `gh pr merge <N> --merge|--squash|--rebase` （任意: `--delete-branch`）
+- マージ方法は、リポジトリの規約（`AGENTS.md`・`CONTRIBUTING.md`・ブランチ運用のドキュメント等）に指定があればそれに従う。作業ブランチを使い続ける運用では squash・rebase にすると作業ブランチの commit が base の祖先にならないので、規約が merge commit ならそれ以外を選ばない
+- 規約にもユーザーの指示にも指定がなければユーザーに確認する

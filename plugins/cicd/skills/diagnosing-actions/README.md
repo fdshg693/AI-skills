@@ -4,7 +4,7 @@ GitHub Actions の失敗を、run / job の URL または PR 番号から読み�
 
 `coding/skills/review` と同じ発想で、長いログを会話に出さず `temp/actions/` へ切り出す。まず `INDEX.md` を読み、表に出た失敗ジョブのファイルだけを開く。
 
-再実行、`gh run watch`、コメント、merge はしない。それらを含む PR 操作は `skills/plugins/coding/skills/pr-check` の範囲。
+再実行、`gh run watch`、コメント、merge はしない。それらを含む PR 操作は `skills/plugins/coding/skills/gh-pr` の範囲。
 
 ## ディレクトリ
 
