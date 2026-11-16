@@ -1,0 +1,1588 @@
+{
+  "source": "`https://github.com/microsoft/playwright` at commit `b4d016aadc5cbd2b898a284307975fe73e05483d` (main)",
+  "source_dir": "docs/src",
+  "upstream_blob": "https://github.com/microsoft/playwright/blob/main/docs/src",
+  "fetched_at": "2026-11-16T05:36:19.136582+00:00",
+  "file_count": 181,
+  "files": [
+    {
+      "output": "docs/accessibility-testing-java.md",
+      "source": "docs/src/accessibility-testing-java.md",
+      "title": "Accessibility testing",
+      "langs": [
+        "java"
+      ],
+      "bytes": 12583,
+      "members": 0
+    },
+    {
+      "output": "docs/accessibility-testing-js.md",
+      "source": "docs/src/accessibility-testing-js.md",
+      "title": "Accessibility testing",
+      "langs": [
+        "js"
+      ],
+      "bytes": 14491,
+      "members": 0
+    },
+    {
+      "output": "docs/actionability.md",
+      "source": "docs/src/actionability.md",
+      "title": "Auto-waiting",
+      "langs": [],
+      "bytes": 6813,
+      "members": 0
+    },
+    {
+      "output": "docs/api-testing-csharp.md",
+      "source": "docs/src/api-testing-csharp.md",
+      "title": "API testing",
+      "langs": [
+        "csharp"
+      ],
+      "bytes": 49275,
+      "members": 0
+    },
+    {
+      "output": "docs/api-testing-java.md",
+      "source": "docs/src/api-testing-java.md",
+      "title": "API testing",
+      "langs": [
+        "java"
+      ],
+      "bytes": 14487,
+      "members": 0
+    },
+    {
+      "output": "docs/api-testing-js.md",
+      "source": "docs/src/api-testing-js.md",
+      "title": "API testing",
+      "langs": [
+        "js"
+      ],
+      "bytes": 13249,
+      "members": 0
+    },
+    {
+      "output": "docs/api-testing-python.md",
+      "source": "docs/src/api-testing-python.md",
+      "title": "API testing",
+      "langs": [
+        "python"
+      ],
+      "bytes": 10303,
+      "members": 0
+    },
+    {
+      "output": "docs/api/class-apirequest.md",
+      "source": "docs/src/api/class-apirequest.md",
+      "title": "class: APIRequest",
+      "langs": [],
+      "bytes": 4152,
+      "members": 1
+    },
+    {
+      "output": "docs/api/class-apirequestcontext.md",
+      "source": "docs/src/api/class-apirequestcontext.md",
+      "title": "class: APIRequestContext",
+      "langs": [],
+      "bytes": 35173,
+      "members": 15
+    },
+    {
+      "output": "docs/api/class-apiresponse.md",
+      "source": "docs/src/api/class-apiresponse.md",
+      "title": "class: APIResponse",
+      "langs": [],
+      "bytes": 4266,
+      "members": 14
+    },
+    {
+      "output": "docs/api/class-apiresponseassertions.md",
+      "source": "docs/src/api/class-apiresponseassertions.md",
+      "title": "class: APIResponseAssertions",
+      "langs": [],
+      "bytes": 2589,
+      "members": 3
+    },
+    {
+      "output": "docs/api/class-browser.md",
+      "source": "docs/src/api/class-browser.md",
+      "title": "class: Browser",
+      "langs": [],
+      "bytes": 13173,
+      "members": 15
+    },
+    {
+      "output": "docs/api/class-browsercontext.md",
+      "source": "docs/src/api/class-browsercontext.md",
+      "title": "class: BrowserContext",
+      "langs": [],
+      "bytes": 60642,
+      "members": 62
+    },
+    {
+      "output": "docs/api/class-browserserver.md",
+      "source": "docs/src/api/class-browserserver.md",
+      "title": "class: BrowserServer",
+      "langs": [],
+      "bytes": 720,
+      "members": 5
+    },
+    {
+      "output": "docs/api/class-browsertype.md",
+      "source": "docs/src/api/class-browsertype.md",
+      "title": "class: BrowserType",
+      "langs": [],
+      "bytes": 16087,
+      "members": 7
+    },
+    {
+      "output": "docs/api/class-cdpsession.md",
+      "source": "docs/src/api/class-cdpsession.md",
+      "title": "class: CDPSession",
+      "langs": [],
+      "bytes": 5801,
+      "members": 9
+    },
+    {
+      "output": "docs/api/class-cdpsessionevent.md",
+      "source": "docs/src/api/class-cdpsessionevent.md",
+      "title": "class: CDPSessionEvent",
+      "langs": [],
+      "bytes": 426,
+      "members": 2
+    },
+    {
+      "output": "docs/api/class-clock.md",
+      "source": "docs/src/api/class-clock.md",
+      "title": "class: Clock",
+      "langs": [],
+      "bytes": 9698,
+      "members": 7
+    },
+    {
+      "output": "docs/api/class-consolemessage.md",
+      "source": "docs/src/api/class-consolemessage.md",
+      "title": "class: ConsoleMessage",
+      "langs": [],
+      "bytes": 5396,
+      "members": 9
+    },
+    {
+      "output": "docs/api/class-coverage.md",
+      "source": "docs/src/api/class-coverage.md",
+      "title": "class: Coverage",
+      "langs": [],
+      "bytes": 3308,
+      "members": 4
+    },
+    {
+      "output": "docs/api/class-credentials.md",
+      "source": "docs/src/api/class-credentials.md",
+      "title": "class: Credentials",
+      "langs": [],
+      "bytes": 15484,
+      "members": 4
+    },
+    {
+      "output": "docs/api/class-debugger.md",
+      "source": "docs/src/api/class-debugger.md",
+      "title": "class: Debugger",
+      "langs": [],
+      "bytes": 1901,
+      "members": 6
+    },
+    {
+      "output": "docs/api/class-dialog.md",
+      "source": "docs/src/api/class-dialog.md",
+      "title": "class: Dialog",
+      "langs": [],
+      "bytes": 3795,
+      "members": 6
+    },
+    {
+      "output": "docs/api/class-disposable.md",
+      "source": "docs/src/api/class-disposable.md",
+      "title": "class: Disposable",
+      "langs": [],
+      "bytes": 708,
+      "members": 2
+    },
+    {
+      "output": "docs/api/class-download.md",
+      "source": "docs/src/api/class-download.md",
+      "title": "class: Download",
+      "langs": [],
+      "bytes": 4945,
+      "members": 9
+    },
+    {
+      "output": "docs/api/class-elementhandle.md",
+      "source": "docs/src/api/class-elementhandle.md",
+      "title": "class: ElementHandle",
+      "langs": [],
+      "bytes": 45642,
+      "members": 37
+    },
+    {
+      "output": "docs/api/class-error.md",
+      "source": "docs/src/api/class-error.md",
+      "title": "class: Error",
+      "langs": [],
+      "bytes": 595,
+      "members": 3
+    },
+    {
+      "output": "docs/api/class-filechooser.md",
+      "source": "docs/src/api/class-filechooser.md",
+      "title": "class: FileChooser",
+      "langs": [],
+      "bytes": 2178,
+      "members": 4
+    },
+    {
+      "output": "docs/api/class-formdata.md",
+      "source": "docs/src/api/class-formdata.md",
+      "title": "class: FormData",
+      "langs": [],
+      "bytes": 6949,
+      "members": 3
+    },
+    {
+      "output": "docs/api/class-frame.md",
+      "source": "docs/src/api/class-frame.md",
+      "title": "class: Frame",
+      "langs": [],
+      "bytes": 77437,
+      "members": 62
+    },
+    {
+      "output": "docs/api/class-framelocator.md",
+      "source": "docs/src/api/class-framelocator.md",
+      "title": "class: FrameLocator",
+      "langs": [],
+      "bytes": 9915,
+      "members": 13
+    },
+    {
+      "output": "docs/api/class-functionassertions.md",
+      "source": "docs/src/api/class-functionassertions.md",
+      "title": "class: FunctionAssertions",
+      "langs": [],
+      "bytes": 1810,
+      "members": 1
+    },
+    {
+      "output": "docs/api/class-genericassertions.md",
+      "source": "docs/src/api/class-genericassertions.md",
+      "title": "class: GenericAssertions",
+      "langs": [],
+      "bytes": 18736,
+      "members": 35
+    },
+    {
+      "output": "docs/api/class-jshandle.md",
+      "source": "docs/src/api/class-jshandle.md",
+      "title": "class: JSHandle",
+      "langs": [],
+      "bytes": 5850,
+      "members": 7
+    },
+    {
+      "output": "docs/api/class-keyboard.md",
+      "source": "docs/src/api/class-keyboard.md",
+      "title": "class: Keyboard",
+      "langs": [],
+      "bytes": 10835,
+      "members": 5
+    },
+    {
+      "output": "docs/api/class-locator.md",
+      "source": "docs/src/api/class-locator.md",
+      "title": "class: Locator",
+      "langs": [],
+      "bytes": 90433,
+      "members": 73
+    },
+    {
+      "output": "docs/api/class-locatorassertions.md",
+      "source": "docs/src/api/class-locatorassertions.md",
+      "title": "class: LocatorAssertions",
+      "langs": [],
+      "bytes": 71141,
+      "members": 57
+    },
+    {
+      "output": "docs/api/class-logger.md",
+      "source": "docs/src/api/class-logger.md",
+      "title": "class: Logger",
+      "langs": [],
+      "bytes": 1475,
+      "members": 2
+    },
+    {
+      "output": "docs/api/class-mouse.md",
+      "source": "docs/src/api/class-mouse.md",
+      "title": "class: Mouse",
+      "langs": [],
+      "bytes": 4274,
+      "members": 6
+    },
+    {
+      "output": "docs/api/class-page.md",
+      "source": "docs/src/api/class-page.md",
+      "title": "class: Page",
+      "langs": [],
+      "bytes": 187987,
+      "members": 157
+    },
+    {
+      "output": "docs/api/class-pageassertions.md",
+      "source": "docs/src/api/class-pageassertions.md",
+      "title": "class: PageAssertions",
+      "langs": [],
+      "bytes": 13512,
+      "members": 10
+    },
+    {
+      "output": "docs/api/class-playwright.md",
+      "source": "docs/src/api/class-playwright.md",
+      "title": "class: Playwright",
+      "langs": [],
+      "bytes": 7584,
+      "members": 11
+    },
+    {
+      "output": "docs/api/class-playwrightassertionexception.md",
+      "source": "docs/src/api/class-playwrightassertionexception.md",
+      "title": "class: PlaywrightAssertionException",
+      "langs": [],
+      "bytes": 570,
+      "members": 0
+    },
+    {
+      "output": "docs/api/class-playwrightassertions.md",
+      "source": "docs/src/api/class-playwrightassertions.md",
+      "title": "class: PlaywrightAssertions",
+      "langs": [],
+      "bytes": 4839,
+      "members": 6
+    },
+    {
+      "output": "docs/api/class-playwrightexception.md",
+      "source": "docs/src/api/class-playwrightexception.md",
+      "title": "class: PlaywrightException",
+      "langs": [],
+      "bytes": 689,
+      "members": 0
+    },
+    {
+      "output": "docs/api/class-request.md",
+      "source": "docs/src/api/class-request.md",
+      "title": "class: Request",
+      "langs": [],
+      "bytes": 11226,
+      "members": 22
+    },
+    {
+      "output": "docs/api/class-requestoptions.md",
+      "source": "docs/src/api/class-requestoptions.md",
+      "title": "class: RequestOptions",
+      "langs": [],
+      "bytes": 6028,
+      "members": 12
+    },
+    {
+      "output": "docs/api/class-response.md",
+      "source": "docs/src/api/class-response.md",
+      "title": "class: Response",
+      "langs": [],
+      "bytes": 4370,
+      "members": 22
+    },
+    {
+      "output": "docs/api/class-route.md",
+      "source": "docs/src/api/class-route.md",
+      "title": "class: Route",
+      "langs": [],
+      "bytes": 18685,
+      "members": 6
+    },
+    {
+      "output": "docs/api/class-screencast.md",
+      "source": "docs/src/api/class-screencast.md",
+      "title": "class: Screencast",
+      "langs": [],
+      "bytes": 6942,
+      "members": 8
+    },
+    {
+      "output": "docs/api/class-selectors.md",
+      "source": "docs/src/api/class-selectors.md",
+      "title": "class: Selectors",
+      "langs": [],
+      "bytes": 8615,
+      "members": 2
+    },
+    {
+      "output": "docs/api/class-snapshotassertions.md",
+      "source": "docs/src/api/class-snapshotassertions.md",
+      "title": "class: SnapshotAssertions",
+      "langs": [],
+      "bytes": 3268,
+      "members": 2
+    },
+    {
+      "output": "docs/api/class-timeouterror.md",
+      "source": "docs/src/api/class-timeouterror.md",
+      "title": "class: TimeoutError",
+      "langs": [],
+      "bytes": 2408,
+      "members": 0
+    },
+    {
+      "output": "docs/api/class-touchscreen.md",
+      "source": "docs/src/api/class-touchscreen.md",
+      "title": "class: Touchscreen",
+      "langs": [],
+      "bytes": 1010,
+      "members": 1
+    },
+    {
+      "output": "docs/api/class-tracing.md",
+      "source": "docs/src/api/class-tracing.md",
+      "title": "class: Tracing",
+      "langs": [],
+      "bytes": 16722,
+      "members": 8
+    },
+    {
+      "output": "docs/api/class-video.md",
+      "source": "docs/src/api/class-video.md",
+      "title": "class: Video",
+      "langs": [],
+      "bytes": 1869,
+      "members": 5
+    },
+    {
+      "output": "docs/api/class-weberror.md",
+      "source": "docs/src/api/class-weberror.md",
+      "title": "class: WebError",
+      "langs": [],
+      "bytes": 1999,
+      "members": 4
+    },
+    {
+      "output": "docs/api/class-webmcp.md",
+      "source": "docs/src/api/class-webmcp.md",
+      "title": "class: WebMCP",
+      "langs": [],
+      "bytes": 3075,
+      "members": 2
+    },
+    {
+      "output": "docs/api/class-websocket.md",
+      "source": "docs/src/api/class-websocket.md",
+      "title": "class: WebSocket",
+      "langs": [],
+      "bytes": 5823,
+      "members": 15
+    },
+    {
+      "output": "docs/api/class-websocketframe.md",
+      "source": "docs/src/api/class-websocketframe.md",
+      "title": "class: WebSocketFrame",
+      "langs": [],
+      "bytes": 492,
+      "members": 2
+    },
+    {
+      "output": "docs/api/class-websocketroute.md",
+      "source": "docs/src/api/class-websocketroute.md",
+      "title": "class: WebSocketRoute",
+      "langs": [],
+      "bytes": 14683,
+      "members": 7
+    },
+    {
+      "output": "docs/api/class-webstorage.md",
+      "source": "docs/src/api/class-webstorage.md",
+      "title": "class: WebStorage",
+      "langs": [],
+      "bytes": 2874,
+      "members": 5
+    },
+    {
+      "output": "docs/api/class-worker.md",
+      "source": "docs/src/api/class-worker.md",
+      "title": "class: Worker",
+      "langs": [],
+      "bytes": 6536,
+      "members": 9
+    },
+    {
+      "output": "docs/api/params.md",
+      "source": "docs/src/api/params.md",
+      "title": "Matches <span>",
+      "langs": [],
+      "bytes": 89216,
+      "members": 0
+    },
+    {
+      "output": "docs/aria-snapshots.md",
+      "source": "docs/src/aria-snapshots.md",
+      "title": "Snapshot testing",
+      "langs": [],
+      "bytes": 19489,
+      "members": 0
+    },
+    {
+      "output": "docs/auth.md",
+      "source": "docs/src/auth.md",
+      "title": "Authentication",
+      "langs": [],
+      "bytes": 26936,
+      "members": 0
+    },
+    {
+      "output": "docs/best-practices-js.md",
+      "source": "docs/src/best-practices-js.md",
+      "title": "Best Practices",
+      "langs": [
+        "js"
+      ],
+      "bytes": 19880,
+      "members": 0
+    },
+    {
+      "output": "docs/browser-contexts.md",
+      "source": "docs/src/browser-contexts.md",
+      "title": "Isolation",
+      "langs": [],
+      "bytes": 6485,
+      "members": 0
+    },
+    {
+      "output": "docs/browsers.md",
+      "source": "docs/src/browsers.md",
+      "title": "Browsers",
+      "langs": [],
+      "bytes": 37990,
+      "members": 0
+    },
+    {
+      "output": "docs/canary-releases-js.md",
+      "source": "docs/src/canary-releases-js.md",
+      "title": "Canary releases",
+      "langs": [
+        "js"
+      ],
+      "bytes": 1373,
+      "members": 0
+    },
+    {
+      "output": "docs/chrome-extensions-js-python.md",
+      "source": "docs/src/chrome-extensions-js-python.md",
+      "title": "Chrome extensions",
+      "langs": [
+        "js",
+        "python"
+      ],
+      "bytes": 7817,
+      "members": 0
+    },
+    {
+      "output": "docs/ci-intro.md",
+      "source": "docs/src/ci-intro.md",
+      "title": "Setting up CI",
+      "langs": [],
+      "bytes": 16010,
+      "members": 0
+    },
+    {
+      "output": "docs/ci.md",
+      "source": "docs/src/ci.md",
+      "title": "Continuous Integration",
+      "langs": [],
+      "bytes": 28521,
+      "members": 0
+    },
+    {
+      "output": "docs/clock.md",
+      "source": "docs/src/clock.md",
+      "title": "Clock",
+      "langs": [],
+      "bytes": 17210,
+      "members": 0
+    },
+    {
+      "output": "docs/codegen-intro.md",
+      "source": "docs/src/codegen-intro.md",
+      "title": "Generating tests",
+      "langs": [],
+      "bytes": 4009,
+      "members": 0
+    },
+    {
+      "output": "docs/codegen.md",
+      "source": "docs/src/codegen.md",
+      "title": "Test generator",
+      "langs": [],
+      "bytes": 24734,
+      "members": 0
+    },
+    {
+      "output": "docs/debug.md",
+      "source": "docs/src/debug.md",
+      "title": "Debugging Tests",
+      "langs": [],
+      "bytes": 18019,
+      "members": 0
+    },
+    {
+      "output": "docs/dialogs.md",
+      "source": "docs/src/dialogs.md",
+      "title": "Dialogs",
+      "langs": [],
+      "bytes": 5346,
+      "members": 0
+    },
+    {
+      "output": "docs/docker.md",
+      "source": "docs/src/docker.md",
+      "title": "Docker",
+      "langs": [],
+      "bytes": 10061,
+      "members": 0
+    },
+    {
+      "output": "docs/downloads.md",
+      "source": "docs/src/downloads.md",
+      "title": "Downloads",
+      "langs": [],
+      "bytes": 3390,
+      "members": 0
+    },
+    {
+      "output": "docs/electron-api/class-electron.md",
+      "source": "docs/src/electron-api/class-electron.md",
+      "title": "class: Electron",
+      "langs": [],
+      "bytes": 5749,
+      "members": 1
+    },
+    {
+      "output": "docs/electron-api/class-electronapplication.md",
+      "source": "docs/src/electron-api/class-electronapplication.md",
+      "title": "class: ElectronApplication",
+      "langs": [],
+      "bytes": 6596,
+      "members": 12
+    },
+    {
+      "output": "docs/emulation.md",
+      "source": "docs/src/emulation.md",
+      "title": "Emulation",
+      "langs": [],
+      "bytes": 23926,
+      "members": 0
+    },
+    {
+      "output": "docs/evaluating.md",
+      "source": "docs/src/evaluating.md",
+      "title": "Evaluating JavaScript",
+      "langs": [],
+      "bytes": 13455,
+      "members": 0
+    },
+    {
+      "output": "docs/events.md",
+      "source": "docs/src/events.md",
+      "title": "Events",
+      "langs": [],
+      "bytes": 5443,
+      "members": 0
+    },
+    {
+      "output": "docs/extensibility.md",
+      "source": "docs/src/extensibility.md",
+      "title": "Extensibility",
+      "langs": [],
+      "bytes": 6035,
+      "members": 0
+    },
+    {
+      "output": "docs/frames.md",
+      "source": "docs/src/frames.md",
+      "title": "Frames",
+      "langs": [],
+      "bytes": 2710,
+      "members": 0
+    },
+    {
+      "output": "docs/getting-started-vscode-js.md",
+      "source": "docs/src/getting-started-vscode-js.md",
+      "title": "VS Code",
+      "langs": [
+        "js"
+      ],
+      "bytes": 10168,
+      "members": 0
+    },
+    {
+      "output": "docs/handles.md",
+      "source": "docs/src/handles.md",
+      "title": "Handles",
+      "langs": [],
+      "bytes": 9404,
+      "members": 0
+    },
+    {
+      "output": "docs/input.md",
+      "source": "docs/src/input.md",
+      "title": "Actions",
+      "langs": [],
+      "bytes": 25446,
+      "members": 0
+    },
+    {
+      "output": "docs/intro-csharp.md",
+      "source": "docs/src/intro-csharp.md",
+      "title": "Installation",
+      "langs": [
+        "csharp"
+      ],
+      "bytes": 8105,
+      "members": 0
+    },
+    {
+      "output": "docs/intro-java.md",
+      "source": "docs/src/intro-java.md",
+      "title": "Installation",
+      "langs": [
+        "java"
+      ],
+      "bytes": 4757,
+      "members": 0
+    },
+    {
+      "output": "docs/intro-js.md",
+      "source": "docs/src/intro-js.md",
+      "title": "Installation",
+      "langs": [
+        "js"
+      ],
+      "bytes": 6481,
+      "members": 0
+    },
+    {
+      "output": "docs/intro-python.md",
+      "source": "docs/src/intro-python.md",
+      "title": "Installation",
+      "langs": [
+        "python"
+      ],
+      "bytes": 3910,
+      "members": 0
+    },
+    {
+      "output": "docs/junit-java.md",
+      "source": "docs/src/junit-java.md",
+      "title": "JUnit (experimental)",
+      "langs": [
+        "java"
+      ],
+      "bytes": 6443,
+      "members": 0
+    },
+    {
+      "output": "docs/languages.md",
+      "source": "docs/src/languages.md",
+      "title": "Supported languages",
+      "langs": [],
+      "bytes": 1719,
+      "members": 0
+    },
+    {
+      "output": "docs/library-csharp.md",
+      "source": "docs/src/library-csharp.md",
+      "title": "Getting started - Library",
+      "langs": [
+        "csharp"
+      ],
+      "bytes": 3020,
+      "members": 0
+    },
+    {
+      "output": "docs/library-js.md",
+      "source": "docs/src/library-js.md",
+      "title": "Library",
+      "langs": [
+        "js"
+      ],
+      "bytes": 11705,
+      "members": 0
+    },
+    {
+      "output": "docs/library-python.md",
+      "source": "docs/src/library-python.md",
+      "title": "Getting started - Library",
+      "langs": [
+        "python"
+      ],
+      "bytes": 5932,
+      "members": 0
+    },
+    {
+      "output": "docs/locators.md",
+      "source": "docs/src/locators.md",
+      "title": "Locators",
+      "langs": [],
+      "bytes": 47224,
+      "members": 0
+    },
+    {
+      "output": "docs/mobile-api/class-android.md",
+      "source": "docs/src/mobile-api/class-android.md",
+      "title": "class: Android",
+      "langs": [],
+      "bytes": 7172,
+      "members": 4
+    },
+    {
+      "output": "docs/mobile-api/class-androiddevice.md",
+      "source": "docs/src/mobile-api/class-androiddevice.md",
+      "title": "class: AndroidDevice",
+      "langs": [],
+      "bytes": 11179,
+      "members": 28
+    },
+    {
+      "output": "docs/mobile-api/class-androidinput.md",
+      "source": "docs/src/mobile-api/class-androidinput.md",
+      "title": "class: AndroidInput",
+      "langs": [],
+      "bytes": 1790,
+      "members": 5
+    },
+    {
+      "output": "docs/mobile-api/class-androidsocket.md",
+      "source": "docs/src/mobile-api/class-androidsocket.md",
+      "title": "class: AndroidSocket",
+      "langs": [],
+      "bytes": 651,
+      "members": 4
+    },
+    {
+      "output": "docs/mobile-api/class-androidwebview.md",
+      "source": "docs/src/mobile-api/class-androidwebview.md",
+      "title": "class: AndroidWebView",
+      "langs": [],
+      "bytes": 607,
+      "members": 4
+    },
+    {
+      "output": "docs/mock-browser-js.md",
+      "source": "docs/src/mock-browser-js.md",
+      "title": "Mock browser APIs",
+      "langs": [
+        "js"
+      ],
+      "bytes": 5784,
+      "members": 0
+    },
+    {
+      "output": "docs/mock.md",
+      "source": "docs/src/mock.md",
+      "title": "Mock APIs",
+      "langs": [],
+      "bytes": 20735,
+      "members": 0
+    },
+    {
+      "output": "docs/navigations.md",
+      "source": "docs/src/navigations.md",
+      "title": "Navigations",
+      "langs": [],
+      "bytes": 6786,
+      "members": 0
+    },
+    {
+      "output": "docs/network.md",
+      "source": "docs/src/network.md",
+      "title": "Network",
+      "langs": [],
+      "bytes": 25671,
+      "members": 0
+    },
+    {
+      "output": "docs/other-locators.md",
+      "source": "docs/src/other-locators.md",
+      "title": "Other locators",
+      "langs": [],
+      "bytes": 27950,
+      "members": 0
+    },
+    {
+      "output": "docs/pages.md",
+      "source": "docs/src/pages.md",
+      "title": "Pages",
+      "langs": [],
+      "bytes": 8678,
+      "members": 0
+    },
+    {
+      "output": "docs/pom.md",
+      "source": "docs/src/pom.md",
+      "title": "Page object models",
+      "langs": [],
+      "bytes": 7271,
+      "members": 0
+    },
+    {
+      "output": "docs/protractor-js.md",
+      "source": "docs/src/protractor-js.md",
+      "title": "Migrating from Protractor",
+      "langs": [
+        "js"
+      ],
+      "bytes": 6568,
+      "members": 0
+    },
+    {
+      "output": "docs/puppeteer-js.md",
+      "source": "docs/src/puppeteer-js.md",
+      "title": "Migrating from Puppeteer",
+      "langs": [
+        "js"
+      ],
+      "bytes": 8296,
+      "members": 0
+    },
+    {
+      "output": "docs/release-notes-csharp.md",
+      "source": "docs/src/release-notes-csharp.md",
+      "title": "Release notes",
+      "langs": [
+        "csharp"
+      ],
+      "bytes": 86962,
+      "members": 0
+    },
+    {
+      "output": "docs/release-notes-java.md",
+      "source": "docs/src/release-notes-java.md",
+      "title": "Release notes",
+      "langs": [
+        "java"
+      ],
+      "bytes": 94969,
+      "members": 0
+    },
+    {
+      "output": "docs/release-notes-js.md",
+      "source": "docs/src/release-notes-js.md",
+      "title": "Release notes",
+      "langs": [
+        "js"
+      ],
+      "bytes": 167893,
+      "members": 0
+    },
+    {
+      "output": "docs/release-notes-python.md",
+      "source": "docs/src/release-notes-python.md",
+      "title": "Release notes",
+      "langs": [
+        "python"
+      ],
+      "bytes": 90924,
+      "members": 0
+    },
+    {
+      "output": "docs/running-tests-csharp.md",
+      "source": "docs/src/running-tests-csharp.md",
+      "title": "Running and debugging tests",
+      "langs": [
+        "csharp"
+      ],
+      "bytes": 5165,
+      "members": 0
+    },
+    {
+      "output": "docs/running-tests-java.md",
+      "source": "docs/src/running-tests-java.md",
+      "title": "Running and debugging tests",
+      "langs": [
+        "java"
+      ],
+      "bytes": 3444,
+      "members": 0
+    },
+    {
+      "output": "docs/running-tests-js.md",
+      "source": "docs/src/running-tests-js.md",
+      "title": "Running and debugging tests",
+      "langs": [
+        "js"
+      ],
+      "bytes": 8268,
+      "members": 0
+    },
+    {
+      "output": "docs/running-tests-python.md",
+      "source": "docs/src/running-tests-python.md",
+      "title": "Running and debugging tests",
+      "langs": [
+        "python"
+      ],
+      "bytes": 5069,
+      "members": 0
+    },
+    {
+      "output": "docs/screenshots.md",
+      "source": "docs/src/screenshots.md",
+      "title": "Screenshots",
+      "langs": [],
+      "bytes": 2542,
+      "members": 0
+    },
+    {
+      "output": "docs/selenium-grid.md",
+      "source": "docs/src/selenium-grid.md",
+      "title": "Selenium Grid (experimental)",
+      "langs": [],
+      "bytes": 7700,
+      "members": 0
+    },
+    {
+      "output": "docs/service-workers-js-python.md",
+      "source": "docs/src/service-workers-js-python.md",
+      "title": "Service Workers",
+      "langs": [
+        "js",
+        "python"
+      ],
+      "bytes": 8813,
+      "members": 0
+    },
+    {
+      "output": "docs/test-agents-js.md",
+      "source": "docs/src/test-agents-js.md",
+      "title": "Agents",
+      "langs": [
+        "js"
+      ],
+      "bytes": 7945,
+      "members": 0
+    },
+    {
+      "output": "docs/test-annotations-js.md",
+      "source": "docs/src/test-annotations-js.md",
+      "title": "Annotations",
+      "langs": [
+        "js"
+      ],
+      "bytes": 6608,
+      "members": 0
+    },
+    {
+      "output": "docs/test-api/class-fixtures.md",
+      "source": "docs/src/test-api/class-fixtures.md",
+      "title": "class: Fixtures",
+      "langs": [],
+      "bytes": 5595,
+      "members": 6
+    },
+    {
+      "output": "docs/test-api/class-fullconfig.md",
+      "source": "docs/src/test-api/class-fullconfig.md",
+      "title": "class: FullConfig",
+      "langs": [],
+      "bytes": 4585,
+      "members": 26
+    },
+    {
+      "output": "docs/test-api/class-fullproject.md",
+      "source": "docs/src/test-api/class-fullproject.md",
+      "title": "class: FullProject",
+      "langs": [],
+      "bytes": 2624,
+      "members": 17
+    },
+    {
+      "output": "docs/test-api/class-location.md",
+      "source": "docs/src/test-api/class-location.md",
+      "title": "class: Location",
+      "langs": [],
+      "bytes": 403,
+      "members": 3
+    },
+    {
+      "output": "docs/test-api/class-test.md",
+      "source": "docs/src/test-api/class-test.md",
+      "title": "class: Test",
+      "langs": [],
+      "bytes": 53233,
+      "members": 28
+    },
+    {
+      "output": "docs/test-api/class-testconfig.md",
+      "source": "docs/src/test-api/class-testconfig.md",
+      "title": "class: TestConfig",
+      "langs": [],
+      "bytes": 32691,
+      "members": 39
+    },
+    {
+      "output": "docs/test-api/class-testinfo.md",
+      "source": "docs/src/test-api/class-testinfo.md",
+      "title": "class: TestInfo",
+      "langs": [],
+      "bytes": 16640,
+      "members": 37
+    },
+    {
+      "output": "docs/test-api/class-testinfoerror.md",
+      "source": "docs/src/test-api/class-testinfoerror.md",
+      "title": "class: TestInfoError",
+      "langs": [],
+      "bytes": 1068,
+      "members": 5
+    },
+    {
+      "output": "docs/test-api/class-testoptions.md",
+      "source": "docs/src/test-api/class-testoptions.md",
+      "title": "class: TestOptions",
+      "langs": [],
+      "bytes": 25092,
+      "members": 40
+    },
+    {
+      "output": "docs/test-api/class-testproject.md",
+      "source": "docs/src/test-api/class-testproject.md",
+      "title": "class: TestProject",
+      "langs": [],
+      "bytes": 20160,
+      "members": 23
+    },
+    {
+      "output": "docs/test-api/class-teststepinfo.md",
+      "source": "docs/src/test-api/class-teststepinfo.md",
+      "title": "class: TestStepInfo",
+      "langs": [],
+      "bytes": 4558,
+      "members": 5
+    },
+    {
+      "output": "docs/test-api/class-workerinfo.md",
+      "source": "docs/src/test-api/class-workerinfo.md",
+      "title": "class: WorkerInfo",
+      "langs": [],
+      "bytes": 1413,
+      "members": 4
+    },
+    {
+      "output": "docs/test-assertions-csharp-java-python.md",
+      "source": "docs/src/test-assertions-csharp-java-python.md",
+      "title": "Assertions",
+      "langs": [
+        "csharp",
+        "java",
+        "python"
+      ],
+      "bytes": 8758,
+      "members": 0
+    },
+    {
+      "output": "docs/test-assertions-js.md",
+      "source": "docs/src/test-assertions-js.md",
+      "title": "Assertions",
+      "langs": [
+        "js"
+      ],
+      "bytes": 18954,
+      "members": 0
+    },
+    {
+      "output": "docs/test-cli-js.md",
+      "source": "docs/src/test-cli-js.md",
+      "title": "Command line",
+      "langs": [
+        "js"
+      ],
+      "bytes": 13787,
+      "members": 0
+    },
+    {
+      "output": "docs/test-components-js.md",
+      "source": "docs/src/test-components-js.md",
+      "title": "Component testing",
+      "langs": [
+        "js"
+      ],
+      "bytes": 19158,
+      "members": 0
+    },
+    {
+      "output": "docs/test-configuration-js.md",
+      "source": "docs/src/test-configuration-js.md",
+      "title": "Configuration",
+      "langs": [
+        "js"
+      ],
+      "bytes": 6315,
+      "members": 0
+    },
+    {
+      "output": "docs/test-fixtures-js.md",
+      "source": "docs/src/test-fixtures-js.md",
+      "title": "Fixtures",
+      "langs": [
+        "js"
+      ],
+      "bytes": 29253,
+      "members": 0
+    },
+    {
+      "output": "docs/test-global-setup-teardown-js.md",
+      "source": "docs/src/test-global-setup-teardown-js.md",
+      "title": "Global setup and teardown",
+      "langs": [
+        "js"
+      ],
+      "bytes": 10827,
+      "members": 0
+    },
+    {
+      "output": "docs/test-parallel-js.md",
+      "source": "docs/src/test-parallel-js.md",
+      "title": "Parallelism",
+      "langs": [
+        "js"
+      ],
+      "bytes": 14588,
+      "members": 0
+    },
+    {
+      "output": "docs/test-parameterize-js.md",
+      "source": "docs/src/test-parameterize-js.md",
+      "title": "Parameterize tests",
+      "langs": [
+        "js"
+      ],
+      "bytes": 8935,
+      "members": 0
+    },
+    {
+      "output": "docs/test-projects-js.md",
+      "source": "docs/src/test-projects-js.md",
+      "title": "Projects",
+      "langs": [
+        "js"
+      ],
+      "bytes": 9156,
+      "members": 0
+    },
+    {
+      "output": "docs/test-reporter-api/class-reporter.md",
+      "source": "docs/src/test-reporter-api/class-reporter.md",
+      "title": "class: Reporter",
+      "langs": [],
+      "bytes": 10670,
+      "members": 0
+    },
+    {
+      "output": "docs/test-reporter-api/class-suite.md",
+      "source": "docs/src/test-reporter-api/class-suite.md",
+      "title": "class: Suite",
+      "langs": [],
+      "bytes": 2604,
+      "members": 10
+    },
+    {
+      "output": "docs/test-reporter-api/class-testcase.md",
+      "source": "docs/src/test-reporter-api/class-testcase.md",
+      "title": "class: TestCase",
+      "langs": [],
+      "bytes": 3621,
+      "members": 15
+    },
+    {
+      "output": "docs/test-reporter-api/class-testerror.md",
+      "source": "docs/src/test-reporter-api/class-testerror.md",
+      "title": "class: TestError",
+      "langs": [],
+      "bytes": 1060,
+      "members": 6
+    },
+    {
+      "output": "docs/test-reporter-api/class-testresult.md",
+      "source": "docs/src/test-reporter-api/class-testresult.md",
+      "title": "class: TestResult",
+      "langs": [],
+      "bytes": 3328,
+      "members": 13
+    },
+    {
+      "output": "docs/test-reporter-api/class-testrun.md",
+      "source": "docs/src/test-reporter-api/class-testrun.md",
+      "title": "class: TestRun",
+      "langs": [],
+      "bytes": 3026,
+      "members": 6
+    },
+    {
+      "output": "docs/test-reporter-api/class-teststep.md",
+      "source": "docs/src/test-reporter-api/class-teststep.md",
+      "title": "class: TestStep",
+      "langs": [],
+      "bytes": 4003,
+      "members": 13
+    },
+    {
+      "output": "docs/test-reporters-js.md",
+      "source": "docs/src/test-reporters-js.md",
+      "title": "Reporters",
+      "langs": [
+        "js"
+      ],
+      "bytes": 25831,
+      "members": 0
+    },
+    {
+      "output": "docs/test-retries-js.md",
+      "source": "docs/src/test-retries-js.md",
+      "title": "Retries",
+      "langs": [
+        "js"
+      ],
+      "bytes": 7406,
+      "members": 0
+    },
+    {
+      "output": "docs/test-runners-csharp.md",
+      "source": "docs/src/test-runners-csharp.md",
+      "title": "Test Runners",
+      "langs": [
+        "csharp"
+      ],
+      "bytes": 19947,
+      "members": 0
+    },
+    {
+      "output": "docs/test-runners-java.md",
+      "source": "docs/src/test-runners-java.md",
+      "title": "Test Runners",
+      "langs": [
+        "java"
+      ],
+      "bytes": 9792,
+      "members": 0
+    },
+    {
+      "output": "docs/test-runners-python.md",
+      "source": "docs/src/test-runners-python.md",
+      "title": "Pytest Plugin Reference",
+      "langs": [
+        "python"
+      ],
+      "bytes": 9495,
+      "members": 0
+    },
+    {
+      "output": "docs/test-sharding-js.md",
+      "source": "docs/src/test-sharding-js.md",
+      "title": "Sharding",
+      "langs": [
+        "js"
+      ],
+      "bytes": 10277,
+      "members": 0
+    },
+    {
+      "output": "docs/test-snapshots-js.md",
+      "source": "docs/src/test-snapshots-js.md",
+      "title": "Visual comparisons",
+      "langs": [
+        "js"
+      ],
+      "bytes": 6632,
+      "members": 0
+    },
+    {
+      "output": "docs/test-timeouts-js.md",
+      "source": "docs/src/test-timeouts-js.md",
+      "title": "Timeouts",
+      "langs": [
+        "js"
+      ],
+      "bytes": 7997,
+      "members": 0
+    },
+    {
+      "output": "docs/test-typescript-js.md",
+      "source": "docs/src/test-typescript-js.md",
+      "title": "TypeScript",
+      "langs": [
+        "js"
+      ],
+      "bytes": 6495,
+      "members": 0
+    },
+    {
+      "output": "docs/test-ui-mode-js.md",
+      "source": "docs/src/test-ui-mode-js.md",
+      "title": "UI Mode",
+      "langs": [
+        "js"
+      ],
+      "bytes": 9554,
+      "members": 0
+    },
+    {
+      "output": "docs/test-use-options-js.md",
+      "source": "docs/src/test-use-options-js.md",
+      "title": "Configuration (use)",
+      "langs": [
+        "js"
+      ],
+      "bytes": 16404,
+      "members": 0
+    },
+    {
+      "output": "docs/test-webserver-js.md",
+      "source": "docs/src/test-webserver-js.md",
+      "title": "Web server",
+      "langs": [
+        "js"
+      ],
+      "bytes": 6666,
+      "members": 0
+    },
+    {
+      "output": "docs/testing-library-js.md",
+      "source": "docs/src/testing-library-js.md",
+      "title": "Migrating from Testing Library",
+      "langs": [
+        "js"
+      ],
+      "bytes": 9153,
+      "members": 0
+    },
+    {
+      "output": "docs/threading-java.md",
+      "source": "docs/src/threading-java.md",
+      "title": "Multithreading",
+      "langs": [
+        "java"
+      ],
+      "bytes": 3078,
+      "members": 0
+    },
+    {
+      "output": "docs/touch-events.md",
+      "source": "docs/src/touch-events.md",
+      "title": "Touch events (legacy)",
+      "langs": [],
+      "bytes": 24198,
+      "members": 0
+    },
+    {
+      "output": "docs/trace-viewer-intro-csharp.md",
+      "source": "docs/src/trace-viewer-intro-csharp.md",
+      "title": "Trace viewer",
+      "langs": [
+        "csharp"
+      ],
+      "bytes": 7227,
+      "members": 0
+    },
+    {
+      "output": "docs/trace-viewer-intro-java-python.md",
+      "source": "docs/src/trace-viewer-intro-java-python.md",
+      "title": "Trace viewer",
+      "langs": [
+        "java",
+        "python"
+      ],
+      "bytes": 3463,
+      "members": 0
+    },
+    {
+      "output": "docs/trace-viewer-intro-js.md",
+      "source": "docs/src/trace-viewer-intro-js.md",
+      "title": "Trace viewer",
+      "langs": [
+        "js"
+      ],
+      "bytes": 3643,
+      "members": 0
+    },
+    {
+      "output": "docs/trace-viewer.md",
+      "source": "docs/src/trace-viewer.md",
+      "title": "Trace viewer",
+      "langs": [],
+      "bytes": 24727,
+      "members": 0
+    },
+    {
+      "output": "docs/videos.md",
+      "source": "docs/src/videos.md",
+      "title": "Videos",
+      "langs": [],
+      "bytes": 5395,
+      "members": 0
+    },
+    {
+      "output": "docs/webview2.md",
+      "source": "docs/src/webview2.md",
+      "title": "WebView2",
+      "langs": [],
+      "bytes": 23495,
+      "members": 0
+    },
+    {
+      "output": "docs/writing-tests-csharp.md",
+      "source": "docs/src/writing-tests-csharp.md",
+      "title": "Writing tests",
+      "langs": [
+        "csharp"
+      ],
+      "bytes": 13639,
+      "members": 0
+    },
+    {
+      "output": "docs/writing-tests-java.md",
+      "source": "docs/src/writing-tests-java.md",
+      "title": "Writing tests",
+      "langs": [
+        "java"
+      ],
+      "bytes": 3678,
+      "members": 0
+    },
+    {
+      "output": "docs/writing-tests-js.md",
+      "source": "docs/src/writing-tests-js.md",
+      "title": "Writing tests",
+      "langs": [
+        "js"
+      ],
+      "bytes": 6817,
+      "members": 0
+    },
+    {
+      "output": "docs/writing-tests-python.md",
+      "source": "docs/src/writing-tests-python.md",
+      "title": "Writing tests",
+      "langs": [
+        "python"
+      ],
+      "bytes": 6813,
+      "members": 0
+    }
+  ]
+}

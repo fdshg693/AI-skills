@@ -14,6 +14,7 @@ git clone --recurse-submodules https://github.com/fdshg693/AI.git
 ## プラグイン一覧
 
 - [ai-tools-knowledge](plugins/ai-tools-knowledge/): Knowledge skills about other AI coding tools \(Codex, GitHub Copilot, Cursor, Antigravity, Cline, Kilo Code\): docs, CLIs, SDKs, memory, skills and plugins
+- [browser](plugins/browser/): Browser automation with playwright-cli: driving pages, site recon, handing logins to the user, and Playwright docs / agent definitions grounded in upstream snapshots
 - [cc-knowledge](plugins/cc-knowledge/): Skills about Claude Code itself: docs, settings, and how to write skills, hooks, plugins and subagents
 - [cicd](plugins/cicd/): Skills for GitHub Actions diagnosis, agentic workflows, issue triage and PR-Agent
 - [coding](plugins/coding/): Skills for brainstorming, debugging, code review, pull requests and development workflows
