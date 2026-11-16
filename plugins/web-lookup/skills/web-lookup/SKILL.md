@@ -19,7 +19,7 @@ meta:
   requires_skills: none
   status: experimental
   description: no description
-  version: 1.3.0
+  version: 1.3.1
 ---
 
 ## いま使えるバックエンド
