@@ -2,7 +2,11 @@
 
 一般 Web（ニュース、製品比較、一次情報の裏取り）を取るときの手順。起動プレフィックスは [SKILL.md](SKILL.md) と同じ。以降は `tav search` / `tav extract` だけ書く。オプションは `--help` を正本にする。表は転記しない。
 
-`TAVILY_API_KEY` が空なら `unavailable`。呼ばない。この CLI にあるのは `search` と `extract` だけ。`map` / `crawl` / `research` / `search-extract` / `map-extract` / `--topic` / `--detail` / `--json` は無い。
+`TAVILY_API_KEY` が空なら `unavailable`。呼ばない。この CLI にあるのは `search` と `extract` だけ。`search-extract` / `map-extract` / `--topic` / `--detail` / `--json` は無い。
+
+**`map` / `crawl` / `research` は Tavily API には存在するが、この CLI には出していない。** サイト単位の偵察では `curl` + `sitemap.xml`（0 円）に劣るため — 実測で `map` は 15 クレジットを払って sitemap に無い生きた新規ページが 1 枚だけ、代わりに死 URL を 5 件掴まされた（別サイトでも sitemap の 20% しかカバーしない部分集合）。**「無いなら出そう」と考える前に、`browser` プラグインの `using-playwright-cli` スキルの `references/site-recon.md` §6（`map` を使う条件）を見る。**
+
+**`localhost` / 社内 / 非公開 / 認証壁の向こうの URL は外部サービスに渡さない**（`tav` に限らず）。第三者への送信にあたり、そもそも到達もできない。
 
 ## 判断フロー
 
@@ -21,7 +25,7 @@
    全文が要る -> 結果ファイルの `URL:` 行を tav extract に渡す
 ```
 
-迷ったら URL 起点は `extract`、キーワード起点は `search`。サイト全体の一覧やクロール、AI 調査レポートは無い。必要なページだけ `search` → `extract` で足す。
+迷ったら URL 起点は `extract`、キーワード起点は `search`。必要なページだけ `search` → `extract` で足す。**サイト全体の一覧が要るときはこの CLI ではなく `curl` + `sitemap.xml`**（`using-playwright-cli` スキルの `references/site-recon.md`）。
 
 ## クエリとドメイン
 

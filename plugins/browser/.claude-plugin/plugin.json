@@ -1,0 +1,5 @@
+{
+  "name": "browser",
+  "version": "0.1.0",
+  "description": "Browser automation with playwright-cli: driving pages, site recon, handing logins to the user, and Playwright docs / agent definitions grounded in upstream snapshots"
+}
