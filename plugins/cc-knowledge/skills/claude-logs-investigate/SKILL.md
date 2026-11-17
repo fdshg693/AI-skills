@@ -1,6 +1,6 @@
 ---
 name: claude-logs-investigate
-description: Claude Code自体(CLIツール)の動作ログ・デバッグ情報・テレメトリを調査する、または新たに記録する仕組みを仕込む際に使う。セッショントランスクリプトやシェルスナップショットなど既存ログの場所と見方に加え、デバッグフラグ・スラッシュコマンドでの原因切り分け、hookを使った独自ログの仕込み、OpenTelemetryによるテレメトリ送信設定までを扱う。「Claude Codeのログを見たい/調べたい」「なぜ設定やhook、MCPが効かないか調査したい」「ツール呼び出し履歴を記録したい」「テレメトリ/OTelを設定したい」といった要求で使う。
+description: Claude Code自体(CLIツール)の動作ログ・デバッグ情報・テレメトリを調査する、または新たに記録する仕組みを仕込む際に使う。セッショントランスクリプトやシェルスナップショットなど既存ログの場所と見方（ローカルログのファイル形式を含む）に加え、デバッグフラグ・スラッシュコマンドでの原因切り分け、hookを使った独自ログの仕込み、OpenTelemetryによるテレメトリ送信設定までを扱う。「Claude Codeのログを見たい/調べたい」「なぜ設定やhook、MCPが効かないか調査したい」「ツール呼び出し履歴を記録したい」「テレメトリ/OTelを設定したい」といった要求で使う。
 # hookそのものの書き方(イベント種別・stdin/stdout構造・exit code・settings.jsonへの登録方法)は writing-hooks スキルに依存・委譲する
 meta:
   tag: []
@@ -12,7 +12,7 @@ meta:
   requires_skills: writing-hooks, claude-code-docs, claude-cli-docs
   status: stable
   description: no description
-  version: 1.0.2
+  version: 1.0.3
 ---
 
 # Claude Code ログ調査・仕込みスキル
@@ -44,6 +44,7 @@ Claude Code自体の挙動を、既存ログから調査する/新たに記録�
 
 補足:
 
+- トランスクリプトのレコード構造、`subagents/` の構成、トークン集計時の重複除去、ディレクトリ名とプロジェクトの対応、スイープされないファイル、秘密情報の扱いは [log-format.md](log-format.md) を参照
 - `CLAUDE_CONFIG_DIR` で `~/.claude` 自体の場所を変更できる(調査環境を汚したくない時の切り分けにも使える)
 - 保持期間は `settings.json` の `cleanupPeriodDays`(デフォルト30日)
 - `CLAUDE_CODE_SKIP_PROMPT_HISTORY` 環境変数、または非対話1回実行時の `--no-session-persistence` フラグでトランスクリプト書き込みを抑止できる
@@ -105,6 +106,7 @@ Claude Codeは使用状況(メトリクス・ログ・イベント、betaでト�
 
 ## 参照
 
+- [log-format.md](log-format.md) — ローカルログ(トランスクリプト・周辺ファイル)のファイル形式・レコード構造・読み方の注意
 - [otel-reference.md](otel-reference.md) — OTel環境変数・メトリクス名・イベント名の全量リファレンス
 - `writing-hooks` スキル — hookの書き方・登録方法・デバッグ方法の詳細
 - `claude-code-docs` スキル — 上記の元になっている公式ドキュメント(`monitoring-usage`, `sessions`, `debug-your-config` 等)の最新版を直接参照したい場合
