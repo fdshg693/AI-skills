@@ -162,7 +162,7 @@ meta:
   requires_skills: writing-hooks, claude-code-docs, claude-cli-docs
   status: stable
   description: no description
-  version: 1.0.3
+  version: 1.0.4
 ---
 
 - claude-mechanisms
