@@ -38,24 +38,24 @@ meta:
 - web-lookup
 ---
 name: web-lookup
-description: Looks up current web information via a bundled CLI covering grep.app (real GitHub code), Microsoft Learn (official Microsoft/Azure docs), AWS Knowledge MCP (official AWS docs, Blog, re:Post), Tavily (general web), and Context7 (library APIs). Use when you need Microsoft/Azure or AWS official docs, current library/framework API references, real-world public GitHub code examples, or general web research, and the plugin must run without installing tools/ CLIs.
+description: Looks up current web information via a bundled CLI covering grep.app (real GitHub code), Microsoft Learn (official Microsoft/Azure docs), AWS Knowledge MCP (official AWS docs, Blog, re:Post), local page fetch with main-content extraction (known URLs), Tavily (general web search), and Context7 (library APIs). Use when you need Microsoft/Azure or AWS official docs, current library/framework API references, real-world public GitHub code examples, the full text of a known web page, or general web research, and the plugin must run without installing tools/ CLIs.
 
 # 前提: 起動は `uv run --project ${CLAUDE_SKILL_DIR} web-lookup`。`uv` 必須。
 # グローバル `uv tool install` はしない。`tools/` の CLI は使わない。
 # TAVILY_API_KEY / CONTEXT7_API_KEY が空なら該当バックエンドは unavailable。
 # WEB_LOOKUP_OUTPUT_DIR は未設定時 temp/web-lookup。
-# 同梱ファイル: ms.md / aws.md / ctx.md / grep.md / tav.md（各系統の判断フロー）
+# 同梱ファイル: ms.md / aws.md / ctx.md / grep.md / page.md / tav.md（各系統の判断フロー）
 # 設計意図・セットアップは同階層の README.md（人間のメンテナ向け）
 allowed-tools: Bash(uv run *)
 meta:
   tag: []
   requires_repo_tools: none
   requires_env: TAVILY_API_KEY, CONTEXT7_API_KEY, WEB_LOOKUP_OUTPUT_DIR
-  dependencies: fastmcp, tavily-python, requests, python-dotenv
+  dependencies: fastmcp, tavily-python, requests, python-dotenv, trafilatura, lxml
   requires_install: uv
   requires_hooks: none
   requires_skills: none
   status: experimental
   description: no description
-  version: 1.3.1
+  version: 1.4.0
 ---
