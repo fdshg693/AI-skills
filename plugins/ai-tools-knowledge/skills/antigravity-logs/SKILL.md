@@ -18,18 +18,18 @@ meta:
   requires_skills: antigravity-docs, agy-cli-docs
   status: experimental
   description: Antigravityのローカル会話ログ（3ルート）の所在と形式
-  version: 1.0.0
+  version: 1.0.1
 ---
 
 # Antigravity のローカル会話ログ
 
 Google Antigravity（IDE と CLI `agy`）は、会話を `~/.gemini/` の下に残す。**会話本文は平文で読める。暗号化されているのは思考署名だけ。** 読みやすい順に次の 3 つがある。
 
-| 対象                                                      | 形式             | 範囲                                   |
-| --------------------------------------------------------- | ---------------- | -------------------------------------- |
-| `brain/<id>/.system_generated/logs/transcript_full.jsonl` | JSONL（平文）    | 2026-10-29 以降の会話だけ              |
-| `conversations/<id>.db`                                   | SQLite＋protobuf | 全期間。スキーマは非公開               |
-| `conversation_summaries.db`                               | SQLite（索引）   | 全会話の一覧・タイトル・ワークスペース |
+| 対象                                                      | 形式             | 範囲                                                       |
+| --------------------------------------------------------- | ---------------- | ---------------------------------------------------------- |
+| `brain/<id>/.system_generated/logs/transcript_full.jsonl` | JSONL（平文）    | 主に 2026-10-29 以降の会話（旧ルートには以前のものもある） |
+| `conversations/<id>.db`                                   | SQLite＋protobuf | 全期間。スキーマは非公開                                   |
+| `conversation_summaries.db`                               | SQLite（索引）   | 全会話の一覧・タイトル・ワークスペース                     |
 
 公式ドキュメントに保存形式の説明は無い。この先の内容の大半は実データからの推定で、バージョンが変われば崩れうる（区別は「公式記載と推定の区別」の節）。protobuf の enum 表・フィールド番号、SQLite の全テーブルは [format.md](format.md) にまとめた。
 
@@ -37,11 +37,11 @@ Google Antigravity（IDE と CLI `agy`）は、会話を `~/.gemini/` の下に�
 
 ルートは 3 つある。Windows では `C:\Users\<user>\.gemini\...`、POSIX/macOS も `~/.gemini/...` に同じ構造があると推定する（未確認）。保存先を変える環境変数は見つかっていない。
 
-| ルート                       | 状態                                                                                          |
-| ---------------------------- | --------------------------------------------------------------------------------------------- |
-| `~/.gemini/antigravity/`     | 現行のメイン。Antigravity 2.0（エージェントマネージャ）、IDE（2026-10-29 に移行）、CLI が共用 |
-| `~/.gemini/antigravity-cli/` | 旧 CLI。構成はメインと同じ。2026-10-28 以降は更新されていない                                 |
-| `~/.gemini/antigravity-ide/` | 旧 IDE。`.ide_migration`（2026-10-29）があり凍結状態。多くの会話がメインへコピー済み          |
+| ルート                       | 状態                                                                                                                         |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `~/.gemini/antigravity/`     | 現行のメイン。Antigravity 2.0（エージェントマネージャ）、IDE（2026-10-29 に移行）、CLI が共用                                |
+| `~/.gemini/antigravity-cli/` | 旧 CLI。構成はメインと同じ。2026-10-28 以降は更新されていない                                                                |
+| `~/.gemini/antigravity-ide/` | 旧 IDE。`.ide_migration`（2026-10-29）があり凍結状態。多くの会話がメインへコピー済み。**`conversation_summaries.db` が無い** |
 
 各ルートの主なファイル：
 
@@ -60,8 +60,8 @@ Google Antigravity（IDE と CLI `agy`）は、会話を `~/.gemini/` の下に�
 
 ## 保存系統と正本
 
-- **一覧・メタデータの正本**は `conversation_summaries.db`。会話ごとの db を開かずにタイトル・ステップ数・更新時刻・ワークスペースが分かる。
-- **本文**は `transcript_full.jsonl` が最も扱いやすい。ただし 2026-10-29 以降の会話にしか無い。生成条件（バージョン・設定・ソース）は不明。
+- **一覧・メタデータの正本**は `conversation_summaries.db`。会話ごとの db を開かずにタイトル・ステップ数・更新時刻・ワークスペースが分かる。ただし `antigravity-ide/` には無いので、そこだけの会話は `brain/`・`conversations/` の ID から拾い、メタデータは他ルートの summaries か transcript で補う。
+- **本文**は `transcript_full.jsonl` が最も扱いやすい。メインでは 2026-10-29 以降の会話にしか無いが、旧ルートには 2026-10-29 より前の transcript もある（確認環境で 553 件）。生成条件（バージョン・設定・ソース）は不明なので、日付で切らずに全ルートの `brain/*/` を探す。
 - **それより古い会話の本文**は `conversations/<id>.db` の protobuf にしか無い。スキーマ非公開なので、フィールド番号を固定で読む最小限のデコードになる（[format.md](format.md)）。
 - 3 ルートに**同じ会話 ID が重複**する（旧 IDE からメインへの移行コピーなど）。全ルートを走査して会話 ID で重複を除き、更新時刻が新しい方を採る。
 - `transcript.jsonl` は長いフィールドを切り詰めた版。`transcript_full.jsonl` を優先する。`logs/chunks/` は同じ内容をチャンクに分けたもの。
@@ -75,15 +75,15 @@ Google Antigravity（IDE と CLI `agy`）は、会話を `~/.gemini/` の下に�
 | フィールド                                             | 型と値                                                                                         |
 | ------------------------------------------------------ | ---------------------------------------------------------------------------------------------- |
 | `step_index`                                           | int。db の `steps.idx` と一致                                                                  |
-| `type`                                                 | `USER_INPUT`、`PLANNER_RESPONSE`、`GENERIC`（ツール結果）、`SYSTEM_MESSAGE` など               |
+| `type`                                                 | `USER_INPUT`、`PLANNER_RESPONSE`、`GENERIC` などのツール結果、`SYSTEM_MESSAGE` など（下記）    |
 | `source`                                               | `USER_EXPLICIT`、`MODEL`、`SYSTEM`                                                             |
 | `status`                                               | `DONE`、`RUNNING`（`ERROR`、`CANCELED` もあると推定）                                          |
 | `created_at`                                           | ISO8601 UTC（`YYYY-MM-DDThh:mm:ssZ`）                                                          |
 | `content`                                              | str。本文。無い step もある                                                                    |
 | `thinking`                                             | str。思考の要約（`PLANNER_RESPONSE` のみ）                                                     |
 | `tool_calls[]`                                         | `{name, args}`。`name` は `read_file`、`run_command`、`edit_file` など。**呼び出し ID は無い** |
-| `model`                                                | モデル名（`PLANNER_RESPONSE` のみ）                                                            |
-| `input_tokens` / `output_tokens` / `cache_read_tokens` | int（`PLANNER_RESPONSE` のみ）                                                                 |
+| `model`                                                | モデル名（一部の `PLANNER_RESPONSE` のみ）                                                     |
+| `input_tokens` / `output_tokens` / `cache_read_tokens` | int（一部の `PLANNER_RESPONSE` のみ）                                                          |
 | `truncated_fields`                                     | 切り詰めたフィールド名の配列（`transcript.jsonl` のみ）                                        |
 
 架空値の最小例：
@@ -94,26 +94,29 @@ Google Antigravity（IDE と CLI `agy`）は、会話を `~/.gemini/` の下に�
 {"step_index":2,"type":"GENERIC","source":"MODEL","status":"DONE","created_at":"2026-01-01T00:00:03Z","content":"# Example\n..."}
 ```
 
-- トークンを集計するなら `PLANNER_RESPONSE` 行の `input_tokens`/`output_tokens`（必要なら `cache_read_tokens`）を足す。料金情報は無い。
-- ツール結果（`GENERIC`）には tool 名も呼び出し ID も無い。直前の `PLANNER_RESPONSE.tool_calls` と出現順で対応付ける（推定）。
+- トークンを集計するなら `PLANNER_RESPONSE` 行の `input_tokens`/`output_tokens`（必要なら `cache_read_tokens`）を足す。**token・model は一部の `PLANNER_RESPONSE` にしか無い**ので、無い行は 0 でなく欠損として扱う（合計は下限になる）。料金情報は無い。
+- **ツール結果の `type` は `GENERIC` だけではない**。ツールごとの種別名（[format.md](format.md) の step 種別 enum の名前）で出ることが多い。`type` で列挙せず、「`USER_INPUT`・`PLANNER_RESPONSE`・システム系（`SYSTEM_MESSAGE`・`EPHEMERAL_MESSAGE`・`KNOWLEDGE_ARTIFACTS`・`ERROR_MESSAGE`、または `source` が `SYSTEM`）・要約系（`CHECKPOINT`・`CONVERSATION_HISTORY`）以外で `source` が `MODEL`」をツール結果とみなす。
+- ツール結果には tool 名も呼び出し ID も無い。直前の `PLANNER_RESPONSE.tool_calls` と出現順で対応付ける（推定）。
 - ツール出力の全文は `brain/<id>/.system_generated/steps/<idx>/output.txt` にもある。
 
 ### conversation_summaries.db
 
 テーブル `conversation_summaries` の主な列（全列は [format.md](format.md)）：
 
-| 列                                                        | 内容                                                          |
-| --------------------------------------------------------- | ------------------------------------------------------------- |
-| `conversation_id`                                         | 会話 ID（UUID）                                               |
-| `title` / `preview`                                       | タイトルと冒頭のプレビュー                                    |
-| `step_count`                                              | step 数                                                       |
-| `last_modified_time`                                      | `YYYY-MM-DD hh:mm:ss.fffffff+00:00`。未設定は `0001-01-01...` |
-| `workspace_uris`                                          | JSON 配列（例 `["file:///c%3A/work/example"]`）。空もある     |
-| `source`                                                  | `''` または `CORTEX_TRAJECTORY_SOURCE_CLI`                    |
-| `project_id`                                              | Antigravity 内の「プロジェクト」の UUID                       |
-| `parent_conversation_id` / `nesting_depth` / `agent_name` | サブエージェント会話の親子                                    |
+| 列                                                        | 内容                                                                       |
+| --------------------------------------------------------- | -------------------------------------------------------------------------- |
+| `conversation_id`                                         | 会話 ID（UUID）                                                            |
+| `title` / `preview`                                       | タイトルと冒頭のプレビュー。**`title` は大半が空**で、`preview` が実質の題 |
+| `step_count`                                              | step 数                                                                    |
+| `last_modified_time`                                      | `YYYY-MM-DD hh:mm:ss.fffffff+00:00`。未設定は `0001-01-01...`              |
+| `workspace_uris`                                          | JSON 配列（例 `["file:///c%3A/work/example"]`）。空もある                  |
+| `source`                                                  | `''` または `CORTEX_TRAJECTORY_SOURCE_CLI`                                 |
+| `project_id`                                              | Antigravity 内の「プロジェクト」の UUID                                    |
+| `parent_conversation_id` / `nesting_depth` / `agent_name` | サブエージェント会話の親子                                                 |
 
 開始時刻の列は無い。開始時刻は最初の step の `created_at`（transcript）か db の step metadata から取る。
+
+タイトルは「`annotations/<id>.pbtxt` の `title`（ユーザーのリネーム）→ `title` → `preview` の 1 行目」の順で採る。
 
 ### conversations/<id>.db
 
@@ -180,7 +183,8 @@ Google Antigravity（IDE と CLI `agy`）は、会話を `~/.gemini/` の下に�
 
 ## 未確認事項
 
-- `transcript*.jsonl` が作られる条件（2.0 で導入されたのか、設定やソースによるのか）。古い会話に遡って作られるか
+- `transcript*.jsonl` が作られる条件（2.0 で導入されたのか、設定やソースによるのか）。古い会話に遡って作られるか（旧ルートには 2026-10-29 より前のものもある）
+- token・model が付く `PLANNER_RESPONSE` と付かないものの違い
 - `gen_metadata` のトークン値の正確な意味と、transcript の `input_tokens`/`output_tokens` との一致
 - 会話を削除したとき db・brain・summaries・annotations のどれが消えるか。自動削除やサイズ上限の有無
 - `project_id` からプロジェクト名を引ける場所

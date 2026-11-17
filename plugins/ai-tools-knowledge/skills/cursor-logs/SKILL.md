@@ -18,7 +18,7 @@ meta:
   requires_skills: cursor-docs
   status: experimental
   description: Cursorのローカルログ（3系統）の所在と形式
-  version: 1.0.0
+  version: 1.0.1
 ---
 
 # Cursor のローカルログ（3 系統）
@@ -50,7 +50,7 @@ Cursor IDE と CLI（`cursor-agent`／`agent`）がローカルに残す会話�
 
 **A の最大の注意点**: A には**時刻・モデル・usage・ツール結果（tool_result）・メッセージ id・親子リンクが無い**。
 
-- 時刻は user 行に埋め込まれた `<timestamp>` タグから復元する（後述）。assistant 行は直前の user 行の時刻を引き継ぐしかない。タグが無ければファイルの mtime で代用する。
+- 時刻は user 行に埋め込まれた `<timestamp>` タグから復元する（後述）。assistant 行は直前の user 行の時刻を引き継ぐしかない。タグが無ければファイルの mtime で代用する。**`<timestamp>` タグが 1 つも無い transcript もある**ので、時刻は必ず B・C の作成／更新時刻か mtime に落とせるようにする。
 - モデル・タイトル・正確な開始／終了時刻は B（`meta.json`・`store.db` の meta）か C（`composerHeaders`・`composerData`）から取る。
 - ツール結果は B の `tool-result` か C の `toolFormerData.result` にしかない。A のツール呼び出しとの対応は「同じツール名と引数の出現順」で突き合わせるしかない。
 - トークン数・コストはどの系統からもローカルでは実質取れない（C の `tokenCount` は確認した全件で 0）。

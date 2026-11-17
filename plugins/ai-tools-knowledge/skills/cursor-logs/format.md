@@ -14,6 +14,11 @@ SQLite はどれも `file:<path>?mode=ro` の URI で読み取り専用に開く
 
 フォルダ名は `md5(meta.json.cwd の UTF-8)` の hex。`store.db` が無いチャットもある（作成だけされたもの）。
 
+逆に **`meta.json` が無く `store.db` だけのチャットもある**（確認環境で 152 件中 15 件）。その場合は次のように補う。
+
+- cwd: フォルダ名（`md5(cwd)`）を、cwd が分かっている他のチャットの cwd の md5 と照合して戻す。照合できなければ不明のまま。
+- タイトル・モデル・作成時刻: `store.db` の `meta` 行の `name`・`lastUsedModel`・`createdAt`。
+
 ### meta.json
 
 | フィールド        | 型      | 意味                                     |
@@ -115,7 +120,7 @@ SQLite はどれも `file:<path>?mode=ro` の URI で読み取り専用に開く
 | `value`                      | JSON（下記）                                               |
 | `subagentTypeName`           | サブエージェントの種別名                                   |
 
-`value` JSON の主なキー: `name`（タイトル）、`subtitle`、`unifiedMode`、`workspaceIdentifier{id, uri{fsPath, path, scheme}}`、`contextUsagePercent`、`totalLinesAdded`／`totalLinesRemoved`、`filesChangedCount`、`trackedGitRepos`。
+`value` JSON の主なキー: `name`（タイトル。**無い行もある**ので、その場合は `composerData:<id>` や A の最初の user 行で代用する）、`subtitle`、`unifiedMode`、`workspaceIdentifier{id, uri{fsPath, path, scheme}}`、`contextUsagePercent`、`totalLinesAdded`／`totalLinesRemoved`、`filesChangedCount`、`trackedGitRepos`。
 
 ### cursorDiskKV のキー接頭辞
 

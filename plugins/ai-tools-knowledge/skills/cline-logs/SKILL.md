@@ -17,7 +17,7 @@ meta:
   requires_skills: cline-docs
   status: experimental
   description: Clineのローカル履歴（SDKセッション形式・レガシータスク形式）の所在と形式
-  version: 1.0.0
+  version: 1.0.1
 ---
 
 # Cline のローカル履歴（タスク・セッション）
@@ -96,6 +96,8 @@ Cline がローカルに残す会話履歴の所在・形式・読み方の注�
 | `assistant` | `{id, role, ts, content[], metrics{inputTokens, outputTokens, cacheReadTokens, cacheWriteTokens, cost}, modelInfo{id, provider}, metadata?{invalidToolCalls[]}}` | `thinking`・`text`・`tool_use{id, name, input}`                          |
 
 - **トークン・コストの位置**: assistant メッセージの `metrics`（リクエストごと）。セッション合計は `<sid>.json` の `metadata.usage`・`metadata.totalCost`。
+- **`inputTokens` は `cacheReadTokens` を含む**（`metrics`・`metadata.usage` とも。実データで確認）。キャッシュを除いた入力は `inputTokens − cacheReadTokens` で出す。
+- **`metadata.usage` は最後の実行分だけのことがある**: 再開したセッションで、`metadata.usage` が `metrics` の合計より小さい例があった（確認環境で 2 件）。セッション合計は「`metadata.usage` と `metrics` の合計の大きい方」を採る。
 - ツール名の例: `run_commands`, `editor`, `read_files`, `search_codebase`, `fetch_web_content`, `ask_question`, `skills`。
 - 読むときの注意: `content` が配列でなく文字列のメッセージ、`ts` の無いメッセージがまれにある。`tool_result.content` は文字列か配列。
 - サブエージェントの messages は同じディレクトリに別の stem（`childArtifactFileStem`）で出る可能性がある（ソースからの推定）。`*.messages.json` をすべて拾い、`agent` フィールドで区別する。

@@ -11,7 +11,7 @@ meta:
   requires_skills: kilo-code-docs, cline-logs
   status: experimental
   description: Kilo Codeのローカル履歴（kilo.db）の所在とスキーマ
-  version: 1.0.0
+  version: 1.0.1
 ---
 
 # Kilo Code のローカル履歴（kilo.db）
@@ -53,22 +53,23 @@ meta:
 
 ### session（列で持つ。JSON ではない）
 
-| 列                                                                                             | 内容                                                            |
-| ---------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
-| `id`                                                                                           | `ses_` + 26 文字。新しいものほど辞書順で小さい（降順 ID）       |
-| `project_id`                                                                                   | `project.id` への参照                                           |
-| `parent_id`                                                                                    | サブエージェントのセッションなら親セッションの ID               |
-| `directory`                                                                                    | 作業ディレクトリ。`C:/x/y` 形式（スラッシュ区切り）             |
-| `path`                                                                                         | ワークツリー内の相対パス（空のこともある）                      |
-| `slug`・`title`・`version`・`agent`                                                            | `version` は書いた Kilo のバージョン。`agent` は `code` 等      |
-| `model`                                                                                        | JSON 文字列 `{"id","providerID","variant"}`                     |
-| `cost`（REAL）                                                                                 | セッション累計のコスト                                          |
-| `tokens_input`・`tokens_output`・`tokens_reasoning`・`tokens_cache_read`・`tokens_cache_write` | セッション累計のトークン                                        |
-| `summary_additions`・`summary_deletions`・`summary_files`・`summary_diffs`                     | 変更行数・ファイル数・差分                                      |
-| `metadata`                                                                                     | JSON。キーにドットを含むもの（`kilocode.sandbox`）がある        |
-| `permission`                                                                                   | JSON 配列 `[{permission, pattern, action}]`。子セッションに付く |
-| `revert`・`share_url`                                                                          |                                                                 |
-| `time_created`・`time_updated`・`time_compacting`・`time_archived`                             | 終了時刻の列は無い                                              |
+| 列                                                                                             | 内容                                                              |
+| ---------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| `id`                                                                                           | `ses_` + 26 文字。新しいものほど辞書順で小さい（降順 ID）         |
+| `project_id`                                                                                   | `project.id` への参照                                             |
+| `workspace_id`                                                                                 | ワークスペース（Agent Manager 等）の ID。意味の詳細は未確認       |
+| `parent_id`                                                                                    | サブエージェントのセッションなら親セッションの ID                 |
+| `directory`                                                                                    | 作業ディレクトリ。`C:/x/y` 形式（スラッシュ区切り）               |
+| `path`                                                                                         | ワークツリー内の相対パス（空のこともある）                        |
+| `slug`・`title`・`version`・`agent`                                                            | `version` は書いた Kilo のバージョン。`agent` は `code` 等        |
+| `model`                                                                                        | JSON 文字列 `{"id","providerID","variant"}`                       |
+| `cost`（REAL）                                                                                 | セッション累計のコスト                                            |
+| `tokens_input`・`tokens_output`・`tokens_reasoning`・`tokens_cache_read`・`tokens_cache_write` | セッション累計のトークン。`tokens_output` は reasoning を含まない |
+| `summary_additions`・`summary_deletions`・`summary_files`・`summary_diffs`                     | 変更行数・ファイル数・差分                                        |
+| `metadata`                                                                                     | JSON。キーにドットを含むもの（`kilocode.sandbox`）がある          |
+| `permission`                                                                                   | JSON 配列 `[{permission, pattern, action}]`。子セッションに付く   |
+| `revert`・`share_url`                                                                          |                                                                   |
+| `time_created`・`time_updated`・`time_compacting`・`time_archived`                             | 終了時刻の列は無い                                                |
 
 ### message
 
@@ -88,6 +89,7 @@ meta:
 | `summary{diffs[]}`                                                    | 任意（`file`・`patch`・`additions`・`deletions`・`status`） | -                                                  |
 | `editorContext{...}`・`tools{...}`                                    | 任意（VS Code 経由のとき）                                  | -                                                  |
 
+- **`output` は reasoning を含まない**（`message.data.tokens`・`step-finish`・`session.tokens_output` とも）。出力の総量は `output + reasoning`。`total` は両方を含む。
 - トークンとコストは **assistant メッセージ**に付く（user メッセージ単位のトークンは無い）。assistant の値は、その配下の `step-finish` part の合計とほぼ一致する。セッション合計は `session` の集計列を使う。
 - `cost` は int の `0` か real。`0` は「無料」か「未計測」のどちらもありうる（サブスクリプション経路では 0 になることがある）。
 
@@ -147,7 +149,11 @@ meta:
 ### クエリの注意
 
 - DB は数 GB になることがある。`json_extract` での全件走査は重い。
-- `session_id` で絞り、既存インデックス（`message_session_time_created_id_idx`・`part_session_idx`・`part_session_step_finish_idx`）に乗るクエリにする。
+- `session_id` で絞り、既存インデックスに乗るクエリにする。確認した版のインデックス:
+  - session: `session_parent_idx`・`session_workspace_idx`・`session_project_idx`
+  - message: `message_session_time_created_id_idx`・`recall_message_role_idx`
+  - part: `part_session_idx`・`part_session_step_finish_idx`・`part_message_id_id_idx`・`recall_part_search_idx`
+- `project` 表には `worktree` のほか `vcs`・`name`・`icon_*`・`sandboxes`・`commands`・`time_initialized` などの列がある。対応づけに使うのは `id` と `worktree` だけでよい。
 
 以下は実データのスキーマから組み立てた例（公式ドキュメントの例ではない）。
 

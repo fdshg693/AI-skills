@@ -60,7 +60,7 @@ meta:
   requires_skills: antigravity-docs, agy-cli-docs
   status: experimental
   description: Antigravityのローカル会話ログ（3ルート）の所在と形式
-  version: 1.0.0
+  version: 1.0.1
 ---
 
 - antigravity-memory
@@ -216,7 +216,7 @@ meta:
   requires_skills: cline-docs
   status: experimental
   description: Clineのローカル履歴（SDKセッション形式・レガシータスク形式）の所在と形式
-  version: 1.0.0
+  version: 1.0.1
 ---
 
 - cline-memory
@@ -403,7 +403,7 @@ meta:
   requires_skills: codex-docs
   status: experimental
   description: Codexのローカルセッションログ（rollout）の所在と形式。実データ未確認、公式とソースが根拠
-  version: 1.0.0
+  version: 1.0.1
 ---
 
 - codex-memory
@@ -607,7 +607,7 @@ meta:
   requires_skills: cursor-docs
   status: experimental
   description: Cursorのローカルログ（3系統）の所在と形式
-  version: 1.0.0
+  version: 1.0.1
 ---
 
 - cursor-memory
@@ -808,7 +808,7 @@ meta:
   requires_skills: kilo-code-docs, cline-logs
   status: experimental
   description: Kilo Codeのローカル履歴（kilo.db）の所在とスキーマ
-  version: 1.0.0
+  version: 1.0.1
 ---
 
 - kilo-memory-guide

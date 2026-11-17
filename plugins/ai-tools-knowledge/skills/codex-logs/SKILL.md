@@ -17,7 +17,7 @@ meta:
   requires_skills: codex-docs
   status: experimental
   description: Codexのローカルセッションログ（rollout）の所在と形式。実データ未確認、公式とソースが根拠
-  version: 1.0.0
+  version: 1.0.1
 ---
 
 # Codex のローカルセッションログ（rollout）
@@ -148,7 +148,8 @@ TokenUsage は `{input_tokens, cached_input_tokens, cache_write_input_tokens（�
 
 - **`total_token_usage` はスレッドの累積値。** セッションの合計は最後の `total_token_usage` を使う。`last_token_usage`（直前の 1 リクエスト分）や各行の `total_*` を足し上げると二重計上になる。
 - `info` が null の行は飛ばす。同じ値の行が連続することもある。
-- `token_usage_record` がある新しい形式では、そちらがレスポンス単位で正確。
+- `token_usage_record` がある新しい形式では、そちらがレスポンス単位で正確。両方がある rollout では `token_usage_record` だけを使い、`token_count` と足し合わせない（同じ使用量の二重記録とみなす。ソースからの推定で、実データでは未確認）。
+- **`input_tokens` は `cached_input_tokens` を含む**と推定する（OpenAI API の `prompt_tokens` と同じ数え方）。キャッシュを除いた入力は `input_tokens − cached_input_tokens`。実データでは未確認。
 - **金額（コスト）のフィールドは無い。** 料金表から自分で計算する。
 
 ### 架空値の最小例（legacy モード）
@@ -257,5 +258,6 @@ openai/codex `main` の `885a1df5ee5f18172233b12d6c94544a24e7b338`（2026-11-17�
 - `logs_2.sqlite` の保持期間と剪定の閾値。`log/` 配下に既定で書かれるもの（TUI ログ以外）。
 - WSL 上で IDE 拡張が動く場合の所在（Linux 側の `~/.codex` か）。
 - rollout ファイルが作られるタイミング（最初のユーザー入力まで遅延するか）。
+- `input_tokens` が `cached_input_tokens` を含むか、`token_usage_record` と `token_count` が同じ使用量の二重記録か（実ログで確かめる）。
 
 Codex の機能・設定全般は **codex-docs** スキルを参照する。
