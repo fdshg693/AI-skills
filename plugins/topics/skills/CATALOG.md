@@ -199,7 +199,7 @@ meta:
   requires_skills: none
   status: experimental
   description: Replit official documentation search and current page lookup
-  version: 1.0.0
+  version: 1.0.1
 ---
 
 - vercel-docs

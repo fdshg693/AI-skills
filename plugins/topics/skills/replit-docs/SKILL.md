@@ -11,7 +11,7 @@ meta:
   requires_skills: none
   status: experimental
   description: Replit official documentation search and current page lookup
-  version: 1.0.0
+  version: 1.0.1
 ---
 
 !`uv run python "${CLAUDE_SKILL_DIR}/webref_cli.py" update`
@@ -31,11 +31,12 @@ Replit の機能や設定は変わるため、記憶ではなく公式資料を�
 uv run python "${CLAUDE_SKILL_DIR}/webref_cli.py" update --force
 uv run python "${CLAUDE_SKILL_DIR}/webref_cli.py" index 'agent'
 uv run python "${CLAUDE_SKILL_DIR}/webref_cli.py" search 'AGENTS.md'
+uv run python "${CLAUDE_SKILL_DIR}/webref_cli.py" search --word --case-sensitive 'CLI'
 uv run python "${CLAUDE_SKILL_DIR}/webref_cli.py" page https://docs.replit.com/build/code/working-with-code.md
 uv run python "${CLAUDE_SKILL_DIR}/webref_cli.py" extract https://docs.replit.com/build/code/working-with-code
 ```
 
-`update` は24時間以内のキャッシュを再利用し、`--force` で更新する。`index` は階層索引、`search` は英語全文を検索し、最大100件を返す。`page` は個別ページを毎回取得し、本文と取得日時を含むファイルのパスを表示する。そのファイルの本文を読んで確認する。`extract` は保存済み英語全文から検証済みの区間を抽出する。索引と全文の取得時刻は別々に記録される。初回に全文を取得・検証できない場合は索引のみが利用可能になり、`search` と `extract` は失敗するため `index` と `page` を使う。
+`update` は24時間以内のキャッシュを再利用し、`--force` で更新する。`index` は階層索引、`search` は英語全文を検索し、最大100件を返す。既定は大文字小文字を区別しない部分一致で、`CLI` が `client` にも当たるような短い語・略語では `--word`（`-w`、単語単位）と `--case-sensitive`（`-c`）で絞る。両オプションは `index` にも使える。`page` は個別ページを毎回取得し、本文と取得日時を含むファイルのパスを表示する。そのファイルの本文を読んで確認する。`extract` は保存済み英語全文から検証済みの区間を抽出する。索引と全文の取得時刻は別々に記録される。初回に全文を取得・検証できない場合は索引のみが利用可能になり、`search` と `extract` は失敗するため `index` と `page` を使う。
 
 2026-11-11 の観測では索引は多言語を含む一方、[全文](https://docs.replit.com/llms-full.txt)は英語 484 ページだけだった。これは将来の網羅性を保証しない。検索ゼロ件は非対応の証拠ではない。別名や階層索引、[sitemap](https://docs.replit.com/sitemap.xml)、対象言語の個別ページを確認し、見つからなければ検索範囲と未確認を明示する。移動・削除、索引欠落、古い全文の可能性も考慮する。
 
@@ -61,4 +62,5 @@ uv run python "${CLAUDE_SKILL_DIR}/webref_cli.py" extract https://docs.replit.co
 - [Secrets](https://docs.replit.com/core-concepts/project-editor/app-setup/secrets.md) は Static では使えない。本番用設定を確認し、機密値をチャットやログに貼らない。UI で値が見えなくても実行権限のある共同作業者が環境変数を取得し得る。接続環境の開発用トークンを公開アプリの本番用と混同しない。
 - [公開料金表](https://docs.replit.com/billing/deployment-pricing.md)と[料金改定](https://docs.replit.com/billing/aug-cloud-billing-updates.md)は Autoscale 基本料の記載が食い違う。アイドル時の計算料金ゼロを基本料を含む総額ゼロと断定せず、クレジット適用前の利用料金と追加請求を分ける。クレジット繰り越しもプラン条件・資料間の差を確認し、適用額は利用明細やサポートで確認する。
 - 失敗時は [トラブルシューティング](https://docs.replit.com/build/troubleshooting.md) と [監視](https://docs.replit.com/features/publishing/monitoring-a-deployment.md)を参照し、build/run、待受アドレス・ポート、本番 Secrets、状態とログを切り分ける。監視機能はプラン・方式に制約がある。
+- 外部ツールから Replit を操作する経路（CLI・API・自動化の質問）は、まず [Replit MCP Server](https://docs.replit.com/platforms/mcp-server.md) を確認する。App の作成・更新・公開（`publish_app`）などのツールはこのページが一覧の正本であり、検索語 `CLI` や `API` では見つけにくい。専用 CLI や公開 REST API の有無は、見つからなくても存在しないと断定しない。
 - 公開、再公開、設定変更、外部サービスへの書き込みなど副作用のある操作は、ユーザーの承認なしに実行しない。
