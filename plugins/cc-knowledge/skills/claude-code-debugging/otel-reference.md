@@ -53,7 +53,9 @@ Claude Code自体が送信するOpenTelemetry(メトリクス・ログ、betaで
 | `NODE_EXTRA_CA_CERTS`                                                     | HTTP | 追加で信頼する CA                         |
 | `CLAUDE_CODE_CLIENT_CERT` / `CLAUDE_CODE_CLIENT_KEY`                      | HTTP | mTLS のクライアント証明書・鍵             |
 
-公的 CA（Let's Encrypt 等）の証明書なら追加設定なしで `https://` に送れる。
+> **実地検証**（2026-11-18、Claude Code 2.1.325、Windows・WSL）: 公的 CA（Let's Encrypt）の証明書なら、OTLP/HTTP（`http/protobuf`）は追加設定なしで `https://<IP>:4318` に送れた。一方 **gRPC で IP アドレスのエンドポイント**（`https://<IP>:4317`）に TLS で送ると、grpc-js が IP を TLS の servername に渡して Node が拒否し、`14 UNAVAILABLE: No connection established. Last error: TypeError [ERR_INVALID_ARG_VALUE]: The property 'options.servername' ...` で失敗する。IP 証明書の送信先には `http/protobuf` を使う（ホスト名なら gRPC でも問題ない）。
+>
+> また、`~/.claude/settings.json` の `env` はプロセスの環境変数より優先される。単発で別の送信先を試すときは環境変数ではなく `claude --settings <一時ファイル>` で渡す。
 
 ## エクスポート間隔
 
@@ -216,15 +218,15 @@ Agent SDKはClaude Code CLIをそのまま子プロセスとして起動して�
 
 ### `ai-logs`との構成上の違い
 
-| 項目             | `otel-stack/`(このスキル)                      | `infra/ai-logs/`                                                         |
-| ---------------- | ---------------------------------------------- | ------------------------------------------------------------------------ |
-| 稼働場所         | ローカル(Docker Desktop)、使う時だけ起動       | さくらのクラウドVM、恒常稼働                                             |
-| ポート公開       | 全ポートをループバック(`127.0.0.1`)のみに公開  | GrafanaはSSHトンネル経由のみ、OTLPは外部公開(Caddy が TLS で受ける)      |
-| OTLP受信の認証   | なし(`bearertokenauth` extension不使用)        | TLS(Let's Encrypt の IP 証明書) + `bearertokenauth` でBearerトークン必須 |
-| Lokiのホット公開 | あり(`127.0.0.1:3100`、直接クエリ用)           | なし(VM上のコンテナ間ネットワークのみ)                                   |
-| 対象信号         | ログのみ                                       | ログのみ                                                                 |
-| ログの保持       | なし(使い捨て。`docker compose down -v`で消す) | Lokiは14日(Compactorのretention)、それ以前はAzure Blobの日次gzip JSONL   |
-| 対象ツール       | Claude Codeのデバッグ実験用途                  | Claude Code + Codex CLIの実利用ログ横断収集                              |
+| 項目             | `otel-stack/`(このスキル)                      | `infra/ai-logs/`                                                                                 |
+| ---------------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| 稼働場所         | ローカル(Docker Desktop)、使う時だけ起動       | さくらのクラウドVM、恒常稼働                                                                     |
+| ポート公開       | 全ポートをループバック(`127.0.0.1`)のみに公開  | GrafanaはSSHトンネル経由のみ、OTLPは外部公開(Caddy が TLS で受ける)                              |
+| OTLP受信の認証   | なし(`bearertokenauth` extension不使用)        | TLS(Let's Encrypt の IP 証明書、OTLP/HTTP の 4318 のみ) + `bearertokenauth` でBearerトークン必須 |
+| Lokiのホット公開 | あり(`127.0.0.1:3100`、直接クエリ用)           | なし(VM上のコンテナ間ネットワークのみ)                                                           |
+| 対象信号         | ログのみ                                       | ログのみ                                                                                         |
+| ログの保持       | なし(使い捨て。`docker compose down -v`で消す) | Lokiは14日(Compactorのretention)、それ以前はAzure Blobの日次gzip JSONL                           |
+| 対象ツール       | Claude Codeのデバッグ実験用途                  | Claude Code + Codex CLIの実利用ログ横断収集                                                      |
 
 外部に一切公開しないループバック限定のローカル完結用途のため、VM公開を前提にした`bearertokenauth`のようなトークン認証機構は導入していない。認証はGrafanaの管理者パスワード(`.env`の`GRAFANA_ADMIN_PASSWORD`)のみに絞ってある。
 
