@@ -1,6 +1,6 @@
 {
   "name": "ai-tools-knowledge",
-  "description": "Knowledge skills about AI coding tools (GitHub Copilot, Copilot CLI, VS Code Copilot, Codex, Cursor, Antigravity, Cline, Kilo Code): docs, CLIs, SDKs, instructions, skills and plugins.",
+  "description": "Knowledge skills about AI coding tools (GitHub Copilot, Copilot CLI, VS Code Copilot, Codex, Cursor, Antigravity, Cline, Kilo Code): docs, CLIs, SDKs, instructions, skills and plugins. Also the consumer chat apps ChatGPT, Gemini and Claude (claude.ai): features, plan limits and cross-app comparison.",
   "version": "1.0.0",
   "author": {
     "name": "fdshg693",
@@ -9,6 +9,17 @@
   "homepage": "https://github.com/fdshg693/AI",
   "repository": "https://github.com/fdshg693/AI",
   "license": "MIT",
-  "keywords": ["github-copilot", "copilot-cli", "vs-code", "codex", "cursor", "agent-skills", "plugins"],
+  "keywords": [
+    "github-copilot",
+    "copilot-cli",
+    "vs-code",
+    "codex",
+    "cursor",
+    "agent-skills",
+    "plugins",
+    "chatgpt",
+    "gemini",
+    "claude-ai"
+  ],
   "skills": "skills/"
 }
