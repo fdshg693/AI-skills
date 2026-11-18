@@ -8,6 +8,7 @@
 - [同じ名前でも中身が違うもの](#同じ名前でも中身が違うもの)
 - [カスタムアシスタントの移行（2026-11 時点）](#カスタムアシスタントの移行2026-11-時点)
 - [自作 MCP サーバーの接続](#自作-mcp-サーバーの接続)
+- [デスクトップアプリ](#デスクトップアプリ)
 
 ## 対応表
 
@@ -67,3 +68,20 @@
 | ChatGPT | [Custom MCP servers](chatgpt.md#custom-mcp-servers) | web のみ。プラン条件は公式どうしで食い違う（ヘルプ記事は Business・Enterprise/Edu、開発者ドキュメントは制限なし。Plus の実画面で追加画面を確認済み） | 食い違いを両方示し、実画面での確認を促す。ローカルのサーバーは Secure MCP Tunnel                                |
 | Gemini  | [Custom apps (MCP)](gemini.md#custom-apps-mcp)      | 18 歳以上・米国・個人アカウント・英語のみ。追加は web から                                                                                           | 日本在住では使えない                                                                                            |
 | Claude  | [Custom connectors](claude-ai.md#custom-connectors) | Free を含む全プラン。Anthropic のクラウドから接続する                                                                                                | ローカルの MCP は Desktop の [Desktop extensions](claude-ai.md#desktop-extensions)。Claude Code・API は別スキル |
+
+ローカル（手元の PC で動く）MCP は 3 アプリで扱いが違う。Claude は Desktop の [Desktop extensions](claude-ai.md#desktop-extensions)、ChatGPT は local MCP apps を含む plugin がデスクトップアプリだけで動く（[Desktop-only plugins](desktop.md#desktop-only-plugins)）。Gemini のデスクトップアプリの記事にはローカル MCP の記載が無い（2026-11-18）。
+
+## デスクトップアプリ
+
+WEB 版との差分だけを [desktop.md](desktop.md) にまとめてある。ネイティブ機能は OS で差が大きい（Gemini の Windows 版はほぼ WEB 版と同じ）ので、比較では OS を確かめる。
+
+| カテゴリ                     | ChatGPT                                                                                                                                | Gemini                                                     | Claude                                                                                            |
+| ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| 提供 OS                      | Windows・macOS・Linux（preview）                                                                                                       | Windows・macOS（Apple silicon）                            | Windows・macOS・Linux（beta）                                                                     |
+| どこからでも呼べる入力欄     | [Chat Bar](desktop.md#chat-bar)                                                                                                        | [Global shortcut](desktop.md#global-shortcut-gemini)       | [Quick entry](desktop.md#quick-entry)（記事上は macOS のみ）                                      |
+| 画面・ウィンドウを渡す       | [Appshots](desktop.md#appshots)、[Screenshots](desktop.md#screenshots)、[Work with Apps](desktop.md#work-with-apps)（macOS。旧アプリ） | [Share window](desktop.md#share-window)（Mac）             | [Quick entry](desktop.md#quick-entry) のスクリーンショット添付                                    |
+| ローカルファイル・アプリ操作 | [New desktop app](desktop.md#new-desktop-app) の Work、[Computer use](desktop.md#computer-use-chatgpt)                                 | [Task on Mac](desktop.md#task-on-mac)                      | [Cowork on Desktop](desktop.md#cowork-on-desktop)、[Computer use](desktop.md#computer-use-claude) |
+| 内蔵ブラウザ                 | [Built-in browser](desktop.md#built-in-browser-chatgpt)                                                                                | なし                                                       | [Built-in browser](desktop.md#built-in-browser-claude)                                            |
+| 別の端末から手元の PC を使う | [Local work sync](desktop.md#local-work-sync)（Enterprise/Edu）                                                                        | [Remote control of Mac](desktop.md#remote-control-of-mac)  | [Dispatch](desktop.md#dispatch)（限定 beta）                                                      |
+| 音声                         | [Voice in Desktop](desktop.md#voice-in-desktop)                                                                                        | [Speak to Window](desktop.md#speak-to-window)（Mac・英語） | [Quick entry](desktop.md#quick-entry) の dictation                                                |
+| 管理者による配布             | [ChatGPT desktop deployment](desktop.md#chatgpt-desktop-deployment)                                                                    | 専用の記事なし                                             | [Claude Desktop deployment](desktop.md#claude-desktop-deployment)                                 |

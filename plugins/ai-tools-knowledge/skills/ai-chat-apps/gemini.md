@@ -1,6 +1,6 @@
 # Gemini アプリ（gemini.google.com）機能マップ
 
-最終確認日: 2026-11-18 ／ 対象: gemini.google.com の WEB 版。デスクトップ（Mac・Windows アプリ）・モバイルは記事に差分が書かれている範囲だけ注記する
+最終確認日: 2026-11-18 ／ 対象: gemini.google.com の WEB 版。デスクトップアプリ（Mac・Windows）固有の機能は [desktop.md](desktop.md)。モバイルは記事に差分が書かれている範囲だけ注記する
 
 機能名 → 公式ページの索引。上限・料金・対応プランの**具体値は書かない**（変わりやすい）。回答前に必ずリンク先の本文を取る（取り方は [SKILL.md](SKILL.md)）。Gemini には索引スクリプトが無い。このファイルに無い記事は `tav search "site:support.google.com/gemini <語>"` で探す。
 

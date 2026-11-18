@@ -24,12 +24,12 @@ meta:
 
 - ai-chat-apps
 ---
-# ChatGPT・Gemini・Claude の利用者向けチャットアプリ（まずは WEB 版）の知識スキル。
-# 機能マップ（chatgpt.md / gemini.md / claude-ai.md / comparison.md）で公式ページを引き、具体値は都度取得する 2 層構成。
+# ChatGPT・Gemini・Claude の利用者向けチャットアプリ（WEB 版とデスクトップアプリ）の知識スキル。
+# 機能マップ（chatgpt.md / gemini.md / claude-ai.md / desktop.md / comparison.md）で公式ページを引き、具体値は都度取得する 2 層構成。
 # 索引（output/*-index.md）は起動時に取らず、search が古い索引だけ取り直す（3 情報源を毎回取ると重いため）。
 # 情報源・スクリプトの出自・索引の更新手順は同階層の README.md（メンテナ向け）。
 name: ai-chat-apps
-description: Use when answering questions about the consumer chat apps ChatGPT (chatgpt.com), Gemini (gemini.google.com) and Claude (claude.ai) — features, settings, how-to steps, plan limits and availability, or how equivalent features map across the three (projects/notebooks, custom GPTs/Gems/skills/plugins, connectors/apps/custom MCP, memory, deep research, canvas/artifacts, agents). Grounds answers in the official help centers and release notes instead of training-data memory, which goes stale quickly here (features are renamed and retired often). Not for the OpenAI, Gemini or Claude APIs, Claude Code, Codex or Gemini CLI.
+description: Use when answering questions about the consumer chat apps ChatGPT (chatgpt.com), Gemini (gemini.google.com) and Claude (claude.ai), including their Windows/macOS desktop apps — features, settings, how-to steps, plan limits and availability, or how equivalent features map across the three (projects/notebooks, custom GPTs/Gems/skills/plugins, connectors/apps/custom MCP, memory, deep research, canvas/artifacts, agents). Grounds answers in the official help centers and release notes instead of training-data memory, which goes stale quickly here (features are renamed and retired often). Not for the OpenAI, Gemini or Claude APIs, Claude Code, Codex or Gemini CLI.
 allowed-tools: Bash(uv run ${CLAUDE_SKILL_DIR}/webref_cli.py *) Read Grep
 meta:
   tag: []
@@ -40,8 +40,8 @@ meta:
   requires_hooks: none
   requires_skills: web-lookup
   status: experimental
-  description: Official-source answers about the ChatGPT, Gemini and Claude web apps, with a cross-app feature map
-  version: 0.1.0
+  description: Official-source answers about the ChatGPT, Gemini and Claude web and desktop apps, with a cross-app feature map
+  version: 0.2.0
 ---
 
 - antigravity-docs
