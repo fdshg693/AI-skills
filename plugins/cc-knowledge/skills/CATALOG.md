@@ -144,7 +144,7 @@ meta:
   requires_skills: claude-settings, claude-cli-docs, claude-code-docs, litellm-docs, claude-code-debugging
   status: experimental
   description: LiteLLM等のMessages互換ゲートウェイ経由でClaude CodeをOpenAIモデルで動かすための構成判断と手順
-  version: 1.0.0
+  version: 1.0.1
 ---
 
 - claude-logs-investigate

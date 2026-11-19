@@ -26,13 +26,13 @@
 
 すぐ動かせる雛形が [gateway/](gateway/) にある（`.env.example` をコピーして `docker compose up -d`）。以下は、そこで何を書いているかの説明。自分で置く場合は Git 管理外のディレクトリ（`temp/` 配下など）に 3 ファイルを置く。
 
-**`config.yaml`** — 公開する alias を、Claude Code へ渡すモデル ID と完全一致させる。
+**`config.yaml`** — 公開する alias を、Claude Code へ渡すモデル ID と完全一致させる。以下の手順の alias は [gateway/](gateway/) の既定と同じ `gpt-5-mini`。別のモデルにするなら、ここと以降のコマンドの alias をそろえて書き換える。
 
 ```yaml
 model_list:
-  - model_name: gpt-5.6-luna # ← Claude Code に --model で渡す文字列
+  - model_name: gpt-5-mini # ← Claude Code に --model で渡す文字列
     litellm_params:
-      model: openai/gpt-5.6-luna # ← 実体。プロバイダ指定はここに閉じ込める
+      model: openai/gpt-5-mini # ← 実体。プロバイダ指定はここに閉じ込める
       api_key: os.environ/OPENAI_API_KEY
 
 general_settings:
@@ -88,7 +88,7 @@ curl -s http://127.0.0.1:4000/v1/messages \
   -H "Authorization: Bearer $LITELLM_MASTER_KEY" \
   -H "anthropic-version: 2023-06-01" \
   -H "content-type: application/json" \
-  -d '{"model":"gpt-5.6-luna","max_tokens":64,"messages":[{"role":"user","content":"reply with OK"}]}'
+  -d '{"model":"gpt-5-mini","max_tokens":64,"messages":[{"role":"user","content":"reply with OK"}]}'
 ```
 
 Anthropic 形式（`type: message` と `content[].text`）が返れば通っている。
@@ -105,7 +105,7 @@ PowerShell:
 $env:ANTHROPIC_BASE_URL  = "http://127.0.0.1:4000"
 $env:ANTHROPIC_AUTH_TOKEN = "<ゲートウェイの仮想キー>"
 Remove-Item Env:ANTHROPIC_API_KEY -ErrorAction SilentlyContinue  # 併存させない
-claude --model gpt-5.6-luna
+claude --model gpt-5-mini
 ```
 
 Git Bash:
@@ -114,7 +114,7 @@ Git Bash:
 export ANTHROPIC_BASE_URL="http://127.0.0.1:4000"
 export ANTHROPIC_AUTH_TOKEN="<ゲートウェイの仮想キー>"
 unset ANTHROPIC_API_KEY
-claude --model gpt-5.6-luna
+claude --model gpt-5-mini
 ```
 
 - `--model` は毎回渡す。省略すると既定の Claude モデル ID が送られ、`model_list` に無ければ失敗する。
@@ -131,7 +131,7 @@ claude --model gpt-5.6-luna
 {
   "env": {
     "ANTHROPIC_BASE_URL": "http://127.0.0.1:4000",
-    "ANTHROPIC_MODEL": "gpt-5.6-luna"
+    "ANTHROPIC_MODEL": "gpt-5-mini"
   }
 }
 ```
@@ -149,7 +149,7 @@ claude --model gpt-5.6-luna
 「応答が返った」だけでは、Claude モデルにフォールバックしていないことを保証できない。次の2点を突き合わせる。
 
 ```bash
-claude -p "reply with exactly: OK" --model gpt-5.6-luna --output-format json
+claude -p "reply with exactly: OK" --model gpt-5-mini --output-format json
 ```
 
 - CLI の JSON 出力の `modelUsage` に、指定した alias が出ていること。
