@@ -1,18 +1,18 @@
 # Cursorのメモリ（Rules / AGENTS.md）詳細
 
-<!-- 2026-07-20 時点の https://cursor.com/docs/rules.md および https://cursor.com/help/customization/rules.md に基づく。更新時は references/ のスナップショットも差し替え、cursor-docs で最新を確認すること -->
+<!-- 2026-11-19 時点の https://cursor.com/docs/rules.md および https://cursor.com/help/customization/rules.md に基づく。更新時は references/ のスナップショットも差し替え、cursor-docs で最新を確認すること -->
 
 LLMは補完間で記憶を持たない。Rules / `AGENTS.md` はプロンプト先頭に注入される**永続・再利用可能なコンテキスト**である。強制力のある設定ではない。
 
 ## 機構の対応表
 
-| 機構          | 置き場所                                          | 書く人          | 適用                                         | 向いている内容                           |
-| ------------- | ------------------------------------------------- | --------------- | -------------------------------------------- | ---------------------------------------- |
-| Project Rules | `.cursor/rules/**/*.mdc`                          | 人間（Git共有） | frontmatterで制御                            | ドメイン知識・パス限定規約・テンプレ参照 |
-| AGENTS.md     | プロジェクトルートまたは任意サブディレクトリ      | 人間（Git共有） | 常時（ネスト時は該当ツリー）                 | シンプルなプロジェクト指示               |
-| CLAUDE.md     | 同上（Cursorは AGENTS.md と同様に読む）           | 人間            | **常時**（frontmatterの alwaysApply は無視） | Claude Code互換の指示をCursorでも共有    |
-| User Rules    | Customize → Rules（ローカル設定。プロジェクト外） | 人間（個人）    | 全プロジェクトの Agent                       | 文体・個人の好み                         |
-| Team Rules    | Cursorダッシュボード                              | 管理者          | チーム全体（Enforce可）                      | 組織ポリシー・コンプライアンス           |
+| 機構          | 置き場所                                            | 書く人          | 適用                                         | 向いている内容                           |
+| ------------- | --------------------------------------------------- | --------------- | -------------------------------------------- | ---------------------------------------- |
+| Project Rules | `.cursor/rules/**/*.mdc`                            | 人間（Git共有） | frontmatterで制御                            | ドメイン知識・パス限定規約・テンプレ参照 |
+| AGENTS.md     | プロジェクトルートまたは任意サブディレクトリ        | 人間（Git共有） | 常時（ネスト時は該当ツリー）                 | シンプルなプロジェクト指示               |
+| CLAUDE.md     | 同上（Cursorは AGENTS.md と同様に読む）             | 人間            | **常時**（frontmatterの alwaysApply は無視） | Claude Code互換の指示をCursorでも共有    |
+| User Rules    | Customize → Rules（アカウント同期）。プロジェクト外 | 人間（個人）    | 全プロジェクトの Agent                       | 文体・個人の好み                         |
+| Team Rules    | Cursorダッシュボード                                | 管理者          | チーム全体（Enforce可）                      | 組織ポリシー・コンプライアンス           |
 
 優先順位（衝突時）: **Team Rules → Project Rules → User Rules**。適用されるものはマージされ、先のソースが優先される。
 
@@ -23,7 +23,7 @@ CLI（`agent`）もエディタと同じ rules システムを使う。CLIはプ
 - 拡張子は **`.mdc` 必須**。`.cursor/rules/` 内の素の `.md` は rules システムに無視される（メタデータがないため）
 - サブフォルダで整理可能（例: `frontend/components.mdc`）。発見はフォルダ走査。同名ファイルが別フォルダにあってもパス全体で識別され、条件が合えば両方適用される
 - UI: `/create-rule`、または Customize → Rules → Add Rule。コマンドパレットの "New Cursor Rule" でも可
-- GitHubから Remote Rule を取り込むと `.cursor/rules/imported/<repoName>/` に配置される
+- GitHub リポジトリから rules だけを取り込む機能（旧 Remote Rule）は無くなった。共有したい rules はプラグインに入れ、マーケットプレイス経由でインストールする（https://cursor.com/docs/plugins.md）
 
 ### Frontmatter と適用タイプ
 
@@ -62,14 +62,17 @@ alwaysApply: false
 
 - 500行未満。大きいルールは関心ごとに分割
 - 曖昧語を避け、内部ドキュメントのように具体的に書く
-- コード全文や巨大スタイルガイドのコピーは避け、`@filename.ts` で参照する（鮮度とトークンのため）
+- コード全文や巨大スタイルガイドのコピーは避け、`@filename.ts` のようにパスで参照する（鮮度とトークンのため）
+  - 参照先の中身はプロンプトに展開されない。Agent がルールを見て、必要なときに自分のツールで読む（エディタ・CLI・Cloud Agents で同じ）。「新しいサービスを作る前に `@service-template.ts` を読む」のように、何を見に行くかを書く
+  - 常にコンテキストに要る内容は、参照ではなくルール本文に直接書く
 - Agentが同じミスを繰り返したときに足す。先回りしすぎない
 - リンタで強制できることはルールに書かない。よくあるツール知識（npm, git 等）の羅列もしない
 
 ### 効く範囲・効かない範囲
 
 - **効く**: Agent（Chat）
-- **効かない**: Cursor Tab、Inline Edit（Ctrl+K）。User Rules も Inline Edit には使われない
+- **効かない**: Cursor Tab、Bugbot の PR レビュー（Bugbot は別の rules を持つ: https://cursor.com/docs/bugbot.md#rules）
+- Inline Edit（Ctrl+K）に効くかは、現行の公式ドキュメントに記載が無い（旧版の「効かない」という記述は削除された）。断定せず、必要なら実機か cursor-docs で確かめる
 
 ## AGENTS.md
 
@@ -99,8 +102,9 @@ Cursorは `CLAUDE.md` を `AGENTS.md` と同じように読む。ルートに置
 
 ## User Rules
 
-- Customize → Rules（または Settings → Rules）に書くグローバル好み
-- プロファイルエクスポートに含まれない。マシン移行時は再入力か Project Rules へ移す
+- Customize → Rules に書くグローバル好み。Cursor アカウントに保存され、別マシンでもサインインすれば同期される
+- ファイルで置くなら `~/.cursor/rules`（Windows: `%USERPROFILE%\.cursor\rules`）。こちらはマシンローカルで同期されない
+- プロファイルエクスポートには含まれない
 - 例: 「簡潔に返す。不要な繰り返しを避ける」
 
 ## Team Rules
@@ -134,7 +138,7 @@ Skillsの作成・配置は **cursor-skill-use**。Rules に長い手順やス�
 | --------------------------------- | ------------------------------------------------------------------------------------------------ |
 | ルールが効かない                  | 適用タイプ。Intelligent なら description。Specific Files なら globs が参照ファイルにマッチするか |
 | `.md` を `.cursor/rules` に置いた | 無視される。`.mdc` にするか `AGENTS.md` を使う                                                   |
-| Tab / Ctrl+K で効かない           | 仕様。Rulesは Agent のみ                                                                         |
+| Tab で効かない                    | 仕様。Rulesは Agent のみ（Ctrl+K は公式に記載なし）                                              |
 | 同名ルールが複数                  | フルパスで別物。条件が合えば両方適用                                                             |
 | TeamとProjectが矛盾               | Teamが優先                                                                                       |
 

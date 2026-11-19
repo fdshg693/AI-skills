@@ -30,12 +30,10 @@ Project rules live in your codebase and are version-controlled. Your whole team 
 
 ## How do I set up user rules?
 
-User rules are global preferences that apply across all your projects.
+User rules are global preferences that apply across all your projects. They sync with your Cursor account across devices.
 
-1. Open Cursor Settings:
-   - **Mac**: Click **Cursor** > **Settings** in the menu bar
-   - **Windows/Linux**: Click **File** > **Preferences** > **Settings**
-2. Click **Rules** in the sidebar
+1. Open **Customize** in the sidebar
+2. Click **Rules**
 3. Add your preferences. For example: "Reply in a concise style. Avoid unnecessary repetition."
 
 ## How do I use AGENTS.md?
@@ -55,7 +53,7 @@ For more control over when rules apply, use project rules in `.cursor/rules/` in
 ## What are good practices for writing rules?
 
 - Keep rules under 500 lines. Split large rules into smaller, focused files.
-- Include concrete examples or reference files with `@filename` in your rule content.
+- Include concrete examples, or point Agent at reference files by path (for example `@service-template.ts`). Agent reads the file when it needs it; the contents aren't inlined, so put anything that must always be in context in the rule body.
 - Start small. Add rules when you notice Agent making the same mistake more than once.
 - Check rules into git so your teammates benefit too.
 
@@ -68,17 +66,18 @@ For large projects, split rules into focused files instead of one long rule. Eac
 ## Where are rules stored?
 
 - **Project rules** are stored in `.cursor/rules/` inside your project folder. They're version-controlled with git.
-- **User rules** are stored locally in your Cursor settings, not in any project directory. They apply across all your projects on that machine.
+- **User rules** in Cursor Settings are stored on your Cursor account. They apply across all your projects and sync when you sign in on another machine.
+- **User rule files** in `~/.cursor/rules` (Windows: `%USERPROFILE%\.cursor\rules`) stay on the machine and do not sync.
 - **Team rules** are stored on Cursor's servers and managed from the team dashboard. They sync automatically to all team members. Team rules support glob patterns, so you can scope a rule to specific file types (e.g., `**/*.py`).
 
-User rules and team rules are not included in profile exports. If you switch machines, re-enter user rules manually or move them into a project rule file.
+User rules and team rules are not included in profile exports. Signing in on a new machine syncs your account user rules.
 
 ## How do team rules work?
 
 Team and [Enterprise](https://cursor.com/docs/enterprise.md) plans can create and enforce rules across the entire organization from the [Cursor dashboard](https://cursor.com/dashboard/team-content).
 
 - **Enforced rules** are required for all members and can't be turned off in their settings.
-- **Optional rules** are enabled by default but members can disable them in **Cursor Settings > Rules**.
+- **Optional rules** are enabled by default but members can disable them in **Customize** > **Rules**.
 - Team rules support glob patterns (e.g., `**/*.py`) to scope a rule to specific file types.
 - When rules conflict, precedence is: Team Rules > Project Rules > User Rules.
 
@@ -107,7 +106,7 @@ Cursor identifies rules by their full file path, not their name alone. Two rules
 
 Check the rule type. For `Apply Intelligently`, make sure you've added a description so Agent knows when it's relevant. For `Apply to Specific Files`, verify the file pattern matches the files you're working with.
 
-Rules only apply to Agent (Chat). They do not apply to Tab completion or Inline Edit.
+Rules only apply to Agent (Chat). They do not apply to Tab completion or [Bugbot](https://cursor.com/docs/bugbot.md#rules) PR reviews.
 
 ## Related
 

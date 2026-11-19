@@ -654,7 +654,7 @@ meta:
   requires_skills: cursor-skill-use, cursor-docs, claude-code-memory
   status: stable
   description: no description
-  version: 1.0.4
+  version: 1.0.5
 ---
 
 - cursor-plugin-use
