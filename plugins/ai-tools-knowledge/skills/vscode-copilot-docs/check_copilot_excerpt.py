@@ -50,6 +50,9 @@ DEFAULT_EXCERPT = SKILL_DIR / "output" / "copilot-excerpt.md"
 def find_repo_root(start: Path) -> Path:
     """Walk upward from `start` to find the repo root (the directory containing `.git`).
 
+    Inside the umbrella this is the skills/ submodule root (its `.git` is a file), so
+    config.yml's `source` is relative to the submodule, not to the umbrella.
+
     config.yml's `source` key is repo-root-relative, not relative to this script's own
     directory -- a file-relative path would break both when the source moves *and* when
     this skill directory itself moves, which is twice as fragile as anchoring to the
@@ -119,7 +122,11 @@ def main() -> int:
 
     excerpt_entries = parse_entries(args.excerpt.read_text(encoding="utf-8"))
     source_entries = parse_entries(args.source.read_text(encoding="utf-8"))
-    source_by_url = {e["url"]: e for e in source_entries}
+    # The source lists some URLs more than once under different titles (e.g. in both
+    # "AI in VS Code" and "Advanced Setup"); an excerpt entry matching any of them is fine.
+    source_by_url: dict[str, list[dict]] = {}
+    for e in source_entries:
+        source_by_url.setdefault(e["url"], []).append(e)
     excerpt_urls = {e["url"] for e in excerpt_entries}
 
     missing = []
@@ -127,10 +134,13 @@ def main() -> int:
     desc_drift = []
 
     for entry in excerpt_entries:
-        source_entry = source_by_url.get(entry["url"])
-        if source_entry is None:
+        candidates_for_url = source_by_url.get(entry["url"])
+        if candidates_for_url is None:
             missing.append(entry)
             continue
+        source_entry = next(
+            (e for e in candidates_for_url if e["title"] == entry["title"]), candidates_for_url[0]
+        )
         if source_entry["title"] != entry["title"]:
             title_mismatches.append((entry, source_entry))
         elif source_entry["desc"] != entry["desc"]:
