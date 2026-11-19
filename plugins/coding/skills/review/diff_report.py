@@ -1,11 +1,28 @@
 #!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.10"
+# dependencies = ["pathspec"]
+# ///
 """現在のブランチから指定したマージ先ブランチへPRを作ると仮定し、その差分を出力する。
 
 読み取り専用: git diff / show / merge-base / rev-parse のみを使用し、
 checkout・merge・commit・push など状態を変更する操作は一切行わない。
 
 使い方:
-    python diff_report.py <target-branch> [--source SOURCE] [--repo REPO] [--output-dir DIR]
+    uv run diff_report.py <target-branch> [--source SOURCE] [--repo REPO] [--output-dir DIR]
+                          [--local-target]
+
+マージ先の解決:
+    ブランチ名だけを渡すと、リモート追跡ブランチ origin/<target> があればそちらを使う
+    （PR のマージ先は GitHub 上の <target> なので、古いローカルの <target> と比べない）。
+    ローカルの <target> と origin/<target> がずれていれば stderr に件数を出す。
+    ローカルの <target> を使いたいときは --local-target。fetch はしないので、
+    origin/<target> 自体が古いときは事前に `git fetch` するようユーザーに伝える。
+
+サブモジュール:
+    ポインタが変わったサブモジュールは、差分ブロックにサブモジュール内のコミット一覧と、
+    新しい commit がリモートのどこかのブランチに含まれるか（未push の検出）を出す。
+    INDEX.md / 標準出力の冒頭にも要約を出す。
 
 出力:
     - ファイル: temp/review/<timestamp>_<hash(target,source)>/ 配下に、
@@ -23,8 +40,8 @@ checkout・merge・commit・push など状態を変更する操作は一切行�
     同梱の diff_common.py（チャンク分割・.diffignoreフィルタ等の共通処理）に依存する。
     本スクリプトと同階層の .diffignore ファイル（.gitignore と同じ書式の
     パターンを記載）に、パスがマッチした差分ファイルをレビュー対象から除外する。
-    このマッチングには `pathspec` パッケージ（PyPI）を使用するため、事前に
-    `pip install pathspec` でグローバルにインストールしておく必要がある。
+    このマッチングには `pathspec` パッケージ（PyPI）を使用する。`uv run` で実行すれば
+    PEP 723 のメタデータから自動で入る（uv を使わない場合は `pip install pathspec`）。
     .diffignore が存在しない場合は何も除外せず、従来どおり全差分を対象とする。
 """
 
@@ -36,6 +53,8 @@ from pathlib import Path
 
 from diff_common import (
     build_block_meta,
+    describe_submodule_change,
+    parse_raw_gitlinks,
     build_chunks,
     build_index_md,
     count_lines,
@@ -45,6 +64,40 @@ from diff_common import (
     run_git,
     write_chunk_files,
 )
+
+
+def resolve_target(repo_root, name, use_local):
+    """マージ先は origin/<name> を優先する。ローカルとずれていれば stderr に出す。"""
+    if use_local or ("/" in name and name.split("/", 1)[0] in remotes(repo_root)):
+        return resolve_branch(repo_root, name, "マージ先ブランチ")
+    remote_name = f"origin/{name}"
+    if not exact_ref(repo_root, f"refs/remotes/{remote_name}"):
+        # ブランチ名でない(HEAD~3 や sha 等)、または origin に無い
+        return resolve_branch(repo_root, name, "マージ先ブランチ")
+    if exact_ref(repo_root, f"refs/heads/{name}"):
+        counts = run_git(
+            repo_root, ["rev-list", "--left-right", "--count", f"{name}...{remote_name}"]
+        ).stdout.split()
+        local_only, remote_only = int(counts[0]), int(counts[1])
+        if local_only or remote_only:
+            print(
+                f"注意: ローカルの {name} は {remote_name} と {remote_only} commit 遅れ・"
+                f"{local_only} commit 先行。PR のマージ先に合わせて {remote_name} と比較する"
+                "（ローカルと比べるなら --local-target）。",
+                file=sys.stderr,
+            )
+    return remote_name
+
+
+def remotes(repo_root):
+    return run_git(repo_root, ["remote"], check=False).stdout.split()
+
+
+def exact_ref(repo_root, full_ref):
+    return (
+        run_git(repo_root, ["show-ref", "--verify", "--quiet", full_ref], check=False).returncode
+        == 0
+    )
 
 
 def resolve_branch(repo_root, name, label):
@@ -98,7 +151,16 @@ def build_output_dir(repo_root, target_ref, source_ref, override):
     return repo_root / "temp" / "review" / folder_name
 
 
-def build_entry_meta(repo_root, diff_range, merge_base_sha, source_ref, status, old_path, new_path):
+def build_entry_meta(
+    repo_root, diff_range, merge_base_sha, source_ref, status, old_path, new_path, gitlinks
+):
+    if new_path in gitlinks:
+        old_sha, new_sha = gitlinks[new_path]
+        diff_body, _ = describe_submodule_change(repo_root, new_path, old_sha, new_sha)
+        return build_block_meta(
+            status, old_path, new_path, "N/A (submodule)", "N/A (submodule)", diff_body
+        )
+
     binary = is_binary(repo_root, diff_range, old_path, new_path)
 
     if binary:
@@ -136,6 +198,11 @@ def main():
         default=None,
         help="差分ファイルの出力先。省略時は temp/review/<timestamp>_<hash>/ 配下",
     )
+    parser.add_argument(
+        "--local-target",
+        action="store_true",
+        help="マージ先に origin/<target> ではなくローカルの <target> を使う",
+    )
     args = parser.parse_args()
 
     repo_root = find_repo_root(Path(args.repo))
@@ -149,7 +216,7 @@ def main():
             )
         source = head
 
-    target_ref = resolve_branch(repo_root, args.target, "マージ先ブランチ")
+    target_ref = resolve_target(repo_root, args.target, args.local_target)
     source_ref = resolve_branch(repo_root, source, "マージ元ブランチ")
 
     if target_ref == source_ref:
@@ -185,9 +252,18 @@ def main():
         )
         return
 
+    gitlinks = parse_raw_gitlinks(
+        run_git(repo_root, ["diff", "--raw", "--no-abbrev", diff_range]).stdout
+    )
+    submodule_summaries = [
+        describe_submodule_change(repo_root, path, old_sha, new_sha)[1]
+        for path, (old_sha, new_sha) in sorted(gitlinks.items())
+        if any(path == e[2] for e in raw_entries)
+    ]
+
     entries = [
         build_entry_meta(
-            repo_root, diff_range, merge_base_sha, source_ref, status, old_path, new_path
+            repo_root, diff_range, merge_base_sha, source_ref, status, old_path, new_path, gitlinks
         )
         for status, old_path, new_path in raw_entries
     ]
@@ -207,6 +283,11 @@ def main():
             output_dir=output_dir,
             total_entries=len(entries),
             ignored_paths=ignored_paths,
+            extra_sections=(
+                [("サブモジュールの変更", "".join(f"- {line}\n" for line in submodule_summaries))]
+                if submodule_summaries
+                else []
+            ),
         )
         index_path = output_dir / "INDEX.md"
         index_path.write_text(index_content, encoding="utf-8")
@@ -220,6 +301,8 @@ def main():
     print(f"# 対象ファイル数: {len(entries)}")
     if ignored_paths:
         print(f"# .diffignoreにより除外: {len(ignored_paths)}件 ({', '.join(ignored_paths)})")
+    for line in submodule_summaries:
+        print(f"# サブモジュール: {line}")
     print()
 
     for index, entry in enumerate(entries, start=1):

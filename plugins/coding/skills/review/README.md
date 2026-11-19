@@ -22,7 +22,8 @@ skills/review/
 ├── uncommitted_report.py  # 未コミット変更の差分を取得・出力するスクリプト
 ├── pr_report.py           # 既存PRの差分とコメント(COMMENTS.md)をghで取得・出力するスクリプト
 ├── diff_common.py         # 上記3スクリプトが共有するヘルパー(チャンク分割・.diffignoreフィルタ・INDEX.md生成など)
-└── .diffignore            # レビュー対象から除外するパスパターン(.gitignoreと同じ書式)
+├── .diffignore.example    # .diffignore の雛形(ロックファイル・スナップショットの例入り)
+└── .diffignore            # レビュー対象から除外するパスパターン(.gitignoreと同じ書式。gitignore 済み)
 
 testing/
 ├── setup_fixture.py       # 動作確認用の使い捨てgitリポジトリを testing/fixture-repo/ に作成するスクリプト
@@ -53,18 +54,19 @@ Claude Codeに対して、以下のように自然文で依頼する。マージ
 
 ```bash
 # ブランチ間差分(マージ元は省略時に現在のブランチ)
-python skills/review/diff_report.py <target-branch> [--source <branch>] [--repo <path>] [--output-dir <dir>]
+uv run skills/review/diff_report.py <target-branch> [--source <branch>] [--repo <path>] [--output-dir <dir>]
 
 # 未コミット変更(staged + unstaged + untracked)
-python skills/review/uncommitted_report.py [--repo <path>] [--output-dir <dir>]
+uv run skills/review/uncommitted_report.py [--repo <path>] [--output-dir <dir>]
 
 # 既存PR(PR番号 / #番号 / PRのURL。省略時は現在のブランチのPR)
-python skills/review/pr_report.py [<PR>] [--gh-repo OWNER/REPO] [--repo <path>] [--output-dir <dir>]
+uv run skills/review/pr_report.py [<PR>] [--gh-repo OWNER/REPO] [--repo <path>] [--output-dir <dir>]
 ```
 
 ## 依存関係
 
-- `.diffignore` に実パターン(コメント以外の行)を記載する場合のみ、`pathspec` パッケージが必要
+- [uv](https://docs.astral.sh/uv/)。各スクリプトは PEP 723 のメタデータで依存(`pathspec`)を宣言しているので、`uv run <script>.py` で実行すれば自動で入る
+- uv を使わず `python` で実行する場合、`.diffignore` に実パターン(コメント以外の行)を記載するなら `pathspec` パッケージが必要
   ```bash
   pip install pathspec
   ```
@@ -103,10 +105,10 @@ python setup_fixture.py --bulk 40
 
 ```bash
 # ブランチ間差分レビュー(feature -> main へのPRを想定)
-python ../skills/review/diff_report.py main --repo fixture-repo
+uv run ../skills/review/diff_report.py main --repo fixture-repo
 
 # 未コミット変更レビュー
-python ../skills/review/uncommitted_report.py --repo fixture-repo
+uv run ../skills/review/uncommitted_report.py --repo fixture-repo
 ```
 
 確認observationポイント:
@@ -124,7 +126,7 @@ python ../skills/review/uncommitted_report.py --repo fixture-repo
 # skills/review/.diffignore に一時的に追記する例
 echo '*.lock' >> ../skills/review/.diffignore
 
-python ../skills/review/uncommitted_report.py --repo fixture-repo
+uv run ../skills/review/uncommitted_report.py --repo fixture-repo
 # -> pkg.lock が除外され、"除外: 1件" のように件数が報告されることを確認する
 
 # 確認後は追記した内容を元に戻す(git checkout等ではなく、追記した行を手動で削除する)
@@ -142,10 +144,10 @@ PRはフィクスチャで再現できないため、公開リポジトリの既
 
 ```bash
 # URL指定(分割1ファイル → 標準出力に差分本文)
-python ../skills/review/pr_report.py https://github.com/cli/cli/pull/14517 --output-dir tmp-pr1
+uv run ../skills/review/pr_report.py https://github.com/cli/cli/pull/14517 --output-dir tmp-pr1
 
 # 番号 + --gh-repo 指定(変更ファイルが多いPR → INDEX.md と COMMENTS.md のパスのみ出力)
-python ../skills/review/pr_report.py "#14507" --gh-repo cli/cli --output-dir tmp-pr2
+uv run ../skills/review/pr_report.py "#14507" --gh-repo cli/cli --output-dir tmp-pr2
 ```
 
 確認ポイント:

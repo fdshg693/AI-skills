@@ -15,7 +15,7 @@
    同梱の `uncommitted_report.py` を実行する。このスクリプトは読み取り専用のgitコマンド(`diff` / `status` 相当の `ls-files` / `show` / `rev-parse`)のみを使う。マージ先ブランチの指定は不要。
 
    ```
-   python ${CLAUDE_SKILL_DIR}/uncommitted_report.py
+   uv run ${CLAUDE_SKILL_DIR}/uncommitted_report.py
    ```
 
    - 対象リポジトリがカレントディレクトリでない場合: `--repo <path>`
@@ -39,11 +39,11 @@
 
 2. **差分をレビューする**
 
-   取得した差分をもとに、通常のコードレビューと同じ観点でレビューする(バグ・既存動作への影響・命名やスタイルの一貫性・テストの有無・意図しないファイルの混入など)。`original_lines` / `new_lines` は、変更の規模感やファイル全体に対する変更割合を把握するために使う。
+   `SKILL.md` の「レビュー観点」に沿ってレビューする。`original_lines` / `new_lines` は、変更の規模感やファイル全体に対する変更割合を把握するために使う。
 
 3. **結果を報告する**
 
-   レビュー結果を報告する際、以下を明記する。
+   `SKILL.md` の「結果の報告」の形式(blocker / should / nit)で報告し、以下も明記する。
 
    - これは「現在コミットされていない変更(staged/unstaged/untracked)」のレビューであること
    - add・commit・stash・checkout等は一切行っていないこと

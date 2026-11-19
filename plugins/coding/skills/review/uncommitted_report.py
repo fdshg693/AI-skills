@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.10"
+# dependencies = ["pathspec"]
+# ///
 """現在の作業ツリーにある、コミットされていない変更の差分を出力する。
 
 対象は staged（indexに追加済み）・unstaged（追加前）・untracked（未追跡）の
@@ -6,7 +10,7 @@
 のみを使用し、add・commit・stash・checkout など状態を変更する操作は一切行わない。
 
 使い方:
-    python uncommitted_report.py [--repo REPO] [--output-dir DIR]
+    uv run uncommitted_report.py [--repo REPO] [--output-dir DIR]
 
 出力:
     - ファイル: temp/review/<timestamp>_uncommitted/ 配下に、
@@ -24,8 +28,8 @@
     同梱の diff_common.py（チャンク分割・.diffignoreフィルタ等の共通処理）に依存する。
     本スクリプトと同階層の .diffignore ファイル（.gitignore と同じ書式の
     パターンを記載）に、パスがマッチした差分ファイルをレビュー対象から除外する。
-    このマッチングには `pathspec` パッケージ（PyPI）を使用するため、事前に
-    `pip install pathspec` でグローバルにインストールしておく必要がある。
+    このマッチングには `pathspec` パッケージ（PyPI）を使用する。`uv run` で実行すれば
+    PEP 723 のメタデータから自動で入る（uv を使わない場合は `pip install pathspec`）。
     .diffignore が存在しない場合は何も除外せず、従来どおり全差分を対象とする。
 """
 
