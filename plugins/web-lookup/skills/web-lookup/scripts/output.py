@@ -35,8 +35,19 @@ def _next_prefixed_sequence(directory: Path) -> int:
     return highest + 1
 
 
-def write_query_results(label: str, items: Sequence[tuple[str, str]]) -> Path:
-    """Write `(title, content)` items into a fresh folder; return `index.md`."""
+def write_query_results(
+    label: str,
+    items: Sequence[tuple[str, str]],
+    *,
+    hints: Sequence[str] | None = None,
+    failures: Sequence[tuple[str, str]] = (),
+) -> Path:
+    """Write `(title, content)` items into a fresh folder; return `index.md`.
+
+    `hints` (same order as `items`) follow `(N chars)` as ` — hint`; empty means none.
+    `failures` are `(url, reason)` lines with no file, listed after the items.
+    grep / ms / aws pass neither, so their index format is unchanged.
+    """
     root = get_output_dir()
     root.mkdir(parents=True, exist_ok=True)
     folder = root / f"{_next_prefixed_sequence(root):04d}-{slugify(label)}"
@@ -46,7 +57,11 @@ def write_query_results(label: str, items: Sequence[tuple[str, str]]) -> Path:
     for position, (title, content) in enumerate(items, start=1):
         filename = f"{position:04d}.md"
         (folder / filename).write_text(content, encoding="utf-8")
-        lines.append(f"- [{title}]({filename}) ({len(content)} chars)")
+        line = f"- [{title}]({filename}) ({len(content)} chars)"
+        hint = hints[position - 1] if hints else ""
+        lines.append(f"{line} — {hint}" if hint else line)
+    for url, reason in failures:
+        lines.append(f"- {url} — {reason}")
 
     index_path = folder / "index.md"
     index_path.write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")

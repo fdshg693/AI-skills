@@ -1,10 +1,10 @@
 r"""Skill-local CLI: `uv run --project ${CLAUDE_SKILL_DIR} web-lookup <subcommand>`.
 
-Subcommands: `available` / `grep search` / `ms search` / `ms fetch` /
+Subcommands: `available` / `page` / `grep search` / `ms search` / `ms fetch` /
 `aws search` / `aws fetch` / `tav search` / `tav extract` / `ctx library` / `ctx docs`.
 
 `available` prints a settings table on stdout and always exits 0. Large results
-(grep / ms / aws / tav) write `WEB_LOOKUP_OUTPUT_DIR/NNNN-<slug>/` and print only the
+(page / grep / ms / aws / tav) write `WEB_LOOKUP_OUTPUT_DIR/NNNN-<slug>/` and print only the
 `index.md` path. `ctx` and `available` print to stdout.
 """
 
@@ -39,7 +39,9 @@ from env_check import (
     load_environment,
     unavailable_reason,
 )
+from hints import gap_hints
 from output import print_index_path, write_query_results
+from page import fetch_pages
 
 EXIT_SUCCESS = 0
 EXIT_ERROR = 1
@@ -61,8 +63,30 @@ def _write_or_empty(label: str, items: list[tuple[str, str]]) -> int:
     return EXIT_SUCCESS
 
 
+def _write_with_hints(label: str, items: list[tuple[str, str]], *, excerpt: bool) -> int:
+    if not items:
+        print("No results.", file=sys.stderr)
+        return EXIT_ERROR
+    hints = [gap_hints(content, excerpt=excerpt) for _title, content in items]
+    print_index_path(write_query_results(label, items, hints=hints))
+    return EXIT_SUCCESS
+
+
 def cmd_available(_args: argparse.Namespace) -> int:
     sys.stdout.write(format_availability_table())
+    return EXIT_SUCCESS
+
+
+def cmd_page(args: argparse.Namespace) -> int:
+    results = fetch_pages(args.urls)
+    items = [(r.title, r.content) for r in results if r.ok]
+    failures = [(r.url, f"{r.failure}; try `tav extract`") for r in results if not r.ok]
+    if not items:
+        for url, reason in failures:
+            print(f"{url}: {reason}", file=sys.stderr)
+        return EXIT_ERROR
+    hints = [gap_hints(content, excerpt=False) for _title, content in items]
+    print_index_path(write_query_results(args.urls[0], items, hints=hints, failures=failures))
     return EXIT_SUCCESS
 
 
@@ -120,14 +144,14 @@ def cmd_tav_search(args: argparse.Namespace) -> int:
         include_domains=args.include_domain,
         exclude_domains=args.exclude_domain,
     )
-    return _write_or_empty(args.query, items)
+    return _write_with_hints(args.query, items, excerpt=True)
 
 
 def cmd_tav_extract(args: argparse.Namespace) -> int:
     if (code := _reject_if_unavailable(BACKEND_TAV)) is not None:
         return code
     items = tav_extract(args.urls, api_key=get_tavily_api_key(), query=args.query)
-    return _write_or_empty(args.urls[0], items)
+    return _write_with_hints(args.urls[0], items, excerpt=bool(args.query))
 
 
 def cmd_ctx_library(args: argparse.Namespace) -> int:
@@ -165,7 +189,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="web-lookup",
         description=(
-            "Bundled web lookup for grep.app, Microsoft Learn, AWS docs, Tavily, and Context7. "
+            "Bundled web lookup for local page fetch, grep.app, Microsoft Learn, AWS docs, Tavily, and Context7. "
             "Run as: uv run --project ${CLAUDE_SKILL_DIR} web-lookup <subcommand>"
         ),
     )
@@ -176,6 +200,16 @@ def build_parser() -> argparse.ArgumentParser:
         help="Print which backends the current .env / environment can run (no network).",
     )
     p_available.set_defaults(func=cmd_available)
+
+    p_page = sub.add_parser(
+        "page",
+        help=(
+            "Fetch known URL(s) locally and keep the main text as Markdown "
+            "(no API key, no JavaScript). Failed URLs are listed for `tav extract`."
+        ),
+    )
+    p_page.add_argument("urls", nargs="+", help="One or more URLs.")
+    p_page.set_defaults(func=cmd_page)
 
     p_grep = sub.add_parser("grep", help="Search public GitHub code via grep.app MCP.")
     grep_sub = p_grep.add_subparsers(dest="grep_command", required=True)

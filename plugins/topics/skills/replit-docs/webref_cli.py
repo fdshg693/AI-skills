@@ -257,6 +257,27 @@ def page_url(raw: str) -> str:
     return url if path.endswith(".md") else url + ".md"
 
 
+def matcher(query: str, word: bool = False, case_sensitive: bool = False):
+    """Return a predicate; default is case-insensitive substring matching."""
+    if not word and not case_sensitive:
+        needle = query.casefold()
+        return lambda text: needle in text.casefold()
+    pattern = re.escape(query)
+    if word:
+        pattern = rf"(?<!\w){pattern}(?!\w)"
+    compiled = re.compile(pattern, 0 if case_sensitive else re.IGNORECASE)
+    return lambda text: compiled.search(text) is not None
+
+
+def add_match_options(command: argparse.ArgumentParser) -> None:
+    command.add_argument(
+        "-w", "--word", action="store_true", help="match whole words only (e.g. CLI, not client)"
+    )
+    command.add_argument(
+        "-c", "--case-sensitive", action="store_true", help="match letter case exactly"
+    )
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
@@ -266,8 +287,10 @@ def main() -> int:
     update.add_argument("--force", action="store_true")
     index = sub.add_parser("index", help="search hierarchical index across languages")
     index.add_argument("query", nargs="?", default="")
+    add_match_options(index)
     search = sub.add_parser("search", help="search English full text, bounded results")
     search.add_argument("query")
+    add_match_options(search)
     extract = sub.add_parser(
         "extract", help="extract a validated English section from the cached full text"
     )
@@ -356,31 +379,25 @@ def main() -> int:
                 f"Source: {section['url']}\nEnglish full text fetched_at: {data['full']['fetched_at']}\nFull text: {path}"
             )
             return 0
-        needle = args.query.casefold()
+        matches = matcher(args.query, args.word, args.case_sensitive)
         if args.command == "index":
             found = [
                 p
                 for p in data["pages"]
-                if needle in (p["title"] + " " + p["url"] + " " + p["hierarchy"]).casefold()
+                if matches(p["title"] + " " + p["url"] + " " + p["hierarchy"])
             ]
             for p in found[:100]:
                 print(f"{p['hierarchy']} | {p['title']} | {p['url']} | index: {p['index']}")
         else:
-            if not needle:
+            if not args.query:
                 raise ValueError("empty search query")
-            found = [
-                s
-                for s in data["full"]["sections"]
-                if needle in (s["title"] + "\n" + s["body"]).casefold()
-            ]
+            found = [s for s in data["full"]["sections"] if matches(s["title"] + "\n" + s["body"])]
             print(
                 f"English full text fetched_at: {data['full']['fetched_at']}; search is not exhaustive across languages"
             )
             for section in found[:100]:
                 lines = [
-                    line.strip()[:300]
-                    for line in section["body"].splitlines()
-                    if needle in line.casefold()
+                    line.strip()[:300] for line in section["body"].splitlines() if matches(line)
                 ][:3]
                 print(f"{section['title']} | {section['url']}\n  " + "\n  ".join(lines))
         print(f"Matches: {len(found)} (showing at most 100); zero matches do not establish absence")

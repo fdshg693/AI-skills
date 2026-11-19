@@ -22,6 +22,28 @@ meta:
   version: 1.0.2
 ---
 
+- ai-chat-apps
+---
+# ChatGPT・Gemini・Claude の利用者向けチャットアプリ（WEB 版とデスクトップアプリ）の知識スキル。
+# 機能マップ（chatgpt.md / gemini.md / claude-ai.md / desktop.md / comparison.md）で公式ページを引き、具体値は都度取得する 2 層構成。
+# 索引（output/*-index.md）は起動時に取らず、search が古い索引だけ取り直す（3 情報源を毎回取ると重いため）。
+# 情報源・スクリプトの出自・索引の更新手順は同階層の README.md（メンテナ向け）。
+name: ai-chat-apps
+description: Use when answering questions about the consumer chat apps ChatGPT (chatgpt.com), Gemini (gemini.google.com) and Claude (claude.ai), including their Windows/macOS desktop apps — features, settings, how-to steps, plan limits and availability, or how equivalent features map across the three (projects/notebooks, custom GPTs/Gems/skills/plugins, connectors/apps/custom MCP, memory, deep research, canvas/artifacts, agents). Grounds answers in the official help centers and release notes instead of training-data memory, which goes stale quickly here (features are renamed and retired often). Not for the OpenAI, Gemini or Claude APIs, Claude Code, Codex or Gemini CLI.
+allowed-tools: Bash(uv run ${CLAUDE_SKILL_DIR}/webref_cli.py *) Read Grep
+meta:
+  tag: []
+  requires_repo_tools: none
+  requires_env: none
+  dependencies: requests, typer, uv
+  requires_install: uv
+  requires_hooks: none
+  requires_skills: web-lookup
+  status: experimental
+  description: Official-source answers about the ChatGPT, Gemini and Claude web and desktop apps, with a cross-app feature map
+  version: 0.2.0
+---
+
 - antigravity-docs
 ---
 name: antigravity-docs
@@ -37,6 +59,30 @@ meta:
   status: stable
   description: no description
   version: 1.0.5
+---
+
+- antigravity-logs
+---
+# 同梱ファイル: format.md（protobuf の enum 表・フィールド番号、SQLite スキーマ、補助ファイルの詳細）
+name: antigravity-logs
+description: >-
+  Google Antigravity（IDE・CLI agy）がローカルに残す会話ログの所在と形式を説明する。
+  3 つのルート（~/.gemini/antigravity・antigravity-cli・antigravity-ide）、索引の
+  conversation_summaries.db、本文の brain/<id>/.system_generated/logs/transcript_full.jsonl、
+  会話ごとの protobuf を収めた conversations/<id>.db を扱う。「Antigravity の過去の会話を探したい」
+  「トークンを集計したい」「会話履歴の保存先を知りたい」「ログの読み方や SQLite の安全な開き方を知りたい」
+  ときに使う。Antigravity の一般的な機能の質問には antigravity-docs、CLI の使い方には agy-cli-docs を使う。
+meta:
+  tag: []
+  requires_repo_tools: none
+  requires_env: none
+  dependencies: none
+  requires_install: none
+  requires_hooks: none
+  requires_skills: antigravity-docs, agy-cli-docs
+  status: experimental
+  description: Antigravityのローカル会話ログ（3ルート）の所在と形式
+  version: 1.0.1
 ---
 
 - antigravity-memory
@@ -170,6 +216,29 @@ meta:
   status: stable
   description: no description
   version: 1.0.4
+---
+
+- cline-logs
+---
+name: cline-logs
+description: >-
+  Cline（VS Code 拡張・Cline CLI）のローカルに残るタスク・セッション履歴の所在と形式を説明する。
+  SDK セッション形式（~/.cline/data/sessions/<sid>/ の JSON と索引 data/db/sessions.db、CLINE_DATA_DIR で上書き可）と、
+  レガシーのタスク形式（VS Code globalStorage の saoudrizwan.claude-dev/tasks/<id>/ と旧 CLI の ~/.cline/data/tasks/）の
+  2 系統について、レコード構造・トークンとコストの位置・プロジェクトとの対応・安全な読み方・読まない秘密ファイルを扱う。
+  「Cline の過去のタスクを探したい」「Cline のトークン・コストを集計したい」「Cline の履歴の保存先を知りたい」
+  「ui_messages.json や sessions.db の中身を読みたい」ときに使う。Cline の機能全般は cline-docs を使う。
+meta:
+  tag: []
+  requires_repo_tools: none
+  requires_env: none
+  dependencies: none
+  requires_install: none
+  requires_hooks: none
+  requires_skills: cline-docs
+  status: experimental
+  description: Clineのローカル履歴（SDKセッション形式・レガシータスク形式）の所在と形式
+  version: 1.0.1
 ---
 
 - cline-memory
@@ -333,6 +402,29 @@ meta:
   requires_skills: codex-docs, codex-settings
   status: stable
   description: no description
+  version: 1.0.1
+---
+
+- codex-logs
+---
+name: codex-logs
+description: >-
+  OpenAI Codex（CLI・IDE 拡張・app-server）のローカルに残るセッションログ
+  （~/.codex/sessions の rollout-*.jsonl、archived_sessions、history.jsonl、
+  state_5.sqlite の threads 索引）の所在とレコード形式を説明する。「Codex の過去の
+  セッションを探したい」「Codex のトークン使用量を集計したい」「rollout ファイルの
+  形式・圧縮（.jsonl.zst）を知りたい」「セッションとプロジェクトを対応付けたい」
+  ときに使う。Codex の機能全般・設定は対象外（codex-docs を使う）。
+meta:
+  tag: []
+  requires_repo_tools: none
+  requires_env: CODEX_HOME
+  dependencies: none
+  requires_install: none
+  requires_hooks: none
+  requires_skills: codex-docs
+  status: experimental
+  description: Codexのローカルセッションログ（rollout）の所在と形式。実データ未確認、公式とソースが根拠
   version: 1.0.1
 ---
 
@@ -516,6 +608,30 @@ meta:
   version: 1.0.5
 ---
 
+- cursor-logs
+---
+# 同梱ファイル: format.md（B: CLI store.db と C: IDE state.vscdb の詳細）
+name: cursor-logs
+description: >-
+  Cursor（IDE と CLI の cursor-agent/agent）のローカルに残るチャット・エージェント会話ログ
+  （projects/*/agent-transcripts の JSONL、CLI の chats/store.db、IDE の state.vscdb）の
+  所在・保存系統・レコード構造・プロジェクトとの対応・安全な読み方・秘密情報の扱いを説明する。
+  「Cursor の過去の会話を探したい」「Cursor のログを集計・解析したい」「Cursor の会話履歴が
+  どこに保存されるか知りたい」「transcript に時刻やモデルが無い理由を知りたい」ときに使う。
+  ルールやエージェント機能など Cursor の機能全般は対象外（cursor-docs を使う）。
+meta:
+  tag: []
+  requires_repo_tools: none
+  requires_env: none
+  dependencies: none
+  requires_install: none
+  requires_hooks: none
+  requires_skills: cursor-docs
+  status: experimental
+  description: Cursorのローカルログ（3系統）の所在と形式
+  version: 1.0.1
+---
+
 - cursor-memory
 ---
 # 同梱ファイル: memory.md（配置判断・書き方の詳細）/ references/（公式ドキュメント原文スナップショット）
@@ -538,7 +654,7 @@ meta:
   requires_skills: cursor-skill-use, cursor-docs, claude-code-memory
   status: stable
   description: no description
-  version: 1.0.4
+  version: 1.0.5
 ---
 
 - cursor-plugin-use
@@ -700,6 +816,23 @@ meta:
   version: 1.0.0
 ---
 
+- kilo-logs
+---
+name: kilo-logs
+description: Kilo Code（CLI/TUI・VS Code 拡張、opencode 由来の v7 系）がローカルに残すセッション履歴（~/.local/share/kilo/kilo.db の session/message/part/project 表）の所在・スキーマ・読み取り時の注意と、読んではいけない秘密情報の表を説明する。「Kilo の過去のセッションを探したい」「Kilo のトークン・コストを集計したい」「kilo.db の中身を知りたい」ときに使う。Kilo の一般的な機能・設定は kilo-code-docs を使う。
+meta:
+  tag: []
+  requires_repo_tools: none
+  requires_env: none
+  dependencies: none
+  requires_install: none
+  requires_hooks: none
+  requires_skills: kilo-code-docs, cline-logs
+  status: experimental
+  description: Kilo Codeのローカル履歴（kilo.db）の所在とスキーマ
+  version: 1.0.1
+---
+
 - kilo-memory-guide
 ---
 # 詳細仕様は同階層の agents-md.md / instructions.md / context.md を必要時だけ読む。
@@ -768,7 +901,7 @@ meta:
   requires_skills: vscode-docs,github-copilot-docs,aim-cli
   status: stable
   description: no description
-  version: 1.0.7
+  version: 1.0.8
 ---
 
 - writing-copilot-instructions
