@@ -7,7 +7,7 @@ ccusage の根拠を2系統まとめたスキル。`SKILL.md` はルーター。
 | 公式サイト（ccusage.com）の llms.txt / llms-full.txt | [official-docs.md](official-docs.md) | `output/llms.txt`, `output/llms-full.txt` |
 | 実 CLI の `--help` キャプチャ                        | [cli-help.md](cli-help.md)           | `output/cli/*.yaml`                       |
 
-CLI 側の抽出方式は `claude-cli-docs` と同じ「実 CLI の `--help` キャプチャ」であり、[ona-cli-docs](../ona-cli-docs/SKILL.md) のような llms.txt 抜粋とは異なる。
+CLI 側の抽出方式は `claude-cli-docs` と同じ「実 CLI の `--help` キャプチャ」である。
 
 ## 公式サイト側
 

@@ -118,6 +118,50 @@ class ReplitTests(unittest.TestCase):
                 self.assertEqual(code, 1)
                 self.assertIn("use index and page", err)
 
+    def test_search_word_and_case_options(self):
+        with tempfile.TemporaryDirectory() as directory:
+            data = {
+                "fetched_at": "index time",
+                "pages": [
+                    {
+                        "title": "CLI",
+                        "url": web.BASE + "cli.md",
+                        "hierarchy": "A",
+                        "index": web.ROOT,
+                    },
+                    {
+                        "title": "Client",
+                        "url": web.BASE + "client.md",
+                        "hierarchy": "A",
+                        "index": web.ROOT,
+                    },
+                ],
+                "full": {
+                    "fetched_at": "full time",
+                    "last_modified": None,
+                    "sections": [
+                        {"title": "Tool", "url": web.BASE + "tool", "body": "Use the CLI here"},
+                        {"title": "Conn", "url": web.BASE + "conn", "body": "an MCP client"},
+                        {"title": "Lower", "url": web.BASE + "lower", "body": "the cli binary"},
+                    ],
+                },
+            }
+            web.atomic_json(Path(directory) / "snapshot.json", data)
+            code, out, _ = self.run_cli(directory, "search", "cli")
+            self.assertEqual(code, 0)
+            self.assertIn("Matches: 3", out)
+            code, out, _ = self.run_cli(directory, "search", "--word", "cli")
+            self.assertIn("Matches: 2", out)
+            self.assertNotIn(web.BASE + "conn", out)
+            code, out, _ = self.run_cli(directory, "search", "-w", "-c", "CLI")
+            self.assertIn("Matches: 1", out)
+            self.assertIn(web.BASE + "tool", out)
+            code, out, _ = self.run_cli(directory, "index", "-w", "cli")
+            self.assertIn("Matches: 1", out)
+            self.assertIn("| CLI |", out)
+            self.assertTrue(web.matcher(".replit", word=True)("edit .replit file"))
+            self.assertFalse(web.matcher("a.b", word=True)("axb"))
+
     def test_deleted_page_uses_cache_and_reports_staleness(self):
         with tempfile.TemporaryDirectory() as directory:
             with patch.object(web, "fetch", return_value=("old body", web.BASE + "a.md", None)):

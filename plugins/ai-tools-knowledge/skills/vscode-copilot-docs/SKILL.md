@@ -11,7 +11,7 @@ meta:
   requires_skills: vscode-docs,github-copilot-docs,aim-cli
   status: stable
   description: no description
-  version: 1.0.7
+  version: 1.0.8
 ---
 
 # VS Code 内の GitHub Copilot 最新ドキュメント参照（抜粋版）
@@ -23,7 +23,8 @@ VS Code エディタに統合された GitHub Copilot 機能（Chat, Agent mode,
 1. **抜粋ファイルを探す**
 
    - `./output/copilot-excerpt.md` を Grep/Read して、質問に関連しそうなページの URL と短い説明を特定する
-   - セクション見出し（`## Agents` `## Agent Customization` `## Using Chat` `## Guides` など）で大まかなカテゴリを絞り込める
+   - Copilot の機能はほぼ `## AI in VS Code` に並ぶ（Chat・Agents window・ツール・カスタマイズ・MCP・ガイド・リファレンス・トラブルシューティング）。それ以外は `## Extension Guides`（拡張機能からの AI API）、`## Agent Foundations` などの学習コース、Source Control などの節にある Copilot 関連ページ
+   - URL は上流の llms.txt どおり `.md` 付き（Markdown 版のページ）。そのまま WebFetch してよい
 
 2. **該当ページの本文を取得する**（説明文だけで回答できない場合）
 

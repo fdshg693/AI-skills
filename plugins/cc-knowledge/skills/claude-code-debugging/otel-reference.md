@@ -38,6 +38,24 @@ Claude Code自体が送信するOpenTelemetry(メトリクス・ログ、betaで
 | `OTEL_EXPORTER_OTLP_METRICS_ENDPOINT` / `_LOGS_ENDPOINT` / `_TRACES_ENDPOINT` | 信号ごとにエンドポイントを個別上書き(SIEM連携等でログだけ別送り先にする場合に使う) |
 | `OTEL_EXPORTER_OTLP_HEADERS`                                                  | 認証ヘッダ等を付与                                                                 |
 | `OTEL_EXPORTER_OTLP_METRICS_HEADERS` / `_LOGS_HEADERS` / `_TRACES_HEADERS`    | 信号ごとの認証ヘッダ。汎用の `OTEL_EXPORTER_OTLP_HEADERS` とマージされる           |
+| `OTEL_EXPORTER_OTLP_METRICS_PROTOCOL` / `_LOGS_PROTOCOL`                      | 信号ごとにプロトコルを個別上書き                                                   |
+| `OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE`                           | メトリクスの temporality。既定 `delta`（`cumulative` も可）                        |
+| `CLAUDE_CODE_OTEL_HEADERS_HELPER_DEBOUNCE_MS`                                 | 動的ヘッダ（`otelHeadersHelper` 設定のスクリプト）を呼び直す間隔                   |
+
+> Claude Code にはプロトコルの既定値が無い。OTLP エクスポータを使うときは `OTEL_EXPORTER_OTLP_PROTOCOL`（または信号別の変数）を必ず設定する。
+
+### TLS・mTLS
+
+| 環境変数                                                                  | 対象 | 説明                                      |
+| ------------------------------------------------------------------------- | ---- | ----------------------------------------- |
+| `OTEL_EXPORTER_OTLP_CERTIFICATE`                                          | gRPC | サーバー証明書を検証する CA（PEM のパス） |
+| `OTEL_EXPORTER_OTLP_CLIENT_KEY` / `OTEL_EXPORTER_OTLP_CLIENT_CERTIFICATE` | gRPC | mTLS のクライアント鍵・証明書             |
+| `NODE_EXTRA_CA_CERTS`                                                     | HTTP | 追加で信頼する CA                         |
+| `CLAUDE_CODE_CLIENT_CERT` / `CLAUDE_CODE_CLIENT_KEY`                      | HTTP | mTLS のクライアント証明書・鍵             |
+
+> **実地検証**（2026-11-18、Claude Code 2.1.325、Windows・WSL）: 公的 CA（Let's Encrypt）の証明書なら、OTLP/HTTP（`http/protobuf`）は追加設定なしで `https://<IP>:4318` に送れた。一方 **gRPC で IP アドレスのエンドポイント**（`https://<IP>:4317`）に TLS で送ると、grpc-js が IP を TLS の servername に渡して Node が拒否し、`14 UNAVAILABLE: No connection established. Last error: TypeError [ERR_INVALID_ARG_VALUE]: The property 'options.servername' ...` で失敗する。IP 証明書の送信先には `http/protobuf` を使う（ホスト名なら gRPC でも問題ない）。
+>
+> また、`~/.claude/settings.json` の `env` はプロセスの環境変数より優先される。単発で別の送信先を試すときは環境変数ではなく `claude --settings <一時ファイル>` で渡す。
 
 ## エクスポート間隔
 
@@ -50,28 +68,36 @@ Claude Code自体が送信するOpenTelemetry(メトリクス・ログ、betaで
 
 ## 送信内容の詳細度制御
 
-| 環境変数                              | 説明                                                                                                                                                                   |
-| ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `OTEL_LOG_USER_PROMPTS`               | ユーザープロンプト本文をログに含めるか                                                                                                                                 |
-| `OTEL_LOG_ASSISTANT_RESPONSES`        | アシスタント応答本文を含めるか                                                                                                                                         |
-| `OTEL_LOG_TOOL_DETAILS`               | Bashコマンド内容・MCPサーバー名等のツール詳細を含めるか                                                                                                                |
-| `OTEL_LOG_TOOL_CONTENT`               | ツール入出力の内容まで含めるか(トレース有効化が前提)                                                                                                                   |
-| `OTEL_LOG_RAW_API_BODIES`             | APIリクエスト/レスポンスの生ボディを含めるか。`file:<dir>` を指定するとボディ全文をファイル保存できる                                                                  |
-| `CLAUDE_CODE_OTEL_CONTENT_MAX_LENGTH` | OpenTelemetryのcontent系属性のトランケーション上限（デフォルト60KB）を変更する                                                                                         |
-| `OTEL_LOG_MANAGED_SETTINGS`           | `managed_settings_resolved` イベントに墨消し済みの managed settings と SHA-256 ダイジェストを含める（既定は無効。project/local 設定では有効にならない。v2.1.274 以降） |
+| 環境変数                              | 説明                                                                                                                                                                                                                                |
+| ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `OTEL_LOG_USER_PROMPTS`               | ユーザープロンプト本文をログに含めるか                                                                                                                                                                                              |
+| `OTEL_LOG_ASSISTANT_RESPONSES`        | アシスタント応答本文を含めるか。未設定なら `OTEL_LOG_USER_PROMPTS` の値にフォールバックする                                                                                                                                         |
+| `OTEL_LOG_TOOL_DETAILS`               | ツール詳細を含めるか。`tool_input`（値ごとに 512 文字、全体で約 4K 文字で切る）、`user_prompt` の `command_name` の実名、コスト系属性のエージェント／スキル／MCP の実名が解禁される。未設定なら `custom` / `mcp` 等のプレースホルダ |
+| `OTEL_LOG_TOOL_CONTENT`               | ツール入出力の内容まで含めるか(トレース有効化が前提)                                                                                                                                                                                |
+| `OTEL_LOG_RAW_API_BODIES`             | APIリクエスト/レスポンスの生ボディを含めるか。`file:<dir>` を指定するとボディ全文をファイル保存できる                                                                                                                               |
+| `CLAUDE_CODE_OTEL_CONTENT_MAX_LENGTH` | OpenTelemetryのcontent系属性のトランケーション上限を変更する（既定 61440。UTF-16 のコード単位で数える）                                                                                                                             |
+| `OTEL_LOG_MANAGED_SETTINGS`           | `managed_settings_resolved` イベントに墨消し済みの managed settings と SHA-256 ダイジェストを含める（既定は無効。project/local 設定では有効にならない。v2.1.274 以降）                                                              |
+
+プライバシー上の要点（公式ドキュメント）:
+
+- 生のファイル内容・コード片はメトリクス・イベントには含まれない（トレースは別）
+- `user.email` は OAuth 認証時に含まれ、設定した送信先にだけ送られる
+- v2.1.287 以降、`user_prompt` では `prompt` と `prompt_text` の両方に本文が入る（伏せるときは両方 `<REDACTED>`）
 
 > **実地検証**: `OTEL_LOG_USER_PROMPTS` を設定しない状態(デフォルト)で `claude_code.user_prompt` / `claude_code.assistant_response` イベントを実際にLokiまで送信したところ、`prompt` / `response` 属性の値は文字列 `"<REDACTED>"` になっていた。`OTEL_LOG_USER_PROMPTS=1` を設定したコンソールエクスポータでの確認では、`prompt` 属性に実際のプロンプト文字列がそのまま載ることを確認した。デフォルトでは本文が伏せられる実装であることが実地で確認できている。
 
 ## カーディナリティ制御(メトリクスの属性を絞る)
 
-| 環境変数                                   |
-| ------------------------------------------ |
-| `OTEL_METRICS_INCLUDE_SESSION_ID`          |
-| `OTEL_METRICS_INCLUDE_VERSION`             |
-| `OTEL_METRICS_INCLUDE_ACCOUNT_UUID`        |
-| `OTEL_METRICS_INCLUDE_ENTRYPOINT`          |
-| `OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES` |
-| `OTEL_METRICS_INCLUDE_REPOSITORY`          |
+名前は `METRICS` だが、**メトリクスだけでなくイベント（ログ）の属性にも効く**。
+
+| 環境変数                                   | 既定    | 付く属性                                |
+| ------------------------------------------ | ------- | --------------------------------------- |
+| `OTEL_METRICS_INCLUDE_SESSION_ID`          | `true`  | `session.id`                            |
+| `OTEL_METRICS_INCLUDE_VERSION`             | `false` | `app.version`                           |
+| `OTEL_METRICS_INCLUDE_ACCOUNT_UUID`        | `true`  | `user.account_uuid` / `user.account_id` |
+| `OTEL_METRICS_INCLUDE_ENTRYPOINT`          | `false` | `app.entrypoint`                        |
+| `OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES` | `true`  | `OTEL_RESOURCE_ATTRIBUTES` のキー       |
+| `OTEL_METRICS_INCLUDE_REPOSITORY`          | `false` | `vcs.*`（リポジトリ情報）               |
 
 ## メトリクス名(8種)
 
@@ -113,6 +139,7 @@ Claude Code自体が送信するOpenTelemetry(メトリクス・ログ、betaで
 - `claude_code.compaction`
 - `claude_code.feedback_survey`
 - `claude_code.subagent_completed`（サブエージェント終了時。`total_tool_uses` / `duration_ms` 等）
+- `claude_code.safety_event`（v2.1.307 以降。ツール呼び出しの拒否・確認要求、サンドボックスのネットワーク拒否、hook によるブロックで出る。属性は `category` / `decision` / `reason_code` / `rule_source` / `tool_class` / `sandbox_violation_count` など。コマンド本文・パスは含まない）
 - `claude_code.retention_sweep`（ローカル履歴の保持期間クリーンアップの結果。`result` は `complete` / `skipped`）
 - `claude_code.managed_settings_resolved`（managed settings の解決状態。`OTEL_LOG_MANAGED_SETTINGS=1` で墨消し済み設定を追加。v2.1.274 以降）
 - `claude_code.system_prompt`（詳細ベータトレース（`ENABLE_BETA_TRACING_DETAILED=1` + `BETA_TRACING_ENDPOINT`）かつ `OTEL_LOG_USER_PROMPTS=1` のときのみ。完全なシステムプロンプトを含む）
@@ -123,18 +150,28 @@ MCPサーバーの接続や利用状況を監査したい場合は `mcp_server_c
 
 ## 標準属性・実際に確認できた属性
 
-ドキュメント上の「標準属性」一覧:
+ドキュメント上の「標準属性」一覧（メトリクス・イベント共通。一部は上の `OTEL_METRICS_INCLUDE_*` で出し入れ）:
 
 - `session.id`
 - `app.version`
 - `app.entrypoint`
 - `organization.id`
 - `user.account_uuid`
+- `user.account_id`
 - `user.id`
 - `user.email`
 - `terminal.type`
+- `ccr.session.id`（Claude Code on the web のセッション）
+- `OTEL_RESOURCE_ATTRIBUTES` で指定したキー
+- `vcs.*`（`OTEL_METRICS_INCLUDE_REPOSITORY=true` のとき）
 
-> **実地検証**: 実際にコンソール/OTLP経由で出力された属性はこれより多い。共通属性として `user.account_id`(ドキュメント未記載)も含め全イベントに付与されていた。イベント個別の属性として `event.name` / `event.timestamp` / `event.sequence` / `prompt.id` / `message.uuid` / `request_id` / `client_request_id` / `query_source` / `effort` / `speed` / `model` / `cost_usd` / `cost_usd_micros` なども実際に確認できた(イベント種別によって付与される属性は異なる)。Lokiに取り込まれた後は、属性名のドット(`.`)がアンダースコア(`_`)に変換される(例: `event.name` → `event_name`)ことも実地で確認した。
+イベントだけに付く共通属性: `prompt.id` / `workspace.host_paths` / `workflow.run_id` / `workflow.name` / `agent_id` / `parent_agent_id`
+
+リソース属性: `service.name`（`claude-code`。Desktop の Code タブは `claude-code-desktop`）/ `service.version` / `os.type` / `os.version` / `host.arch` / `wsl.version`（WSL から送ったときだけ）
+
+> **ドキュメントに無いが実データにある属性**（2026-11-18、Claude Code 2.1.325 の Loki 実データで確認）: 全イベントに `anthropic_plan` / `anthropic_provider` / `anthropic_custom_base_url`、`api_request` に `ttft_ms`。
+
+> **実地検証**: 実際にコンソール/OTLP経由で出力された属性はこれより多い。共通属性の `user.account_id` は以前はドキュメント未記載だったが、現在は記載されている。イベント個別の属性として `event.name` / `event.timestamp` / `event.sequence` / `prompt.id` / `message.uuid` / `request_id` / `client_request_id` / `query_source` / `effort` / `speed` / `model` / `cost_usd` / `cost_usd_micros` なども実際に確認できた(イベント種別によって付与される属性は異なる)。Lokiに取り込まれた後は、属性名のドット(`.`)がアンダースコア(`_`)に変換される(例: `event.name` → `event_name`)ことも実地で確認した。
 >
 > `tool_decision`イベントには`tool_source`属性(値: `builtin`/`mcp`等、ツールの出所を示す閉集合。v2.1.214以降)も付与される(公式ドキュメント由来、未実地検証)。
 
@@ -177,19 +214,19 @@ Agent SDKはClaude Code CLIをそのまま子プロセスとして起動して�
 
 単発のコンソール出力を読むのではなく、継続的にクエリ可能なローカル専用の収集基盤(OTel Collector + Loki + Grafana)を`otel-stack/`配下に同梱している。テレメトリの向き先をいつでもこのローカル基盤に切り替えられる。
 
-**このスタックは、さくらのクラウドVM上で恒常稼働している個人ログ基盤 `tools/infra/ai-logs/`(実利用ログを収集する別インフラ。Lokiのホットは14日保持で、それ以前はAzure Blobへ日次アーカイブする。詳細は[README.md](../../../../../tools/infra/ai-logs/README.md))とは無関係の別物である。** デバッグ用の実験的なテレメトリ(スキル動作確認のノイズ)を実利用アーカイブに混ぜないため、独立して使い捨てで起動・破棄する用途に限定している。設定内容は`ai-logs`の`docker/`を参考にしているが、コード・データともに共有しない。
+**このスタックは、さくらのクラウドVM上で恒常稼働している個人ログ基盤 `infra/ai-logs/`(実利用ログを収集する別インフラ。Lokiのホットは14日保持で、それ以前はAzure Blobへ日次アーカイブする。詳細は[README.md](../../../../../infra/ai-logs/README.md))とは無関係の別物である。** デバッグ用の実験的なテレメトリ(スキル動作確認のノイズ)を実利用アーカイブに混ぜないため、独立して使い捨てで起動・破棄する用途に限定している。設定内容は`ai-logs`の`docker/`を参考にしているが、コード・データともに共有しない。
 
 ### `ai-logs`との構成上の違い
 
-| 項目             | `otel-stack/`(このスキル)                      | `tools/infra/ai-logs/`                                                 |
-| ---------------- | ---------------------------------------------- | ---------------------------------------------------------------------- |
-| 稼働場所         | ローカル(Docker Desktop)、使う時だけ起動       | さくらのクラウドVM、恒常稼働                                           |
-| ポート公開       | 全ポートをループバック(`127.0.0.1`)のみに公開  | GrafanaはSSHトンネル経由のみ、OTLPは外部公開(トークン必須)             |
-| OTLP受信の認証   | なし(`bearertokenauth` extension不使用)        | `bearertokenauth` extensionでBearerトークン必須                        |
-| Lokiのホット公開 | あり(`127.0.0.1:3100`、直接クエリ用)           | なし(VM上のコンテナ間ネットワークのみ)                                 |
-| 対象信号         | ログのみ                                       | ログのみ                                                               |
-| ログの保持       | なし(使い捨て。`docker compose down -v`で消す) | Lokiは14日(Compactorのretention)、それ以前はAzure Blobの日次gzip JSONL |
-| 対象ツール       | Claude Codeのデバッグ実験用途                  | Claude Code + Codex CLIの実利用ログ横断収集                            |
+| 項目             | `otel-stack/`(このスキル)                      | `infra/ai-logs/`                                                                                 |
+| ---------------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| 稼働場所         | ローカル(Docker Desktop)、使う時だけ起動       | さくらのクラウドVM、恒常稼働                                                                     |
+| ポート公開       | 全ポートをループバック(`127.0.0.1`)のみに公開  | GrafanaはSSHトンネル経由のみ、OTLPは外部公開(Caddy が TLS で受ける)                              |
+| OTLP受信の認証   | なし(`bearertokenauth` extension不使用)        | TLS(Let's Encrypt の IP 証明書、OTLP/HTTP の 4318 のみ) + `bearertokenauth` でBearerトークン必須 |
+| Lokiのホット公開 | あり(`127.0.0.1:3100`、直接クエリ用)           | なし(VM上のコンテナ間ネットワークのみ)                                                           |
+| 対象信号         | ログのみ                                       | ログのみ                                                                                         |
+| ログの保持       | なし(使い捨て。`docker compose down -v`で消す) | Lokiは14日(Compactorのretention)、それ以前はAzure Blobの日次gzip JSONL                           |
+| 対象ツール       | Claude Codeのデバッグ実験用途                  | Claude Code + Codex CLIの実利用ログ横断収集                                                      |
 
 外部に一切公開しないループバック限定のローカル完結用途のため、VM公開を前提にした`bearertokenauth`のようなトークン認証機構は導入していない。認証はGrafanaの管理者パスワード(`.env`の`GRAFANA_ADMIN_PASSWORD`)のみに絞ってある。
 
@@ -242,7 +279,7 @@ curl -G "http://localhost:3100/loki/api/v1/query_range" \
   --data-urlencode "limit=50"
 ```
 
-このクエリ構築方法(`{service_name="..."}` によるLogQLクエリ、`query_range`のパラメータ設計)は `tools/infra/ai-logs/scripts/fetch_logs.py` と同じであり、そのまま踏襲できることを実地確認した。
+このクエリ構築方法(`{service_name="..."}` によるLogQLクエリ、`query_range`のパラメータ設計)は `infra/ai-logs/scripts/fetch_logs.py` と同じであり、そのまま踏襲できることを実地確認した。
 
 同梱の [`scripts/query_otel_logs.py`](scripts/query_otel_logs.py) を使うと、上記のクエリをAI(Claude)自身が認証情報を直接扱わずにCLIから実行できる(`otel-stack/.env`をスクリプト自身が読み込む)。使い方は `python scripts/query_otel_logs.py --help` を参照。
 

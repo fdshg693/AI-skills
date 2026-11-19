@@ -6,14 +6,15 @@ skill can inject it with ```!```. Exit 0 even when every backend is unavailable.
 Contract (do not change without updating the skill):
 
     backend  status       reason
+    page      available    no API key required
     grep      available    no API key required
     ms        available    no API key required
     aws       available    no API key required
     tav       available    TAVILY_API_KEY is set
     ctx       unavailable  CONTEXT7_API_KEY is empty
 
-Columns are two-space separated and left-aligned. Backend names are `grep` /
-`ms` / `aws` / `tav` / `ctx`. Status is `available` or `unavailable`. Reason strings
+Columns are two-space separated and left-aligned. Backend names are `page` /
+`grep` / `ms` / `aws` / `tav` / `ctx`. Status is `available` or `unavailable`. Reason strings
 are the constants below.
 """
 
@@ -29,6 +30,7 @@ CONTEXT7_API_KEY_ENV = "CONTEXT7_API_KEY"
 OUTPUT_DIR_ENV = "WEB_LOOKUP_OUTPUT_DIR"
 DEFAULT_OUTPUT_DIR = "temp/web-lookup"
 
+BACKEND_PAGE = "page"
 BACKEND_GREP = "grep"
 BACKEND_MS = "ms"
 BACKEND_AWS = "aws"
@@ -78,6 +80,7 @@ def backend_rows() -> list[tuple[str, str, str]]:
     tav_key = get_tavily_api_key()
     ctx_key = get_context7_api_key()
     return [
+        (BACKEND_PAGE, STATUS_AVAILABLE, REASON_NO_KEY_REQUIRED),
         (BACKEND_GREP, STATUS_AVAILABLE, REASON_NO_KEY_REQUIRED),
         (BACKEND_MS, STATUS_AVAILABLE, REASON_NO_KEY_REQUIRED),
         (BACKEND_AWS, STATUS_AVAILABLE, REASON_NO_KEY_REQUIRED),

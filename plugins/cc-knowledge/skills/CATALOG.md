@@ -144,13 +144,13 @@ meta:
   requires_skills: claude-settings, claude-cli-docs, claude-code-docs, litellm-docs, claude-code-debugging
   status: experimental
   description: LiteLLM等のMessages互換ゲートウェイ経由でClaude CodeをOpenAIモデルで動かすための構成判断と手順
-  version: 1.0.0
+  version: 1.0.1
 ---
 
 - claude-logs-investigate
 ---
 name: claude-logs-investigate
-description: Claude Code自体(CLIツール)の動作ログ・デバッグ情報・テレメトリを調査する、または新たに記録する仕組みを仕込む際に使う。セッショントランスクリプトやシェルスナップショットなど既存ログの場所と見方に加え、デバッグフラグ・スラッシュコマンドでの原因切り分け、hookを使った独自ログの仕込み、OpenTelemetryによるテレメトリ送信設定までを扱う。「Claude Codeのログを見たい/調べたい」「なぜ設定やhook、MCPが効かないか調査したい」「ツール呼び出し履歴を記録したい」「テレメトリ/OTelを設定したい」といった要求で使う。
+description: Claude Code自体(CLIツール)の動作ログ・デバッグ情報・テレメトリを調査する、または新たに記録する仕組みを仕込む際に使う。セッショントランスクリプトやシェルスナップショットなど既存ログの場所と見方（ローカルログのファイル形式を含む）に加え、デバッグフラグ・スラッシュコマンドでの原因切り分け、hookを使った独自ログの仕込み、OpenTelemetryによるテレメトリ送信設定までを扱う。「Claude Codeのログを見たい/調べたい」「なぜ設定やhook、MCPが効かないか調査したい」「ツール呼び出し履歴を記録したい」「テレメトリ/OTelを設定したい」といった要求で使う。
 # hookそのものの書き方(イベント種別・stdin/stdout構造・exit code・settings.jsonへの登録方法)は writing-hooks スキルに依存・委譲する
 meta:
   tag: []
@@ -162,7 +162,7 @@ meta:
   requires_skills: writing-hooks, claude-code-docs, claude-cli-docs
   status: stable
   description: no description
-  version: 1.0.2
+  version: 1.0.4
 ---
 
 - claude-mechanisms
@@ -217,7 +217,7 @@ meta:
   requires_skills: claude-code-docs
   status: stable
   description: no description
-  version: 1.0.7
+  version: 1.0.8
 ---
 
 - writing-output-styles

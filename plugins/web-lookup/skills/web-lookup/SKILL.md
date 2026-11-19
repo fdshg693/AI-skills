@@ -1,25 +1,25 @@
 ---
 name: web-lookup
-description: Looks up current web information via a bundled CLI covering grep.app (real GitHub code), Microsoft Learn (official Microsoft/Azure docs), AWS Knowledge MCP (official AWS docs, Blog, re:Post), Tavily (general web), and Context7 (library APIs). Use when you need Microsoft/Azure or AWS official docs, current library/framework API references, real-world public GitHub code examples, or general web research, and the plugin must run without installing tools/ CLIs.
+description: Looks up current web information via a bundled CLI covering grep.app (real GitHub code), Microsoft Learn (official Microsoft/Azure docs), AWS Knowledge MCP (official AWS docs, Blog, re:Post), local page fetch with main-content extraction (known URLs), Tavily (general web search), and Context7 (library APIs). Use when you need Microsoft/Azure or AWS official docs, current library/framework API references, real-world public GitHub code examples, the full text of a known web page, or general web research, and the plugin must run without installing tools/ CLIs.
 
 # 前提: 起動は `uv run --project ${CLAUDE_SKILL_DIR} web-lookup`。`uv` 必須。
 # グローバル `uv tool install` はしない。`tools/` の CLI は使わない。
 # TAVILY_API_KEY / CONTEXT7_API_KEY が空なら該当バックエンドは unavailable。
 # WEB_LOOKUP_OUTPUT_DIR は未設定時 temp/web-lookup。
-# 同梱ファイル: ms.md / aws.md / ctx.md / grep.md / tav.md（各系統の判断フロー）
+# 同梱ファイル: ms.md / aws.md / ctx.md / grep.md / page.md / tav.md（各系統の判断フロー）
 # 設計意図・セットアップは同階層の README.md（人間のメンテナ向け）
 allowed-tools: Bash(uv run *)
 meta:
   tag: []
   requires_repo_tools: none
   requires_env: TAVILY_API_KEY, CONTEXT7_API_KEY, WEB_LOOKUP_OUTPUT_DIR
-  dependencies: fastmcp, tavily-python, requests, python-dotenv
+  dependencies: fastmcp, tavily-python, requests, python-dotenv, trafilatura, lxml
   requires_install: uv
   requires_hooks: none
   requires_skills: none
   status: experimental
   description: no description
-  version: 1.3.0
+  version: 1.4.0
 ---
 
 ## いま使えるバックエンド
@@ -38,6 +38,8 @@ uv run --project ${CLAUDE_SKILL_DIR} web-lookup available
 uv run --project ${CLAUDE_SKILL_DIR} web-lookup <subcommand>
 ```
 
+`${CLAUDE_SKILL_DIR}` が展開されないホスト（Claude Code 以外の PowerShell 等）では、この SKILL.md があるディレクトリの絶対パスに置き換える。
+
 オプションと終了コードは同じプレフィックスの `--help`（各サブコマンドの `--help`）を正本にする。表は転記しない。
 
 ## 振り分け
@@ -46,12 +48,14 @@ uv run --project ${CLAUDE_SKILL_DIR} web-lookup <subcommand>
 2. AWS の公式ドキュメント・Blog・What's New・re:Post Knowledge Center・CDK/CloudFormation → `aws`。使うなら [aws.md](aws.md) を読み、その手順に従う
 3. 外部ライブラリ / フレームワークの現行 API・セットアップ・移行 → `ctx`。使うなら [ctx.md](ctx.md) を読み、その手順に従う
 4. 公開 GitHub の実コード（ドキュメントの例ではなく、実際の書き方） → `grep`。使うなら [grep.md](grep.md) を読み、その手順に従う
-5. それ以外の Web（ニュース、製品比較、一次情報の裏取り） → `tav`。使うなら [tav.md](tav.md) を読み、その手順に従う
+5. それ以外の Web（ニュース、製品比較、一次情報の裏取り）
+   - URL が分かっている → `page`（ローカル取得＋本文抽出、キー不要）。使うなら [page.md](page.md) を読み、その手順に従う
+   - キーワードから探す → `tav search`。使うなら [tav.md](tav.md) を読み、その手順に従う
 
-使いたい系統が `unavailable` なら呼ばない。`tav` が available なら Web で代替してよいか判断する。grep / ms / aws はキー不要で通常 available。
+使いたい系統が `unavailable` なら呼ばない。`tav` が available なら Web で代替してよいか判断する。page / grep / ms / aws はキー不要で通常 available。
 
 ## 結果の読み方
 
-`grep` / `ms` / `aws` / `tav` の成功時 stdout は `index.md` のパスだけ。まず `index.md` を Read し、必要なファイルだけ読む。大きいファイルも他スキルに回さない。Read で足りるものだけ読む。空結果は stderr `No results.`。
+`page` / `grep` / `ms` / `aws` / `tav` の成功時 stdout は `index.md` のパスだけ。まず `index.md` を Read し、必要なファイルだけ読む。大きいファイルも他スキルに回さない。Read で足りるものだけ読む。空結果は stderr `No results.`。
 
 `ctx` と `available` は stdout に本文を出す。

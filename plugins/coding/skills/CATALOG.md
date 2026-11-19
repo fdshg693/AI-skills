@@ -23,6 +23,24 @@ meta:
   version: 1.0.1
 ---
 
+- gh-pr
+---
+name: gh-pr
+description: gh で現在のブランチのPRを作成・状態確認・マージし、GitHub Actions の run の一覧・詳細取得・手動実行・追跡を行う。Actions の失敗原因の調査は cicd プラグインの diagnosing-actions を使う。
+allowed-tools: Bash(gh *), Bash(git *), Bash(python *gh-pr/*.py*)
+meta:
+  tag: []
+  requires_repo_tools: none
+  requires_env: none
+  dependencies: gh, git, python
+  requires_install: none
+  requires_hooks: none
+  requires_skills: none
+  status: stable
+  description: 現在のブランチのPR作成・状態確認・マージとGitHub Actionsのrun一覧・詳細・手動実行
+  version: 1.1.1
+---
+
 - merge-proposal
 ---
 name: merge-proposal
@@ -67,24 +85,6 @@ meta:
   status: stable
   description: no description
   version: 1.0.1
----
-
-- pr-check
----
-name: pr-check
-description: PRの作成・状態確認・レビュー依頼・GitHub Actions操作を行う
-allowed-tools: Bash(gh *) Bash(git *) Bash(uv run ${CLAUDE_SKILL_DIR}/*.py *) Bash(python ${CLAUDE_SKILL_DIR}/*.py *)
-meta:
-  tag: []
-  requires_repo_tools: none
-  requires_env: none
-  dependencies: gh, git, uv
-  requires_install: none
-  requires_hooks: none
-  requires_skills: none
-  status: stable
-  description: PRの作成・状態確認・Copilotレビュー依頼・マージ・GitHub Actions操作
-  version: 1.1.0
 ---
 
 - proposing-flow

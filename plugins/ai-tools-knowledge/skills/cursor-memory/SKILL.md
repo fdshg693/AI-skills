@@ -19,7 +19,7 @@ meta:
   requires_skills: cursor-skill-use, cursor-docs, claude-code-memory
   status: stable
   description: no description
-  version: 1.0.4
+  version: 1.0.5
 ---
 
 # Cursorのメモリ設計（Rules / AGENTS.md）
@@ -28,7 +28,7 @@ Project Rules・`AGENTS.md`/`CLAUDE.md`・User Rules・Team Rulesのうち**ど�
 
 Cursorでは LLM が補完間で記憶を持たないため、Rules / `AGENTS.md` が「永続コンテキスト」としてプロンプト先頭に注入される。強制力のある設定ではない（Agentが従わない可能性がある）。強制したい処理は **Hooks** を検討する。
 
-このスキルの内容は 2026-07-20 時点の公式ドキュメント（https://cursor.com/docs/rules.md 他）に基づく。原文スナップショットは [references/](references/) に同梱している。
+このスキルの内容は 2026-11-19 時点の公式ドキュメント（https://cursor.com/docs/rules.md 他）に基づく。原文スナップショットは [references/](references/) に同梱している。
 
 ## 判断手順
 
@@ -53,7 +53,7 @@ Cursorでは LLM が補完間で記憶を持たないため、Rules / `AGENTS.md
    - ファイル種別・glob で絞りたい → `.mdc` の `globs`（ネスト `AGENTS.md` では不可）
 5. **書く**
    - 500行未満・1関心1ファイル。曖昧な指示を避け、検証可能な粒度（具体コマンド・数値・禁止パス）で書く
-   - 長いコードやスタイルガイド全文は貼らず、`@path/to/file` で参照する
+   - 長いコードやスタイルガイド全文は貼らず、`@path/to/file` で参照する。参照先は展開されず Agent が必要時に読むだけなので、常に要る内容は本文に書く
    - 同じミスが繰り返されたらルールを足す。先回りで過剰に書かない
 6. **スキルにすべき内容は切り出す**
    - 手順・スクリプト・オンデマンド知識 → **Skills**（`cursor-skill-use`）。`alwaysApply: false` かつ `globs` なしの「Apply Intelligently」ルールは `/migrate-to-skills` の移行候補
@@ -65,7 +65,7 @@ Cursorでは LLM が補完間で記憶を持たないため、Rules / `AGENTS.md
 - [ ] `alwaysApply` / `description` / `globs` の組み合わせが意図した適用タイプと一致している
 - [ ] `Apply Intelligently` なら `description` がある。`Apply to Specific Files` なら `globs` が実ファイルにマッチする
 - [ ] `AGENTS.md` / `CLAUDE.md` は常時適用前提（条件付きなら `.mdc` へ）
-- [ ] ルールは Agent（Chat）向け。Tab / Inline Edit（Ctrl+K）には効かないことを説明済み
+- [ ] ルールは Agent（Chat）向け。Tab・Bugbot PR レビューには効かないことを説明済み（Inline Edit は公式に記載なし。断定しない）
 - [ ] レガシー `.cursorrules` が残っていれば Always Apply の `.mdc` へ移行を提案
 
 ## 困ったときは

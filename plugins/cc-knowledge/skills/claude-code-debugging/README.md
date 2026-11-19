@@ -41,11 +41,11 @@ Claude Code自体（CLIツール）の挙動をデバッグ・検証するため
 - **`~/.claude.json`は大文字小文字違いの重複キーを含みうる**ため、PowerShellの`ConvertFrom-Json`がそのままでは失敗する。`-AsHashtable`が必要（同上）
 - **OTelの実送信属性はドキュメント記載より多い**（`user.account_id`等）。Loki取り込み後は属性名のドット(`.`)がアンダースコア(`_`)に変換される（[otel-reference.md](otel-reference.md)の「標準属性・実際に確認できた属性」）
 
-## `otel-stack/`と`tools/infra/ai-logs/`の関係（別物であることの明記）
+## `otel-stack/`と`infra/ai-logs/`の関係（別物であることの明記）
 
-`otel-stack/`は、既に恒常稼働している`tools/infra/ai-logs/`（さくらのクラウドVM上で複数AIツール横断のログを収集する個人基盤。Lokiのホットは14日保持で、それ以前はAzure Blobへ日次アーカイブする。詳細は`tools/infra/ai-logs/README.md`）とは**目的が異なる別物**として独立に新設した。
+`otel-stack/`は、既に恒常稼働している`infra/ai-logs/`（さくらのクラウドVM上で複数AIツール横断のログを収集する個人基盤。Lokiのホットは14日保持で、それ以前はAzure Blobへ日次アーカイブする。詳細は`infra/ai-logs/README.md`）とは**目的が異なる別物**として独立に新設した。
 
-|            | `tools/infra/ai-logs/`                                                    | `otel-stack/`（本スキル）                                                                        |
+|            | `infra/ai-logs/`                                                          | `otel-stack/`（本スキル）                                                                        |
 | ---------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
 | 目的       | 実利用ログを恒常的に収集・保管する個人基盤（ホット14日 + Blobアーカイブ） | スキル動作確認用の実験的テレメトリを都度確認する使い捨て基盤                                     |
 | 稼働場所   | さくらのクラウドVM（常時稼働）                                            | ローカルのDocker Desktop（`docker compose up -d`で必要な時だけ起動）                             |
@@ -54,7 +54,7 @@ Claude Code自体（CLIツール）の挙動をデバッグ・検証するため
 | クエリ経路 | SSHトンネル越しに`docker exec`でLokiへ（`fetch_logs.py`）                 | ローカルの`http://localhost:3100`へ直接HTTP（`query_otel_logs.py`）                              |
 | 対象信号   | ログ（v1スコープ）                                                        | ログのみ（メトリクス・トレースは対象外）                                                         |
 
-Collector/Lokiの設定内容は`tools/infra/ai-logs/docker/`を参考にしたが、共有・依存関係は一切ない。`otel-stack/`単体で完結し、`ai-logs`側の変更が本スキルに影響することはない。
+Collector/Lokiの設定内容は`infra/ai-logs/docker/`を参考にしたが、共有・依存関係は一切ない。`otel-stack/`単体で完結し、`ai-logs`側の変更が本スキルに影響することはない。
 
 ## 前提条件（重要）
 

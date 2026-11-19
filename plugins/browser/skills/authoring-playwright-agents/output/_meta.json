@@ -1,0 +1,35 @@
+{
+  "source_repo": "microsoft/playwright",
+  "ref": "main",
+  "dir_sources": [
+    "packages/playwright/src/agents"
+  ],
+  "file_sources": [
+    "docs/src/test-agents-js.md",
+    "packages/playwright/src/mcp/test/plannerTools.ts",
+    "packages/playwright/src/mcp/test/generatorTools.ts",
+    "packages/playwright/src/mcp/test/testTools.ts",
+    "packages/playwright/src/mcp/test/testTool.ts",
+    "packages/playwright/src/program.ts"
+  ],
+  "fetched_at": "2026-11-16T05:37:54.196156+00:00",
+  "files": [
+    "agents/agentParser.ts",
+    "agents/copilot-setup-steps.yml",
+    "agents/generateAgents.ts",
+    "agents/playwright-test-coverage.prompt.md",
+    "agents/playwright-test-generate.prompt.md",
+    "agents/playwright-test-generator.agent.md",
+    "agents/playwright-test-heal.prompt.md",
+    "agents/playwright-test-healer.agent.md",
+    "agents/playwright-test-plan.prompt.md",
+    "agents/playwright-test-planner.agent.md",
+    "cli/program.ts",
+    "docs/test-agents-js.md",
+    "mcp-tools/generatorTools.ts",
+    "mcp-tools/plannerTools.ts",
+    "mcp-tools/testTool.ts",
+    "mcp-tools/testTools.ts",
+    "summary.md"
+  ]
+}
